@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header">
                     Dashboard
-                </div>
+                </div> 
 
                 <div class="card-body">
                     @if(session('status'))
