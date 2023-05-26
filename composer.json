@@ -10,17 +10,18 @@
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
+        "illuminate/redis": "*",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "yajra/laravel-datatables-oracle": "^10.3",
         "laraveldaily/laravel-charts": "^0.1.29",
         "nuovo/spreadsheet-reader": "^0.5.11",
-        "spatie/laravel-medialibrary": "^10.7",
         "pbmedia/laravel-ffmpeg": "^8.3",
         "php-ffmpeg/php-ffmpeg": "^1.1",
         "predis/predis": "^2.1",
-        "symfony/filesystem": "^6.2"
+        "spatie/laravel-medialibrary": "^10.7",
+        "symfony/filesystem": "^6.2",
+        "yajra/laravel-datatables-oracle": "^10.3"
     },
     "require-dev": {
         "laravel/ui": "^4.2",

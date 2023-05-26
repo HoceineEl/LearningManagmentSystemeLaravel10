@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('videos.layout')
 
 @section('content')
     <div class="row">
@@ -33,6 +33,4 @@
             </div>
         @endforeach
     </div>
-
-
 @endsection

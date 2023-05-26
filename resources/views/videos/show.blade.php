@@ -1,4 +1,5 @@
-@extends('layout')
+@extends('videos.layout')
+
 
 @section('content')
     @push('scripts')

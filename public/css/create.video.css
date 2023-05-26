@@ -1,0 +1,100 @@
+.progress-wrapper {
+    position: relative;
+    height: 30px;
+    /* Increased height for better visibility */
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 20px;
+    display: none;
+    /* Hide progress bars by default */
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 5px;
+    width: 0;
+    transition: width 0.5s ease;
+    background-color: #2a70c0;
+    /* Filled color for progress */
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    /* Adjust left padding for text */
+    transform: translateY(-50%);
+    font-size: 14px;
+    /* Increased font size for better visibility */
+    color: #ffffff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.card {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #2a70c0;
+    border-color: #2a70c0;
+}
+
+.btn-primary:hover {
+    background-color: #1b4c8b;
+    border-color: #1b4c8b;
+}
+
+.alert {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+
+.alert-danger {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+}
+
+.video-preview {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.done-animation {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+    animation: fade-in 0.5s ease-in-out;
+}
+
+.completed-progress {
+    display: none;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

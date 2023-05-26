@@ -1,68 +1,7 @@
-@extends('layout')
+@extends('videos.layout')
 
 @section('content')
-    <style>
-        .progress {
-            height: 30px;
-            color: #b6c9df;
-            font-weight: bold;
-        }
 
-        .progress-bar.task1 {
-            background-color: #2a70c0;
-        }
-
-        .progress-bar.task2 {
-            background-color: #42c422;
-        }
-
-        .progress-bar.task3 {
-            background-color: #c06e2a;
-        }
-
-        .progress-bar.task4 {
-            background-color: #c81ed8;
-        }
-
-        .card {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-label {
-            font-weight: bold;
-        }
-
-        .btn-primary {
-            background-color: #2a70c0;
-            border-color: #2a70c0;
-        }
-
-        .btn-primary:hover {
-            background-color: #1b4c8b;
-            border-color: #1b4c8b;
-        }
-
-        .alert {
-            border-radius: 10px;
-            margin-bottom: 20px;
-            padding: 10px;
-        }
-
-        .alert-success {
-            background-color: #dff0d8;
-            border-color: #d6e9c6;
-            color: #3c763d;
-        }
-
-        .alert-danger {
-            background-color: #f2dede;
-            border-color: #ebccd1;
-            color: #a94442;
-        }
-    </style>
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -81,7 +20,7 @@
 
     <div class="card p-5">
         <h1>Video Upload Form</h1>
-        <form id="upload-form" enctype="multipart/form-data">
+        <form enctype="multipart/form-data" id="upload-form">
             @csrf
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
@@ -89,18 +28,63 @@
             </div>
             <div class="mb-3">
                 <label for="video" class="form-label">Video</label>
-                <input type="file" class="form-control-file" id="video" name="video" required>
-                <div class="progress mt-2" style="display: none;">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <span id="current-task"></span>
-                    </div>
+                <input type="file" class="filepond" name="video" multiple data-allow-reorder="true"
+                    data-max-file-size="20MB" data-max-files="3">
+                <div class="progress-wrapper watermark-progress completed-progress">
+                    <div class="progress-bar"></div>
+                    <div class="progress-text"></div>
+                </div>
+                <div class="progress-wrapper demo-progress completed-progress">
+                    <div class="progress-bar"></div>
+                    <div class="progress-text"></div>
+                </div>
+                <div class="progress-wrapper hls-progress completed-progress">
+                    <div class="progress-bar"></div>
+                    <div class="progress-text"></div>
+                </div>
+                <div id="done-animation" class="done-animation" style="display: none;">
+                    <strong>Done!</strong> All tasks completed successfully.
                 </div>
             </div>
             <button type="button" class="btn btn-primary" id="upload-button">Upload</button>
         </form>
+        <div id="video-preview-container" style="display: none;">
+            <h2>Uploaded Video Preview</h2>
+            <video id="video-preview" class="video-preview" controls>
+                <source id="video-source" src="" type="video/mp4">
+            </video>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <!-- Include FilePond JavaScript -->
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <!-- Additional plugins may be required to handle videos, such as FilePond Plugin File Validate Type -->
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script>
+        // First, register any necessary plugins
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
+
+        // Then, turn your input element into a pond
+        const inputElement = document.querySelector('input.filepond');
+        const pond = FilePond.create(inputElement, {
+            acceptedFileTypes: ['video/mp4', 'video/webm', 'video/ogg'],
+            labelIdle: 'Drag and drop your files or <span class="filepond--label-action">Browse</span>',
+            server: {
+                url: "{{ route('videos.store') }}",
+                method: 'POST'
+            }
+        });
+
+        // Listen for the 'submit' event on the form
+        document.querySelector("#upload-form").addEventListener('submit', function(event) {
+            // Prevent form submission if all fields are not valid
+            if (!event.target.checkValidity()) {
+                event.preventDefault();
+                alert('Please fill in all fields correctly.');
+            }
+        });
+    </script>
     <script>
         $(document).ready(function() {
             var progressInterval;
@@ -112,100 +96,87 @@
                     success: function(response) {
                         var progress = response.progress;
                         var currentTask = response.current_task;
-
+                        console.log(currentTask);
                         updateProgressBar(progress, currentTask);
-                        updateCurrentTask(currentTask);
 
                         // Stop the interval if the progress is 100 and there is no current task
-                        if (progress === 100 || currentTask === '') {
+                        if (progress === 100 && currentTask === null) {
                             clearInterval(progressInterval);
                         }
                     },
                     error: function(xhr, status, error) {
                         console.log(error);
-                    }
+                    },
                 });
             }
 
             function updateProgressBar(progress, currentTask) {
-                var progressBar = $('.progress-bar');
+                var progressWrapper = $(".progress-wrapper");
+                var doneAnimation = $("#done-animation");
 
-                // Stop the animation if the progress is 100 or there is no current task
-                if (currentTask === '') {
-                    progressBar.stop();
+                // Hide the progress bars and show the "Done" animation when progress is 100 and there is no current task
+                if (progress === 100 && currentTask === null) {
+                    progressWrapper.hide();
+                    doneAnimation.show();
                 } else {
-                    progressBar.animate({
-                        width: progress + '%'
-                    }, 500).attr('aria-valuenow', progress);
-                }
+                    doneAnimation.hide();
+                    var progressBar;
+                    var progressText;
 
-                // Show the progress bar if it was hidden
-                if (progress > 0 && progress < 100) {
-                    progressBar.parent('.progress').show();
-                } else {
-                    progressBar.parent('.progress').hide();
-                }
-            }
+                    switch (currentTask) {
+                        case "Watermarking":
+                            progressBar = $(".watermark-progress .progress-bar");
+                            progressText = $(".watermark-progress .progress-text");
+                            break;
+                        case "Demo creation":
+                            progressBar = $(".demo-progress .progress-bar");
+                            progressText = $(".demo-progress .progress-text");
+                            break;
+                        case "HLS conversion":
+                            progressBar = $(".hls-progress .progress-bar");
+                            progressText = $(".hls-progress .progress-text");
+                            break;
+                        default:
+                            return;
+                    }
 
-            function updateCurrentTask(currentTask) {
-                var currentTaskElement = $('#current-task');
+                    progressText.text(currentTask + ": " + progress + "%");
 
-                currentTaskElement.text(currentTask);
-
-                // Assign different CSS class to progress bar based on the current task
-                var progressBar = $('.progress-bar');
-                progressBar.removeClass().addClass('progress-bar ' + getTaskCSSClass(currentTask));
-            }
-
-            function getTaskCSSClass(task) {
-                // Define your task-to-CSS-class mapping here
-                switch (task) {
-                    case 'Watermarking':
-                        return 'task1';
-                    case 'Demo creation':
-                        return 'task2';
-                    case 'HLS conversion':
-                        return 'task3';
-                    case 'Uploading':
-                        return 'task4';
-                        // Add more cases for additional tasks
-                    default:
-                        return '';
+                    // Show the progress bar if it was hidden and there is progress
+                    if (progress > 0 && progress <= 100) {
+                        progressBar.css("width", progress + "%");
+                        progressBar.parent(".progress-wrapper").show();
+                    } else {
+                        progressBar.css("width", 0 + "%");
+                    }
                 }
             }
 
-            // Start the progress update interval
-            progressInterval = setInterval(updateProgress, 1000);
-
-            // Show the progress bar on file selection
-            $('#video').on('change', function() {
-                $('.progress').show();
-            });
-
-            // Handle form submission
-            $('#upload-button').on('click', function() {
-                var formData = new FormData($('#upload-form')[0]);
-
-                $.ajax({
+            // Handle the upload button click event
+            $("#upload-button").on("click", function() {
+                // Submit the form via AJAX when the upload button is clicked
+                $("#upload-form").ajaxSubmit({
                     url: "{{ route('videos.store') }}",
-                    method: "POST",
-                    data: formData,
-                    dataType: 'json',
-                    contentType: false,
-                    processData: false,
-                    beforeSend: function() {
-                        // Display loading or progress indicator if needed
-                    },
+                    type: "POST",
+                    dataType: "json",
                     success: function(response) {
-                        // Handle the success response
-                        console.log(response);
+                        // Update the video preview source
+                        $("#video-source").attr("src", response.videoUrl);
+                        // Show the video preview container
+                        $("#video-preview-container").show();
+                        // Load and play the video
+                        $("#video-preview")[0].load();
+                        $("#video-preview")[0].play();
                     },
                     error: function(xhr, status, error) {
-                        // Handle the error response
+                        // Handle error response
                         console.log(error);
-                    }
+                    },
                 });
+                // Start the progress update interval after the upload button is clicked
+                progressInterval = setInterval(updateProgress, 1000);
             });
         });
     </script>
+
 @endsection

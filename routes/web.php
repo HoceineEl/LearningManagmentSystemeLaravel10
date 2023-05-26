@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\VideoController;
+use App\Http\Controllers\Admin\VideoController;
 use App\Models\Video;
 use Illuminate\Support\Facades\Http;
 

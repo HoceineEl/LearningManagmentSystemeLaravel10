@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Video;
+use App\Http\Controllers\Controller;
 use App\Jobs\GenerateResolutionsJob;
-use FFMpeg\Format\Video\X264;
+use App\Models\LessonVideo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Storage;
-use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
-use Symfony\Component\Filesystem\Filesystem;
 
 class VideoController extends Controller
 {
@@ -20,7 +17,7 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $videos = Video::all();
+        $videos = LessonVideo::all();
         return view('videos.index', compact('videos'));
     }
 
@@ -49,23 +46,33 @@ class VideoController extends Controller
             $filename = str_replace(' ', '_', $filename);
             $storagePath = storage_path('app/public/videos');
             $fullPath = $this->moveVideoFile($videoFile, $storagePath, $filename);
+
             // Update Redis with initial progress and task
+            Redis::set('current_task', 'Uploading');
+            Redis::set('video_conversion_progress', 20);
 
-
-            //wait until the file uploaded successfully
+            // Wait until the file is uploaded successfully
             while (!file_exists($fullPath)) {
                 usleep(1000);
+                Redis::set('video_conversion_progress', 80);
             }
 
             // Update Redis with progress and task after file upload
+            Redis::set('current_task', 'Processing');
+            Redis::set('video_conversion_progress', 100);
 
+            // Perform any additional tasks (e.g., video conversion, watermarking, etc.)
             Queue::push(new GenerateResolutionsJob($storagePath, $filename, $request['title']));
 
-            return redirect()->route('videos.create')->with('success', 'Video upload initiated successfully.');
+            // Get the URL for the video
+            $videoUrl = asset('storage/videos/' . $filename);
+
+            // Return success response with the video URL
+            return response()->json(['videoUrl' => $videoUrl]);
         }
 
         $errorMessage = 'The video failed to upload: ' . $videoFile->getErrorMessage();
-        return redirect()->back()->withErrors(['video' => $errorMessage]);
+        return response()->json(['error' => $errorMessage], 400);
     }
 
 
@@ -75,11 +82,8 @@ class VideoController extends Controller
      */
     private function moveVideoFile($videoFile, $storagePath, $filename)
     {
-        Redis::set('video_conversion_progress', 0);
-        Redis::set('current_task', 'Uploading');
+
         $path = $videoFile->move($storagePath, $filename);
-        Redis::set('video_conversion_progress', 98);
-        Redis::set('current_task', 'Uploading');
         return $path->getRealPath();
     }
 
@@ -88,7 +92,7 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        $video = Video::findOrFail($id);
+        $video = LessonVideo::findOrFail($id);
 
         return view('videos.show', compact('video'));
     }
@@ -99,7 +103,7 @@ class VideoController extends Controller
      */
     public function edit($id)
     {
-        $video = Video::findOrFail($id);
+        $video = LessonVideo::findOrFail($id);
 
         return view('videos.edit', compact('video'));
     }
@@ -113,7 +117,7 @@ class VideoController extends Controller
             'title' => 'required',
         ]);
 
-        $video = Video::findOrFail($id);
+        $video = LessonVideo::findOrFail($id);
         $video->title = $request->input('title');
         $video->save();
 
@@ -129,7 +133,7 @@ class VideoController extends Controller
      */
     // public function destroy($id)
     // {
-    //     $video = Video::findOrFail($id);
+    //     $video = LessonVideo::findOrFail($id);
     //     $resolutions = Resolution::where('video_id', $video->id)->get();
 
     //     // Delete video resolutions
@@ -159,13 +163,13 @@ class VideoController extends Controller
 
     public function clear()
     {
-        $videos = Video::all();
+        $videos = LessonVideo::all();
         foreach ($videos as $video) {
             $storagePath = storage_path('app/public/videos');
             $floderPath = $storagePath . '/' . str_replace('_0_1500.m3u8', '', $video->path);
             if (file_exists($floderPath)) {
-                $filesystem = new Filesystem();
-                $filesystem->remove($floderPath);
+
+                File::deleteDirectory($floderPath);
             }
             $video->delete();
         }

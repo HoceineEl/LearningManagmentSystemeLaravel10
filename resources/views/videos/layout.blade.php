@@ -6,49 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Videos App</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Custom styles for the e-learning platform */
-        body {
-            padding-top: 60px;
-        }
 
-        .navbar-brand {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .navbar-toggler {
-            border: none;
-        }
-
-        .card {
-            border: none;
-            transition: transform 0.3s;
-        }
-
-
-
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .ratio {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.25%;
-        }
-
-        .ratio-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/create.video.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.video.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.video.css') }}">
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
     @stack('scripts')
 </head>
 
