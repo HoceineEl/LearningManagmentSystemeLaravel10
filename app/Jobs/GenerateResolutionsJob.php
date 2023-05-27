@@ -176,7 +176,7 @@ class GenerateResolutionsJob implements ShouldQueue
 
         $modifiedContent = preg_replace_callback($pattern, function ($matches) use (&$replacements) {
             return array_shift($replacements);
-        }, $fileContent, 3);
+        }, $fileContent, 4);
 
         // Save the modified content back to the file
         file_put_contents($filePath, $modifiedContent);
