@@ -1,4 +1,4 @@
-{{-- @extends('admin.videos.layout')
+@extends('admin.videos.layout')
 
 
 @section('content')
@@ -14,22 +14,20 @@
         </style>
         <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     @endpush
-    <div class="container">
-        <video controls crossorigin playsinline poster="https://bitdash-a.akamaihd.net/content/sintel/poster.png"></video>
-    </div>
+    <video controls crossorigin playsinline>
+        <source type="application/x-mpegURL"
+            src=" {{ asset('storage/videos/' . str_replace('.m3u8', '', $video->path) . '/' . $video->path) }}">
+    </video>
     <script src="https://cdn.rawgit.com/video-dev/hls.js/18bb552/dist/hls.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const source =
-                "{{ asset('storage/videos/' . str_replace('_0_1500.m3u8', '', $video->path) . '/' . $video->path) }}"
-            const video = document.querySelector('video');
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.querySelector("video");
+            const source = video.getElementsByTagName("source")[0].src;
 
+            // For more options see: https://github.com/sampotts/plyr/#options
             const defaultOptions = {};
 
-            if (!Hls.isSupported()) {
-                video.src = source;
-                var player = new Plyr(video, defaultOptions);
-            } else {
+            if (Hls.isSupported()) {
                 // For more Hls.js options, see https://github.com/dailymotion/hls.js
                 const hls = new Hls();
                 hls.loadSource(source);
@@ -41,56 +39,39 @@
 
                     // Transform available levels into an array of integers (height values).
                     const availableQualities = hls.levels.map((l) => l.height)
-                    availableQualities.unshift(0) //prepend 0 to quality array
 
                     // Add new qualities to option
                     defaultOptions.quality = {
-                        default: 0, //Default - AUTO
+                        default: availableQualities[0],
                         options: availableQualities,
+                        // this ensures Plyr to use Hls to update quality level
+                        // Ref: https://github.com/sampotts/plyr/blob/master/src/js/html5.js#L77
                         forced: true,
                         onChange: (e) => updateQuality(e),
                     }
-                    // Add Auto Label 
-                    defaultOptions.i18n = {
-                        qualityLabel: {
-                            0: 'Auto',
-                        },
-                    }
-
-                    hls.on(Hls.Events.LEVEL_SWITCHED, function(event, data) {
-                        var span = document.querySelector(
-                            ".plyr__menu__container [data-plyr='quality'][value='0'] span")
-                        if (hls.autoLevelEnabled) {
-                            span.innerHTML = `AUTO (${hls.levels[data.level].height}p)`
-                        } else {
-                            span.innerHTML = `AUTO`
-                        }
-                    })
 
                     // Initialize new Plyr player with quality options
-                    var player = new Plyr(video, defaultOptions);
+                    const player = new Plyr(video, defaultOptions);
                 });
-
                 hls.attachMedia(video);
                 window.hls = hls;
+            } else {
+                // default options with no quality update in case Hls is not supported
+                const player = new Plyr(video, defaultOptions);
             }
 
             function updateQuality(newQuality) {
-                if (newQuality === 0) {
-                    window.hls.currentLevel = -1; //Enable AUTO quality if option.value = 0
-                } else {
-                    window.hls.levels.forEach((level, levelIndex) => {
-                        if (level.height === newQuality) {
-                            console.log("Found quality match with " + newQuality);
-                            window.hls.currentLevel = levelIndex;
-                        }
-                    });
-                }
+                window.hls.levels.forEach((level, levelIndex) => {
+                    if (level.height === newQuality) {
+                        console.log("Found quality match with " + newQuality);
+                        window.hls.currentLevel = levelIndex;
+                    }
+                });
             }
         });
     </script>
-@endsection --}}
-<!DOCTYPE html>
+@endsection
+{{-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -168,4 +149,4 @@
     </script>
 </body>
 
-</html>
+</html> --}}

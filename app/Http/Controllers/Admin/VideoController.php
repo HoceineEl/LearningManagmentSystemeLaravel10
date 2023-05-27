@@ -34,6 +34,7 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
+        set_time_limit(0);
         $request->validate([
             'title' => 'required',
             'video' => 'required|mimetypes:video/*',

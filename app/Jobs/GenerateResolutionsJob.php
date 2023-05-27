@@ -51,16 +51,14 @@ class GenerateResolutionsJob implements ShouldQueue
         try {
             $inputPath = $this->storagePath . '/' . $this->filename;
             $newFilename = pathinfo($this->filename, PATHINFO_FILENAME);
-            $resolutions = ['1500'];
-            $totalResolutions = count($resolutions);
-            $currentResolution = 1;
-
+            $resolutions = ['1500', '1000'];
+            $this->updateConversionProgress('Watermarking', 0);
+            $this->simulateConversionProgress();
             // Add watermark to the original video
             $watermarkedFilename = $this->addWatermark($inputPath);
 
             // Simulate progress for watermarking
-            $this->updateConversionProgress('Watermarking', 0);
-            $this->simulateConversionProgress();
+
 
             // Create demo video
             $this->createDemoVideo($watermarkedFilename, $newFilename);
@@ -148,21 +146,40 @@ class GenerateResolutionsJob implements ShouldQueue
      */
     private function generateResolutions(array $resolutions, string $newFilename)
     {
-        foreach ($resolutions as $resolution) {
-            $format = (new X264('aac'))->setKiloBitrate($resolution);
-            $video = FFMpeg::fromDisk('ffmpeg')
-                ->open('watermarked_' . $this->filename)
-                ->exportForHLS()
-                ->setSegmentLength(10)
-                ->addFormat($format)
-                ->onProgress(function ($progress) {
-                    $this->updateConversionProgress('HLS conversion', $progress);
-                })
-                ->toDisk('public')
-                ->save('videos/' . $newFilename . '/' . $newFilename . '.m3u8');
-            $duration = $video->getDurationInSeconds();
-            $this->saveResolution($newFilename . '_0_' . $resolution . '.m3u8', $duration);
-        }
+
+
+        $video = FFMpeg::fromDisk('ffmpeg')
+            ->open('watermarked_' . $this->filename)
+            ->exportForHLS()
+            ->setSegmentLength(10)
+            ->addFormat((new X264('aac'))->setKiloBitrate(1500))
+            ->addFormat((new X264('aac'))->setKiloBitrate(1000))
+            ->addFormat((new X264('aac'))->setKiloBitrate(700))
+            ->addFormat((new X264('aac'))->setKiloBitrate(300))
+            ->onProgress(function ($progress) {
+                $this->updateConversionProgress('HLS conversion', $progress);
+            })
+            ->toDisk('public')
+            ->save('videos/' . $newFilename . '/' . $newFilename . '.m3u8');
+        $duration = $video->getDurationInSeconds();
+        $this->saveResolution($newFilename . '.m3u8', $duration);
+        $filePath = $this->storagePath . '/'  . $newFilename . '/' . $newFilename . '.m3u8';
+        $fileContent = file_get_contents($filePath);
+        $replacements = [
+            'RESOLUTION=1920x1080',
+            'RESOLUTION=1920x720',
+            'RESOLUTION=1920x480',
+            'RESOLUTION=1920x244'
+        ];
+
+        $pattern = "/RESOLUTION=\d+x\d+/";
+
+        $modifiedContent = preg_replace_callback($pattern, function ($matches) use (&$replacements) {
+            return array_shift($replacements);
+        }, $fileContent, 3);
+
+        // Save the modified content back to the file
+        file_put_contents($filePath, $modifiedContent);
     }
 
     /**

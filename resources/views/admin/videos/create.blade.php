@@ -157,13 +157,7 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        // Update the video preview source
-                        $("#video-source").attr("src", response.videoUrl);
-                        // Show the video preview container
-                        $("#video-preview-container").show();
-                        // Load and play the video
-                        $("#video-preview")[0].load();
-                        $("#video-preview")[0].play();
+                       
                     },
                     error: function(xhr, status, error) {
                         // Handle error response
@@ -180,93 +174,3 @@
     </script>
 
 @endsection
-{{-- $(document).ready(function() {
-            var progressInterval;
-            var uploadButton = $("#upload-button");
-            var uploadSpinner = $(".spinner-border");
-            var uploadingText = $(".visually-hidden:contains('Uploading...')");
-            var uploadText = $(".upload");
-
-            function updateProgress() {
-                $.ajax({
-                    url: "{{ route('video-conversion-progress') }}",
-                    method: "GET",
-                    success: function(response) {
-                        var progress = response.progress;
-                        var currentTask = response.current_task;
-                        updateProgressBar(progress, currentTask);
-
-                        // Stop the interval if the progress is 100 and there is no current task
-                        if (progress === 100 && currentTask === null) {
-                            clearInterval(progressInterval);
-                            showUploadButton();
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                    },
-                });
-            }
-
-            function updateProgressBar(progress, currentTask) {
-                var watermarkProgressWrapper = $(".progress-wrapper.watermark-progress");
-                var demoProgressWrapper = $(".progress-wrapper.demo-progress");
-                var hlsProgressWrapper = $(".progress-wrapper.hls-progress");
-                var doneAnimation = $("#done-animation");
-
-                watermarkProgressWrapper.find(".progress-bar").css("width", progress + "%");
-                watermarkProgressWrapper.find(".progress-text").text("Watermarking " + progress + "%");
-
-                demoProgressWrapper.find(".progress-bar").css("width", progress + "%");
-                demoProgressWrapper.find(".progress-text").text("Demo creation " + progress + "%");
-
-                hlsProgressWrapper.find(".progress-bar").css("width", progress + "%");
-                hlsProgressWrapper.find(".progress-text").text("HLS conversion " + progress + "%");
-
-                // If all tasks are completed (progress is 100 and no current task), show the done animation
-                if (progress === 100 && currentTask === null) {
-                    doneAnimation.show();
-                }
-            }
-
-            function showUploadButton() {
-                uploadSpinner.addClass("visually-hidden");
-                uploadingText.addClass("visually-hidden");
-                uploadText.removeClass("visually-hidden");
-            }
-
-            // Handle the upload button click event
-            uploadButton.on("click", function() {
-                uploadSpinner.removeClass("visually-hidden");
-                uploadingText.removeClass("visually-hidden");
-                uploadText.addClass("visually-hidden");
-
-                var formData = new FormData($("#upload-form")[0]);
-
-                $.ajax({
-                    url: "{{ route('videos.store') }}",
-                    method: "POST",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        // Update the video preview source
-                        $("#video-source").attr("src", response.videoUrl);
-                        // Show the video preview container
-                        $("#video-preview-container").show();
-                        // Load and play the video
-                        $("#video-preview")[0].load();
-                        $("#video-preview")[0].play();
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error response
-                        console.log(error);
-                    },
-                });
-            });
-
-            // Start the progress update interval after the upload button is clicked
-            uploadButton.on("click", function() {
-                progressInterval = setInterval(updateProgress, 1000);
-            });
-         --}}

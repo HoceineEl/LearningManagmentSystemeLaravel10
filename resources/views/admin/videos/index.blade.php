@@ -11,7 +11,7 @@
                                 <div class="ratio ratio-16x9">
                                     <video id="video-{{ $video->id }}" autoplay muted loop preload="auto">
                                         <source
-                                            src="{{ asset('storage/videos/' . str_replace('_0_1500.m3u8', '', $video->path) . '/demo.mp4') }}"
+                                            src="{{ asset('storage/videos/' . str_replace('.m3u8', '', $video->path) . '/demo.mp4') }}"
                                             type="video/mp4">
                                     </video>
                                 </div>
