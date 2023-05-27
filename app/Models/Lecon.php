@@ -66,4 +66,7 @@ class Lecon extends Model
     {
         return $this->belongsTo(Section::class, 'section_id');
     }
+    public function lessonVideos(){
+        return $this->hasMany(LessonVideo::class, 'lecon_id', 'id');
+    }
 }

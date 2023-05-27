@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.videos.layout')
 
 @section('content')
     <div class="row">
@@ -11,7 +11,7 @@
                                 <div class="ratio ratio-16x9">
                                     <video id="video-{{ $video->id }}" autoplay muted loop preload="auto">
                                         <source
-                                            src="{{ asset('storage/' . str_replace('_0_1500.m3u8', '', explode('|', $video->path)[0]) . '/demo.mp4') }}"
+                                            src="{{ asset('storage/videos/' . str_replace('_0_1500.m3u8', '', $video->path) . '/demo.mp4') }}"
                                             type="video/mp4">
                                     </video>
                                 </div>
@@ -25,8 +25,22 @@
                             </h1>
                         @endif
                         <div class="card-footer">
-                            <h5 class="card-title">{{ $video->title }}</h5>
-                            <p class="card-text" id="duration-{{ $video->id }}"></p>
+                            @php
+                                $hours = floor($video->duration / 3600);
+                                $minutes = floor(($video->duration % 3600) / 60);
+                                $seconds = $video->duration % 60;
+                                
+                                // Format values with leading zeros if needed
+                                $formattedHours = str_pad($hours, 2, '0', STR_PAD_LEFT);
+                                $formattedMinutes = str_pad($minutes, 2, '0', STR_PAD_LEFT);
+                                $formattedSeconds = str_pad($seconds, 2, '0', STR_PAD_LEFT);
+                            @endphp
+
+                            <p class="card-text fw-bold">{{ $video->lecon->label }}</p>
+                            <p class="card-text">{{ $formattedHours }}:{{ $formattedMinutes }}:{{ $formattedSeconds }}</p>
+
+
+
                         </div>
                     </div>
                 </div>

@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('lesson_videos', function (Blueprint $table) {
             $table->id();
-            $table->string('path');
+            $table->foreignId('lecon_id')->constrained('lecons')->onDelete('cascade');
             $table->string('title');
+            $table->string('duration');
+            $table->string('path');
             $table->timestamps();
         });
     }

@@ -152,11 +152,11 @@
                                             {{ trans('cruds.contenu.title') }}
                                         </a>
                                     @endcan
-                                    @can('video_access')
+                                    {{-- @can('video_access')
                                         <a class="dropdown-item" href="{{ route('frontend.videos.index') }}">
                                             {{ trans('cruds.video.title') }}
                                         </a>
-                                    @endcan
+                                    @endcan --}}
                                     @can('user_alert_access')
                                         <a class="dropdown-item" href="{{ route('frontend.user-alerts.index') }}">
                                             {{ trans('cruds.userAlert.title') }}

@@ -18,7 +18,9 @@
     background-color: #2a70c0;
     /* Filled color for progress */
 }
-
+.file-footer-buttons {
+    display: none;
+}
 .progress-text {
     position: absolute;
     top: 50%;

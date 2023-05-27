@@ -9,8 +9,8 @@ use App\Http\Requests\StoreVideoRequest;
 use App\Http\Requests\UpdateVideoRequest;
 use App\Models\Contenu;
 use App\Models\Video;
-use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +23,6 @@ class VideosController extends Controller
         abort_if(Gate::denies('video_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $videos = Video::with(['contenu', 'media'])->get();
-
         return view('admin.videos.index', compact('videos'));
     }
 
@@ -71,7 +70,7 @@ class VideosController extends Controller
         $video->update($request->all());
 
         if ($request->input('video', false)) {
-            if (! $video->video || $request->input('video') !== $video->video->file_name) {
+            if (!$video->video || $request->input('video') !== $video->video->file_name) {
                 if ($video->video) {
                     $video->video->delete();
                 }
@@ -82,7 +81,7 @@ class VideosController extends Controller
         }
 
         if ($request->input('miniature', false)) {
-            if (! $video->miniature || $request->input('miniature') !== $video->miniature->file_name) {
+            if (!$video->miniature || $request->input('miniature') !== $video->miniature->file_name) {
                 if ($video->miniature) {
                     $video->miniature->delete();
                 }

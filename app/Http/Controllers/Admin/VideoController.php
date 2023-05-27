@@ -18,7 +18,7 @@ class VideoController extends Controller
     public function index()
     {
         $videos = LessonVideo::all();
-        return view('videos.index', compact('videos'));
+        return view('admin.videos.index', compact('videos'));
     }
 
     /**
@@ -26,7 +26,7 @@ class VideoController extends Controller
      */
     public function create()
     {
-        return view('videos.create');
+        return view('admin.videos.create');
     }
 
     /**
@@ -62,13 +62,13 @@ class VideoController extends Controller
             Redis::set('video_conversion_progress', 100);
 
             // Perform any additional tasks (e.g., video conversion, watermarking, etc.)
-            Queue::push(new GenerateResolutionsJob($storagePath, $filename, $request['title']));
+            Queue::push(new GenerateResolutionsJob($storagePath, $filename, $request['title'], $request['lecon_id']));
 
             // Get the URL for the video
             $videoUrl = asset('storage/videos/' . $filename);
 
             // Return success response with the video URL
-            return response()->json(['videoUrl' => $videoUrl]);
+
         }
 
         $errorMessage = 'The video failed to upload: ' . $videoFile->getErrorMessage();
@@ -94,7 +94,7 @@ class VideoController extends Controller
     {
         $video = LessonVideo::findOrFail($id);
 
-        return view('videos.show', compact('video'));
+        return view('admin.videos.show', compact('video'));
     }
 
 
@@ -105,7 +105,7 @@ class VideoController extends Controller
     {
         $video = LessonVideo::findOrFail($id);
 
-        return view('videos.edit', compact('video'));
+        return view('admin.videos.edit', compact('video'));
     }
 
     /**

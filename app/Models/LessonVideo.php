@@ -12,4 +12,7 @@ class LessonVideo extends Model
         'title',
         'path',
     ];
+    public function lecon(){
+        return $this->belongsTo(Lecon::class);
+    }
 }

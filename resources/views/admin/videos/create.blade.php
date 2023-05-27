@@ -1,68 +1,7 @@
-@extends('layout')
+@extends('admin.videos.layout')
 
 @section('content')
-    <style>
-        .progress {
-            height: 30px;
-            color: #b6c9df;
-            font-weight: bold;
-        }
 
-        .progress-bar.task1 {
-            background-color: #2a70c0;
-        }
-
-        .progress-bar.task2 {
-            background-color: #42c422;
-        }
-
-        .progress-bar.task3 {
-            background-color: #c06e2a;
-        }
-
-        .progress-bar.task4 {
-            background-color: #c81ed8;
-        }
-
-        .card {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-label {
-            font-weight: bold;
-        }
-
-        .btn-primary {
-            background-color: #2a70c0;
-            border-color: #2a70c0;
-        }
-
-        .btn-primary:hover {
-            background-color: #1b4c8b;
-            border-color: #1b4c8b;
-        }
-
-        .alert {
-            border-radius: 10px;
-            margin-bottom: 20px;
-            padding: 10px;
-        }
-
-        .alert-success {
-            background-color: #dff0d8;
-            border-color: #d6e9c6;
-            color: #3c763d;
-        }
-
-        .alert-danger {
-            background-color: #f2dede;
-            border-color: #ebccd1;
-            color: #a94442;
-        }
-    </style>
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -88,19 +27,45 @@
                 <input type="text" class="form-control" id="title" name="title" required>
             </div>
             <div class="mb-3">
+                <label for="title" class="form-label">lecon</label>
+                <select class="form-select form-select-lg" name="lecon_id" id="">
+                    <option selected value="1">Routes</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <label for="video" class="form-label">Video</label>
-                <input type="file" class="form-control-file" id="video" name="video" required>
-                <div class="progress mt-2" style="display: none;">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <span id="current-task"></span>
-                    </div>
+                <input id="video" name="video" type="file" class="file" data-show-upload="false"
+                    data-show-caption="true" data-msg-placeholder="Select {videos} for upload...">
+            </div>
+            <div class="mb-3">
+                <div class="progress-wrapper watermark-progress completed-progress">
+                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated"></div>
+                    <div class="progress-text fw-bold "></div>
+                </div>
+                <div class="progress-wrapper demo-progress completed-progress">
+                    <div class="progress-bar progress-bar-striped bg-info progress-bar-animated"></div>
+                    <div class="progress-text fw-bold"></div>
+                </div>
+                <div class="progress-wrapper hls-progress completed-progress">
+                    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated"></div>
+                    <div class="progress-text fw-bold"></div>
+                </div>
+                <div id="done-animation" class="done-animation" style="display: none;">
+                    <strong>Done!</strong> All tasks completed successfully.
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Upload</button>
+            <button type="button" class="btn btn-primary" id="upload-button">
+                <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+                <span class="visually-hidden">Uploading...</span>
+                <span class="upload">Upload</span>
+            </button>
         </form>
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
     <script>
         $(document).ready(function() {
             var progressInterval;
@@ -112,75 +77,196 @@
                     success: function(response) {
                         var progress = response.progress;
                         var currentTask = response.current_task;
-
+                        console.log(currentTask);
                         updateProgressBar(progress, currentTask);
-                        updateCurrentTask(currentTask);
 
                         // Stop the interval if the progress is 100 and there is no current task
-                        if (progress === 100 || currentTask === '') {
-                            clearInterval(progressInterval);
-                        }
+
                     },
                     error: function(xhr, status, error) {
                         console.log(error);
-                    }
+                    },
                 });
             }
 
             function updateProgressBar(progress, currentTask) {
-                var progressBar = $('.progress-bar');
+                var progressWrapper = $(".progress-wrapper");
+                var doneAnimation = $("#done-animation");
 
-                // Stop the animation if the progress is 100 or there is no current task
-                if (currentTask === '') {
-                    progressBar.stop();
+                // Hide the progress bars and show the "Done" animation when progress is 100 and there is no current task
+                if (currentTask === '' && progress == 404) {
+                    progressWrapper.hide();
+                    doneAnimation.show();
+                    showUploadButton();
+                    clearInterval(progressInterval);
                 } else {
-                    progressBar.animate({
-                        width: progress + '%'
-                    }, 500).attr('aria-valuenow', progress);
-                }
+                    doneAnimation.hide();
+                    var progressBar;
+                    var progressText;
 
-                // Show the progress bar if it was hidden
-                if (progress > 0 && progress < 100) {
-                    progressBar.parent('.progress').show();
-                } else {
-                    progressBar.parent('.progress').hide();
-                }
-            }
+                    switch (currentTask) {
+                        case "Watermarking":
+                            progressBar = $(".watermark-progress .progress-bar");
+                            progressText = $(".watermark-progress .progress-text");
+                            break;
+                        case "Demo creation":
+                            progressBar = $(".demo-progress .progress-bar");
+                            progressText = $(".demo-progress .progress-text");
+                            break;
+                        case "HLS conversion":
+                            progressBar = $(".hls-progress .progress-bar");
+                            progressText = $(".hls-progress .progress-text");
+                            break;
+                        default:
+                            return;
+                    }
 
-            function updateCurrentTask(currentTask) {
-                var currentTaskElement = $('#current-task');
+                    progressText.text(currentTask + ": " + progress + "%");
 
-                currentTaskElement.text(currentTask);
-
-                // Assign different CSS class to progress bar based on the current task
-                var progressBar = $('.progress-bar');
-                progressBar.removeClass().addClass('progress-bar ' + getTaskCSSClass(currentTask));
-            }
-
-            function getTaskCSSClass(task) {
-                // Define your task-to-CSS-class mapping here
-                switch (task) {
-                    case 'Watermarking':
-                        return 'task1';
-                    case 'Demo creation':
-                        return 'task2';
-                    case 'HLS conversion':
-                        return 'task3';
-                    case 'Uploading':
-                        return 'task4';
-                        // Add more cases for additional tasks
-                    default:
-                        return '';
+                    // Show the progress bar if it was hidden and there is progress
+                    if (progress > 0 && progress <= 100) {
+                        progressBar.css("width", progress + "%");
+                        progressBar.parent(".progress-wrapper").show();
+                    } else {
+                        progressBar.css("width", 0 + "%");
+                    }
                 }
             }
+            var uploadButton = $("#upload-button");
+            var uploadSpinner = $(".spinner-border");
+            var uploadingText = $(".visually-hidden:contains('Uploading...')");
+            var uploadText = $(".upload");
 
-            // Start the progress update interval
-            progressInterval = setInterval(updateProgress, 1000);
+            function showUploadButton() {
+                uploadSpinner.addClass("visually-hidden");
+                uploadingText.addClass("visually-hidden");
+                uploadText.removeClass("visually-hidden");
+            }
 
-            // Show the progress bar on file selection
-            $('#video').on('change', function() {
-                $('.progress').show();
+            // Handle the upload button click event
+            $("#upload-button").on("click", function() {
+                uploadSpinner.removeClass("visually-hidden");
+                uploadingText.removeClass("visually-hidden");
+                uploadText.addClass("visually-hidden");
+                var formData = new FormData($("#upload-form")[0]);
+
+                $.ajax({
+                    url: "{{ route('videos.store') }}",
+                    method: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        // Update the video preview source
+                        $("#video-source").attr("src", response.videoUrl);
+                        // Show the video preview container
+                        $("#video-preview-container").show();
+                        // Load and play the video
+                        $("#video-preview")[0].load();
+                        $("#video-preview")[0].play();
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error response
+                        console.log(error);
+                    },
+                });
+            });
+
+            // Start the progress update interval after the upload button is clicked
+            $("#upload-button").on("click", function() {
+                progressInterval = setInterval(updateProgress, 1000);
             });
         });
     </script>
+
 @endsection
+{{-- $(document).ready(function() {
+            var progressInterval;
+            var uploadButton = $("#upload-button");
+            var uploadSpinner = $(".spinner-border");
+            var uploadingText = $(".visually-hidden:contains('Uploading...')");
+            var uploadText = $(".upload");
+
+            function updateProgress() {
+                $.ajax({
+                    url: "{{ route('video-conversion-progress') }}",
+                    method: "GET",
+                    success: function(response) {
+                        var progress = response.progress;
+                        var currentTask = response.current_task;
+                        updateProgressBar(progress, currentTask);
+
+                        // Stop the interval if the progress is 100 and there is no current task
+                        if (progress === 100 && currentTask === null) {
+                            clearInterval(progressInterval);
+                            showUploadButton();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    },
+                });
+            }
+
+            function updateProgressBar(progress, currentTask) {
+                var watermarkProgressWrapper = $(".progress-wrapper.watermark-progress");
+                var demoProgressWrapper = $(".progress-wrapper.demo-progress");
+                var hlsProgressWrapper = $(".progress-wrapper.hls-progress");
+                var doneAnimation = $("#done-animation");
+
+                watermarkProgressWrapper.find(".progress-bar").css("width", progress + "%");
+                watermarkProgressWrapper.find(".progress-text").text("Watermarking " + progress + "%");
+
+                demoProgressWrapper.find(".progress-bar").css("width", progress + "%");
+                demoProgressWrapper.find(".progress-text").text("Demo creation " + progress + "%");
+
+                hlsProgressWrapper.find(".progress-bar").css("width", progress + "%");
+                hlsProgressWrapper.find(".progress-text").text("HLS conversion " + progress + "%");
+
+                // If all tasks are completed (progress is 100 and no current task), show the done animation
+                if (progress === 100 && currentTask === null) {
+                    doneAnimation.show();
+                }
+            }
+
+            function showUploadButton() {
+                uploadSpinner.addClass("visually-hidden");
+                uploadingText.addClass("visually-hidden");
+                uploadText.removeClass("visually-hidden");
+            }
+
+            // Handle the upload button click event
+            uploadButton.on("click", function() {
+                uploadSpinner.removeClass("visually-hidden");
+                uploadingText.removeClass("visually-hidden");
+                uploadText.addClass("visually-hidden");
+
+                var formData = new FormData($("#upload-form")[0]);
+
+                $.ajax({
+                    url: "{{ route('videos.store') }}",
+                    method: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        // Update the video preview source
+                        $("#video-source").attr("src", response.videoUrl);
+                        // Show the video preview container
+                        $("#video-preview-container").show();
+                        // Load and play the video
+                        $("#video-preview")[0].load();
+                        $("#video-preview")[0].play();
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error response
+                        console.log(error);
+                    },
+                });
+            });
+
+            // Start the progress update interval after the upload button is clicked
+            uploadButton.on("click", function() {
+                progressInterval = setInterval(updateProgress, 1000);
+            });
+         --}}

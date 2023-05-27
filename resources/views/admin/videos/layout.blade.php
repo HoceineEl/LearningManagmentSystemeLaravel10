@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.video.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.video.css') }}">
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    @include('admin.videos.scripts.scripts')
     @stack('scripts')
 </head>
 

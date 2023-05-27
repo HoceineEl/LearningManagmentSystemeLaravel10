@@ -9,7 +9,7 @@ class CreateLeconsTable extends Migration
     public function up()
     {
         Schema::create('lecons', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('label');
             $table->integer('position');
             $table->timestamps();
