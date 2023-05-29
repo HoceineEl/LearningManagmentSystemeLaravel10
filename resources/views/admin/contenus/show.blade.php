@@ -25,10 +25,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.contenu.fields.lecon') }}
+                            {{ trans('cruds.contenu.fields.lesson') }}
                         </th>
                         <td>
-                            {{ $contenu->lecon->label ?? '' }}
+                            {{ $contenu->lesson->label ?? '' }}
                         </td>
                     </tr>
                     <tr>

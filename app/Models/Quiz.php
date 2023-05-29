@@ -21,7 +21,7 @@ class Quiz extends Model
 
     protected $fillable = [
         'nom',
-        'lecon_id',
+        'lesson_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -42,8 +42,8 @@ class Quiz extends Model
         return $this->hasMany(ScoreQuiz::class, 'quiz_id', 'id');
     }
 
-    public function lecon()
+    public function lesson()
     {
-        return $this->belongsTo(Lecon::class, 'lecon_id');
+        return $this->belongsTo(Lesson::class, 'lesson_id');
     }
 }

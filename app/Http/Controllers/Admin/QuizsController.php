@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyQuizRequest;
 use App\Http\Requests\StoreQuizRequest;
 use App\Http\Requests\UpdateQuizRequest;
-use App\Models\Lecon;
+use App\Models\Lesson;
 use App\Models\Quiz;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +18,7 @@ class QuizsController extends Controller
     {
         abort_if(Gate::denies('quiz_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quizzes = Quiz::with(['lecon'])->get();
+        $quizzes = Quiz::with(['lesson'])->get();
 
         return view('admin.quizzes.index', compact('quizzes'));
     }
@@ -27,9 +27,9 @@ class QuizsController extends Controller
     {
         abort_if(Gate::denies('quiz_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.quizzes.create', compact('lecons'));
+        return view('admin.quizzes.create', compact('lessons'));
     }
 
     public function store(StoreQuizRequest $request)
@@ -43,11 +43,11 @@ class QuizsController extends Controller
     {
         abort_if(Gate::denies('quiz_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $quiz->load('lecon');
+        $quiz->load('lesson');
 
-        return view('admin.quizzes.edit', compact('lecons', 'quiz'));
+        return view('admin.quizzes.edit', compact('lessons', 'quiz'));
     }
 
     public function update(UpdateQuizRequest $request, Quiz $quiz)
@@ -61,7 +61,7 @@ class QuizsController extends Controller
     {
         abort_if(Gate::denies('quiz_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quiz->load('lecon', 'quizQuizQuestions', 'quizScoreQuizzes');
+        $quiz->load('lesson', 'quizQuizQuestions', 'quizScoreQuizzes');
 
         return view('admin.quizzes.show', compact('quiz'));
     }

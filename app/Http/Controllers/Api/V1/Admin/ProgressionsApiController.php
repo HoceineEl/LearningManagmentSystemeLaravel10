@@ -7,7 +7,7 @@ use App\Http\Requests\StoreProgressionRequest;
 use App\Http\Requests\UpdateProgressionRequest;
 use App\Http\Resources\Admin\ProgressionResource;
 use App\Models\Progression;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,7 +17,7 @@ class ProgressionsApiController extends Controller
     {
         abort_if(Gate::denies('progression_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ProgressionResource(Progression::with(['utilisateur', 'lecon'])->get());
+        return new ProgressionResource(Progression::with(['utilisateur', 'lesson'])->get());
     }
 
     public function store(StoreProgressionRequest $request)
@@ -33,7 +33,7 @@ class ProgressionsApiController extends Controller
     {
         abort_if(Gate::denies('progression_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ProgressionResource($progression->load(['utilisateur', 'lecon']));
+        return new ProgressionResource($progression->load(['utilisateur', 'lesson']));
     }
 
     public function update(UpdateProgressionRequest $request, Progression $progression)

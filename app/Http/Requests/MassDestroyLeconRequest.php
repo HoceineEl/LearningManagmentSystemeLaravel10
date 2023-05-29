@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Lecon;
-use Gate;
+use App\Models\Lesson;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +20,7 @@ class MassDestroyLeconRequest extends FormRequest
     {
         return [
             'ids'   => 'required|array',
-            'ids.*' => 'exists:lecons,id',
+            'ids.*' => 'exists:lessons,id',
         ];
     }
 }

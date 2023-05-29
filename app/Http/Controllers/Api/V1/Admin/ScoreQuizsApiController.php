@@ -7,7 +7,7 @@ use App\Http\Requests\StoreScoreQuizRequest;
 use App\Http\Requests\UpdateScoreQuizRequest;
 use App\Http\Resources\Admin\ScoreQuizResource;
 use App\Models\ScoreQuiz;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,7 +17,7 @@ class ScoreQuizsApiController extends Controller
     {
         abort_if(Gate::denies('score_quiz_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ScoreQuizResource(ScoreQuiz::with(['lecon', 'quiz', 'utilisateur'])->get());
+        return new ScoreQuizResource(ScoreQuiz::with(['lesson', 'quiz', 'utilisateur'])->get());
     }
 
     public function store(StoreScoreQuizRequest $request)
@@ -33,7 +33,7 @@ class ScoreQuizsApiController extends Controller
     {
         abort_if(Gate::denies('score_quiz_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ScoreQuizResource($scoreQuiz->load(['lecon', 'quiz', 'utilisateur']));
+        return new ScoreQuizResource($scoreQuiz->load(['lesson', 'quiz', 'utilisateur']));
     }
 
     public function update(UpdateScoreQuizRequest $request, ScoreQuiz $scoreQuiz)

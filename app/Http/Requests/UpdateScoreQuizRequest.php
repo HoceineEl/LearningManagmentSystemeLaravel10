@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\ScoreQuiz;
-use Gate;
+use  Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 
@@ -17,7 +17,7 @@ class UpdateScoreQuizRequest extends FormRequest
     public function rules()
     {
         return [
-            'lecon_id' => [
+            'lesson_id' => [
                 'required',
                 'integer',
             ],

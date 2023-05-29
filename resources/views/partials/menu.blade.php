@@ -84,9 +84,8 @@
         @endcan
         @can('section_access')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.sections.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sections") || request()->is("admin/sections/*") ? "c-active" : "" }}">
+                <a href="{{ route("section.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sections") || request()->is("admin/sections/*") ? "c-active" : "" }}">
                     <i class="fa-fw fas fa-puzzle-piece c-sidebar-nav-icon">
-
                     </i>
                     {{ trans('cruds.section.title') }}
                 </a>

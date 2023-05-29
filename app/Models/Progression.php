@@ -38,8 +38,8 @@ class Progression extends Model
         return $this->belongsTo(User::class, 'utilisateur_id');
     }
 
-    public function lecon()
+    public function lesson()
     {
-        return $this->belongsTo(Lecon::class, 'lecon_id');
+        return $this->belongsTo(Lesson::class, 'lesson_id');
     }
 }

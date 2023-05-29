@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProgressionRequest;
 use App\Http\Requests\StoreProgressionRequest;
 use App\Http\Requests\UpdateProgressionRequest;
-use App\Models\Lecon;
+use App\Models\Lesson;
 use App\Models\Progression;
 use App\Models\User;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +19,7 @@ class ProgressionsController extends Controller
     {
         abort_if(Gate::denies('progression_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $progressions = Progression::with(['utilisateur', 'lecon'])->get();
+        $progressions = Progression::with(['utilisateur', 'lesson'])->get();
 
         return view('admin.progressions.index', compact('progressions'));
     }
@@ -30,9 +30,9 @@ class ProgressionsController extends Controller
 
         $utilisateurs = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.progressions.create', compact('lecons', 'utilisateurs'));
+        return view('admin.progressions.create', compact('lessons', 'utilisateurs'));
     }
 
     public function store(StoreProgressionRequest $request)
@@ -48,11 +48,11 @@ class ProgressionsController extends Controller
 
         $utilisateurs = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $progression->load('utilisateur', 'lecon');
+        $progression->load('utilisateur', 'lesson');
 
-        return view('admin.progressions.edit', compact('lecons', 'progression', 'utilisateurs'));
+        return view('admin.progressions.edit', compact('lessons', 'progression', 'utilisateurs'));
     }
 
     public function update(UpdateProgressionRequest $request, Progression $progression)
@@ -66,7 +66,7 @@ class ProgressionsController extends Controller
     {
         abort_if(Gate::denies('progression_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $progression->load('utilisateur', 'lecon');
+        $progression->load('utilisateur', 'lesson');
 
         return view('admin.progressions.show', compact('progression'));
     }

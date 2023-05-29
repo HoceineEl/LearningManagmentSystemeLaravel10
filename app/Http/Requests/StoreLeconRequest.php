@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Lecon;
-use Gate;
+use App\Models\Lesson;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 
@@ -11,7 +11,7 @@ class StoreLeconRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('lecon_create');
+        return Gate::allows('lesson_create');
     }
 
     public function rules()

@@ -26,7 +26,7 @@
                             {{ trans('cruds.contenu.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.contenu.fields.lecon') }}
+                            {{ trans('cruds.contenu.fields.lesson') }}
                         </th>
                         <th>
                             {{ trans('cruds.contenu.fields.ordre') }}
@@ -52,7 +52,7 @@
                                 {{ $contenu->id ?? '' }}
                             </td>
                             <td>
-                                {{ $contenu->lecon->label ?? '' }}
+                                {{ $contenu->lesson->label ?? '' }}
                             </td>
                             <td>
                                 {{ $contenu->ordre ?? '' }}

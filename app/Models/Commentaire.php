@@ -26,7 +26,7 @@ class Commentaire extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'lecon_id',
+        'lesson_id',
         'utilisateur_id',
         'commentaire',
         'date_time',
@@ -60,7 +60,7 @@ class Commentaire extends Model implements HasMedia
 
     public function lecon()
     {
-        return $this->belongsTo(Lecon::class, 'lecon_id');
+        return $this->belongsTo(Lesson::class, 'lesson_id');
     }
 
     public function utilisateur()

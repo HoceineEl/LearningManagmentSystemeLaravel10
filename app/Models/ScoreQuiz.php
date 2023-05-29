@@ -34,9 +34,9 @@ class ScoreQuiz extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function lecon()
+    public function lesson()
     {
-        return $this->belongsTo(Lecon::class, 'lecon_id');
+        return $this->belongsTo(Lesson::class, 'lesson_id');
     }
 
     public function quiz()

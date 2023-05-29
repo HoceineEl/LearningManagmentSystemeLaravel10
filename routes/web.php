@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\VideoController;
 use App\Models\Video;
+use App\Http\Controllers\Admin\SectionController;
+use App\Http\Controllers\Admin\LessonController;
 use Illuminate\Support\Facades\Http;
 
 
@@ -31,15 +33,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('cours/media', 'CoursController@storeMedia')->name('cours.storeMedia');
     Route::post('cours/ckmedia', 'CoursController@storeCKEditorImages')->name('cours.storeCKEditorImages');
     Route::resource('cours', 'CoursController');
-
-    // Sections
-    Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
-    Route::resource('sections', 'SectionsController');
-
-    // Lecons
-    Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
-    Route::resource('lecons', 'LeconsController');
-
     // Quizs
     Route::delete('quizzes/destroy', 'QuizsController@massDestroy')->name('quizzes.massDestroy');
     Route::resource('quizzes', 'QuizsController');
@@ -132,13 +125,13 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('cours/ckmedia', 'CoursController@storeCKEditorImages')->name('cours.storeCKEditorImages');
     Route::resource('cours', 'CoursController');
 
-    // Sections
-    Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
-    Route::resource('sections', 'SectionsController');
+    // // Sections
+    // Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
+    // Route::resource('sections', 'SectionsController');
 
     // Lecons
-    Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
-    Route::resource('lecons', 'LeconsController');
+    // Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
+    // Route::resource('lecons', 'LeconsController');
 
     // Quizs
     Route::delete('quizzes/destroy', 'QuizsController@massDestroy')->name('quizzes.massDestroy');
@@ -204,11 +197,6 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 
 // HOUCEIN
 
-
-
-
-
-
 Route::post('clearVideos', [VideoController::class, 'clear'])->name('videos.clear');
 Route::resource('videos', VideoController::class);
 Route::get('/captions/example.vtt', function () {
@@ -216,3 +204,20 @@ Route::get('/captions/example.vtt', function () {
     return $response->body();
 });
 Route::get('/video-conversion-progress', [VideoController::class, 'getVideoConversionProgress'])->name('video-conversion-progress');
+
+
+
+// Hamza 
+
+    // Sections
+    Route::post('/saveSection',[ SectionController::class,'store']);
+    Route::put('/updateSectionPosition',[ SectionController::class,'updatePosition']);
+    // Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
+    // Route::resource('sections', 'SectionsController');
+
+    // Lessons
+    Route::get('/',[ LessonController::class,'index'])->name('section.index');
+    Route::post('/saveLesson',[ LessonController::class,'store']);
+    Route::put('/updateLessonPosition',[ LessonController::class,'updatePosition']);
+    // Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
+    // Route::resource('lecons', 'LeconsController');

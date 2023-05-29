@@ -7,7 +7,7 @@ use App\Http\Requests\StoreQuizRequest;
 use App\Http\Requests\UpdateQuizRequest;
 use App\Http\Resources\Admin\QuizResource;
 use App\Models\Quiz;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,7 +17,7 @@ class QuizsApiController extends Controller
     {
         abort_if(Gate::denies('quiz_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new QuizResource(Quiz::with(['lecon'])->get());
+        return new QuizResource(Quiz::with(['lesson'])->get());
     }
 
     public function store(StoreQuizRequest $request)
@@ -33,7 +33,7 @@ class QuizsApiController extends Controller
     {
         abort_if(Gate::denies('quiz_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new QuizResource($quiz->load(['lecon']));
+        return new QuizResource($quiz->load(['lesson']));
     }
 
     public function update(UpdateQuizRequest $request, Quiz $quiz)
