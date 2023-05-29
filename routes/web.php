@@ -221,3 +221,5 @@ Route::get('/video-conversion-progress', [VideoController::class, 'getVideoConve
     Route::put('/updateLessonPosition',[ LessonController::class,'updatePosition']);
     // Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
     // Route::resource('lecons', 'LeconsController');
+    
+    // Route::post('/saveSectionEx',[ SectionController::class,'storeEx'])->name('section.save');

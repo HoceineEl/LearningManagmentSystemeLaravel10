@@ -10,8 +10,14 @@
     </div>
 @endcan --}}
 <div class="card">
+        {{-- <form action="{{route('section.save')}}" method="post">
+          @csrf
+          <input class="form-control m-2" type="text" name="sectionName" placeholder="Enter section">
+          <input class="form-control m-2" type="text" name="position" placeholder="Enter position">
+          <button class="btn btn-success m-2" type="submit">Save</button>
+        </form> --}}
         <div class="card-body" id="main">
-            <ul class="section-list">
+            {{-- <ul class="section-list">
               <li class="section">
                 <i class="fa fa-bars handle-section"></i>
                 <span id="section-title">Item 6</span>
@@ -28,20 +34,20 @@
                   <li class="lesson">
                     <i class="fa fa-bars handle"></i>
                     <div id="lesson-box" style="display: inline;">
-                      <input value="New Lesson" class="form-control form-control-lg input m-2 border border-dark" type="text" id="input">
+                      <input value="New Lesson" class="form-control input m-2 border border-dark" type="text" id="input">
                       <button class="btn btn-primary button save-button">Save</button>
                       <button class="btn btn-light button cancel-button">Cancel</button>
                     </div>
                   </li>
                 </ul>
               </li>
-            </ul>
+            </ul> --}}
         
             @foreach($sections as $section)
             <ul class="section-list" data-section-id="{{ $section->id }}">
               <li class="section" data-section-id="{{ $section->id }}">
                 <i class="fa fa-bars handle-section"></i>
-                <span id="section-title">{{ $section->name }}</span>
+                <span id="section-title">{{ $section->label }}</span>
                 <a href="" class="section-h-btn">Quick Actions</a>
                 <ul class="lesson-list" data-section-id="{{ $section->id }}">
                   <button id="" class="btn btn-el">+ Add Lesson</button>
@@ -49,7 +55,7 @@
                   @foreach($lessons[$section->id] as $lesson)
                   <li class="lesson" data-lesson-id="{{ $lesson->id }}">
                     <i class="fa fa-bars handle"></i>
-                    <a href="#" id="lesson-link">{{ $lesson->name }}</a>
+                    <a href="#" id="lesson-link">{{ $lesson->label }}</a>
                     <a href="#" class="publish-btn">Publish</a>
                   </li>
                   @endforeach

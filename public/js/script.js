@@ -283,8 +283,8 @@ document.getElementById("btn").addEventListener("click", function () {
                         publish_btn.textContent = "Publish";
                         publish_btn.className = "publish-btn";
                         row.replaceWith(link, publish_btn);
-                        console.log(lessonId);
-                        console.log(name);
+                        console.log("lesson id : ", lessonId);
+                        console.log("lesson name :", name);
                         $.ajax({
                             url: "/api/lessons/" + lessonId,
                             type: "PUT",
@@ -332,7 +332,7 @@ document.getElementById("btn").addEventListener("click", function () {
             quick_action_button.textContent = "Quick Action";
             quick_action_button.className = "section-h-btn";
             row.replaceWith(span, quick_action_button);
-
+            console.log("section id for update : ", sectionId);
             $.ajax({
                 url: "/api/sections/" + sectionId,
                 type: "PUT",
@@ -344,7 +344,6 @@ document.getElementById("btn").addEventListener("click", function () {
                     name: sectionNm,
                 },
                 success: function (data) {
-                    g;
                     // Update the section name in the UI
                     console.log("suuccessuful update section name");
                 },
