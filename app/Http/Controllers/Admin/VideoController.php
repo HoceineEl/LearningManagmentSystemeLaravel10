@@ -166,15 +166,15 @@ class VideoController extends Controller
     {
         $videos = LessonVideo::all();
         foreach ($videos as $video) {
-            $storagePath = storage_path('app/public/videos');
-            $floderPath = $storagePath . '/' . str_replace('_0_1500.m3u8', '', $video->path);
-            if (file_exists($floderPath)) {
 
-                File::deleteDirectory($floderPath);
-            }
             $video->delete();
         }
+        $storagePath = storage_path('app/public/videos');
 
+        if (file_exists($storagePath)) {
+
+            File::deleteDirectory($storagePath);
+        }
         return back();
     }
     public function getVideoConversionProgress()
