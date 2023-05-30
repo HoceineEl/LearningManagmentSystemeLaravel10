@@ -8,9 +8,9 @@ use App\Http\Requests\MassDestroyCommentaireRequest;
 use App\Http\Requests\StoreCommentaireRequest;
 use App\Http\Requests\UpdateCommentaireRequest;
 use App\Models\Commentaire;
-use App\Models\Lecon;
+use App\Models\Lesson;
 use App\Models\User;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ class CommentairesController extends Controller
     {
         abort_if(Gate::denies('commentaire_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $commentaires = Commentaire::with(['lecon', 'utilisateur', 'parent'])->get();
+        $commentaires = Commentaire::with(['lesson', 'utilisateur', 'parent'])->get();
 
         return view('frontend.commentaires.index', compact('commentaires'));
     }
@@ -32,11 +32,11 @@ class CommentairesController extends Controller
     {
         abort_if(Gate::denies('commentaire_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $utilisateurs = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.commentaires.create', compact('lecons', 'utilisateurs'));
+        return view('frontend.commentaires.create', compact('lessons', 'utilisateurs'));
     }
 
     public function store(StoreCommentaireRequest $request)
@@ -54,13 +54,13 @@ class CommentairesController extends Controller
     {
         abort_if(Gate::denies('commentaire_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $utilisateurs = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $commentaire->load('lecon', 'utilisateur', 'parent');
+        $commentaire->load('lesson', 'utilisateur', 'parent');
 
-        return view('frontend.commentaires.edit', compact('commentaire', 'lecons', 'utilisateurs'));
+        return view('frontend.commentaires.edit', compact('commentaire', 'lessons', 'utilisateurs'));
     }
 
     public function update(UpdateCommentaireRequest $request, Commentaire $commentaire)
@@ -74,7 +74,7 @@ class CommentairesController extends Controller
     {
         abort_if(Gate::denies('commentaire_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $commentaire->load('lecon', 'utilisateur', 'parent', 'parentCommentaires');
+        $commentaire->load('lesson', 'utilisateur', 'parent', 'parentCommentaires');
 
         return view('frontend.commentaires.show', compact('commentaire'));
     }

@@ -59,17 +59,17 @@ class HomeController
         $chart2 = new LaravelChart($settings2);
 
         $settings3 = [
-            'chart_title'        => 'le nombre de lecons par section',
+            'chart_title'        => 'le nombre de lessons par section',
             'chart_type'         => 'bar',
             'report_type'        => 'group_by_relationship',
-            'model'              => 'App\Models\Lecon',
+            'model'              => 'App\Models\Lesson',
             'group_by_field'     => 'label',
             'aggregate_function' => 'count',
             'filter_field'       => 'created_at',
             'column_class'       => 'col-md-6',
             'entries_number'     => '5',
             'relationship_name'  => 'section',
-            'translation_key'    => 'lecon',
+            'translation_key'    => 'lesson',
         ];
 
         $chart3 = new LaravelChart($settings3);

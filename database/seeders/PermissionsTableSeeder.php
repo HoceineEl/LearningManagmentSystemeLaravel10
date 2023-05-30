@@ -116,23 +116,23 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 27,
-                'title' => 'lecon_create',
+                'title' => 'lesson_create',
             ],
             [
                 'id'    => 28,
-                'title' => 'lecon_edit',
+                'title' => 'lesson_edit',
             ],
             [
                 'id'    => 29,
-                'title' => 'lecon_show',
+                'title' => 'lesson_show',
             ],
             [
                 'id'    => 30,
-                'title' => 'lecon_delete',
+                'title' => 'lesson_delete',
             ],
             [
                 'id'    => 31,
-                'title' => 'lecon_access',
+                'title' => 'lesson_access',
             ],
             [
                 'id'    => 32,

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Section extends Model
 {
     use SoftDeletes, HasFactory;
-
     public $table = 'sections';
 
     public static $searchable = [
@@ -32,16 +30,9 @@ class Section extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
+    public function lesson(){
+        return $this->hasMany(Lesson::class);
     }
-
-    public function sectionLecons()
-    {
-        return $this->hasMany(Lecon::class, 'section_id', 'id');
-    }
-
     public function cours()
     {
         return $this->belongsTo(Cour::class, 'cours_id');

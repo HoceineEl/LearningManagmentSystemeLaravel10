@@ -11,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lesson_videos', function (Blueprint $table) {
+        Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lessons_id')->constrained('lessons')->onDelete('cascade');
-            $table->string('title');
-            $table->string('duration');
-            $table->string('path');
+            $table->string('label');
+            $table->integer('position');
+            $table->foreignId('section_id')->constrained('sections')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
     /**
-     * Reverse the migrations.
-     */
+        * Reverse the migrations.
+    **/
     public function down(): void
     {
-        Schema::dropIfExists('lesson_videos');
+        Schema::dropIfExists('lessons');
     }
 };

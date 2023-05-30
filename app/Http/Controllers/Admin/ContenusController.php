@@ -8,8 +8,8 @@ use App\Http\Requests\MassDestroyContenuRequest;
 use App\Http\Requests\StoreContenuRequest;
 use App\Http\Requests\UpdateContenuRequest;
 use App\Models\Contenu;
-use App\Models\Lecon;
-use Gate;
+use App\Models\Lesson;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ class ContenusController extends Controller
     {
         abort_if(Gate::denies('contenu_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $contenus = Contenu::with(['lecon'])->get();
+        $contenus = Contenu::with(['lesson'])->get();
 
         return view('admin.contenus.index', compact('contenus'));
     }
@@ -31,9 +31,9 @@ class ContenusController extends Controller
     {
         abort_if(Gate::denies('contenu_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lessons = lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.contenus.create', compact('lecons'));
+        return view('admin.contenus.create', compact('lessons'));
     }
 
     public function store(StoreContenuRequest $request)
@@ -51,11 +51,11 @@ class ContenusController extends Controller
     {
         abort_if(Gate::denies('contenu_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $contenu->load('lecon');
+        $contenu->load('lesson');
 
-        return view('admin.contenus.edit', compact('contenu', 'lecons'));
+        return view('admin.contenus.edit', compact('contenu', 'lessons'));
     }
 
     public function update(UpdateContenuRequest $request, Contenu $contenu)
@@ -69,7 +69,7 @@ class ContenusController extends Controller
     {
         abort_if(Gate::denies('contenu_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $contenu->load('lecon', 'contenuVideos');
+        $contenu->load('lesson', 'contenuVideos');
 
         return view('admin.contenus.show', compact('contenu'));
     }

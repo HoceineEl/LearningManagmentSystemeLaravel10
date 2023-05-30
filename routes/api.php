@@ -1,6 +1,9 @@
 <?php
-
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:sanctum']], function () {
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\LessonController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+    Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:sanctum']], function () {
     // Cours
     Route::post('cours/media', 'CoursApiController@storeMedia')->name('cours.storeMedia');
     Route::apiResource('cours', 'CoursApiController');
@@ -44,3 +47,5 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // User Alerts
     Route::apiResource('user-alerts', 'UserAlertsApiController', ['except' => ['update']]);
 });
+Route::put('/sections/{section}',[SectionController::class,'update']);
+Route::put('/lessons/{lesson}',[LessonController::class,'update']);

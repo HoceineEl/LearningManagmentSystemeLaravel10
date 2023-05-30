@@ -13,7 +13,7 @@
             </select>
         </li>
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("admin.home") }}" class="c-sidebar-nav-link">
+            <a href="{{ route("dashboard") }}" class="c-sidebar-nav-link">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-tachometer-alt">
 
                 </i>
@@ -84,9 +84,8 @@
         @endcan
         @can('section_access')
             <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.sections.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sections") || request()->is("admin/sections/*") ? "c-active" : "" }}">
+                <a href="{{ route("section.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/sections") || request()->is("admin/sections/*") ? "c-active" : "" }}">
                     <i class="fa-fw fas fa-puzzle-piece c-sidebar-nav-icon">
-
                     </i>
                     {{ trans('cruds.section.title') }}
                 </a>

@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyScoreQuizRequest;
 use App\Http\Requests\StoreScoreQuizRequest;
 use App\Http\Requests\UpdateScoreQuizRequest;
-use App\Models\Lecon;
+use App\Models\Lesson;
 use App\Models\Quiz;
 use App\Models\ScoreQuiz;
 use App\Models\User;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +20,7 @@ class ScoreQuizsController extends Controller
     {
         abort_if(Gate::denies('score_quiz_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $scoreQuizzes = ScoreQuiz::with(['lecon', 'quiz', 'utilisateur'])->get();
+        $scoreQuizzes = ScoreQuiz::with(['lesson', 'quiz', 'utilisateur'])->get();
 
         return view('admin.scoreQuizzes.index', compact('scoreQuizzes'));
     }
@@ -29,13 +29,13 @@ class ScoreQuizsController extends Controller
     {
         abort_if(Gate::denies('score_quiz_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $quizzes = Quiz::pluck('nom', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $utilisateurs = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.scoreQuizzes.create', compact('lecons', 'quizzes', 'utilisateurs'));
+        return view('admin.scoreQuizzes.create', compact('lessons', 'quizzes', 'utilisateurs'));
     }
 
     public function store(StoreScoreQuizRequest $request)
@@ -49,15 +49,15 @@ class ScoreQuizsController extends Controller
     {
         abort_if(Gate::denies('score_quiz_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $quizzes = Quiz::pluck('nom', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $utilisateurs = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $scoreQuiz->load('lecon', 'quiz', 'utilisateur');
+        $scoreQuiz->load('lesson', 'quiz', 'utilisateur');
 
-        return view('admin.scoreQuizzes.edit', compact('lecons', 'quizzes', 'scoreQuiz', 'utilisateurs'));
+        return view('admin.scoreQuizzes.edit', compact('lessons', 'quizzes', 'scoreQuiz', 'utilisateurs'));
     }
 
     public function update(UpdateScoreQuizRequest $request, ScoreQuiz $scoreQuiz)
@@ -71,7 +71,7 @@ class ScoreQuizsController extends Controller
     {
         abort_if(Gate::denies('score_quiz_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $scoreQuiz->load('lecon', 'quiz', 'utilisateur');
+        $scoreQuiz->load('lesson', 'quiz', 'utilisateur');
 
         return view('admin.scoreQuizzes.show', compact('scoreQuiz'));
     }

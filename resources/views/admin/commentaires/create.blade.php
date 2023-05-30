@@ -10,18 +10,18 @@
         <form method="POST" action="{{ route("admin.commentaires.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label class="required" for="lecon_id">{{ trans('cruds.commentaire.fields.lecon') }}</label>
-                <select class="form-control select2 {{ $errors->has('lecon') ? 'is-invalid' : '' }}" name="lecon_id" id="lecon_id" required>
-                    @foreach($lecons as $id => $entry)
-                        <option value="{{ $id }}" {{ old('lecon_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                <label class="required" for="lesson_id">{{ trans('cruds.commentaire.fields.lesson') }}</label>
+                <select class="form-control select2 {{ $errors->has('lesson') ? 'is-invalid' : '' }}" name="lesson_id" id="lesson_id" required>
+                    @foreach($lessons as $id => $entry)
+                        <option value="{{ $id }}" {{ old('lesson_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('lecon'))
+                @if($errors->has('lesson'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('lecon') }}
+                        {{ $errors->first('lesson') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.commentaire.fields.lecon_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.commentaire.fields.lesson_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="utilisateur_id">{{ trans('cruds.commentaire.fields.utilisateur') }}</label>

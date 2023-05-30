@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProgressionRequest;
 use App\Http\Requests\StoreProgressionRequest;
 use App\Http\Requests\UpdateProgressionRequest;
-use App\Models\Lecon;
+use App\Models\Lesson;
 use App\Models\Progression;
 use App\Models\User;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +19,7 @@ class ProgressionsController extends Controller
     {
         abort_if(Gate::denies('progression_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $progressions = Progression::with(['utilisateur', 'lecon'])->get();
+        $progressions = Progression::with(['utilisateur', 'lesson'])->get();
 
         return view('frontend.progressions.index', compact('progressions'));
     }
@@ -30,7 +30,7 @@ class ProgressionsController extends Controller
 
         $utilisateurs = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lecons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('frontend.progressions.create', compact('lecons', 'utilisateurs'));
     }
@@ -48,9 +48,9 @@ class ProgressionsController extends Controller
 
         $utilisateurs = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $lecons = Lecon::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lecons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $progression->load('utilisateur', 'lecon');
+        $progression->load('utilisateur', 'lesson');
 
         return view('frontend.progressions.edit', compact('lecons', 'progression', 'utilisateurs'));
     }
@@ -66,7 +66,7 @@ class ProgressionsController extends Controller
     {
         abort_if(Gate::denies('progression_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $progression->load('utilisateur', 'lecon');
+        $progression->load('utilisateur', 'lesson');
 
         return view('frontend.progressions.show', compact('progression'));
     }

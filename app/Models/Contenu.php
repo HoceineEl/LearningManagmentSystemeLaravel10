@@ -29,7 +29,7 @@ class Contenu extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'lecon_id',
+        'lesson_id',
         'ordre',
         'type',
         'id_type',
@@ -55,8 +55,8 @@ class Contenu extends Model implements HasMedia
         return $this->hasMany(Video::class, 'contenu_id', 'id');
     }
 
-    public function lecon()
+    public function lesson()
     {
-        return $this->belongsTo(Lecon::class, 'lecon_id');
+        return $this->belongsTo(Lesson::class, 'lesson_id');
     }
 }

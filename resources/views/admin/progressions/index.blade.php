@@ -29,7 +29,7 @@
                             {{ trans('cruds.progression.fields.utilisateur') }}
                         </th>
                         <th>
-                            {{ trans('cruds.progression.fields.lecon') }}
+                            {{ trans('cruds.progression.fields.lesson') }}
                         </th>
                         <th>
                             {{ trans('cruds.progression.fields.est_complete') }}
@@ -52,7 +52,7 @@
                                 {{ $progression->utilisateur->name ?? '' }}
                             </td>
                             <td>
-                                {{ $progression->lecon->label ?? '' }}
+                                {{ $progression->lesson->label ?? '' }}
                             </td>
                             <td>
                                 <span style="display:none">{{ $progression->est_complete ?? '' }}</span>

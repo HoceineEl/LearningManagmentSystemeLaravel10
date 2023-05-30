@@ -7,10 +7,11 @@ use App\Http\Requests\MassDestroyUserAlertRequest;
 use App\Http\Requests\StoreUserAlertRequest;
 use App\Models\User;
 use App\Models\UserAlert;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class UserAlertsController extends Controller
 {
@@ -114,7 +115,7 @@ class UserAlertsController extends Controller
 
     public function read(Request $request)
     {
-        $alerts = \Auth::user()->userUserAlerts()->where('read', false)->get();
+        $alerts = Auth::user()->userUserAlerts()->where('read', false)->get();
         foreach ($alerts as $alert) {
             $pivot       = $alert->pivot;
             $pivot->read = true;

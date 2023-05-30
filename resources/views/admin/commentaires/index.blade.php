@@ -26,7 +26,7 @@
                             {{ trans('cruds.commentaire.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.commentaire.fields.lecon') }}
+                            {{ trans('cruds.commentaire.fields.lesson') }}
                         </th>
                         <th>
                             {{ trans('cruds.commentaire.fields.utilisateur') }}
@@ -49,7 +49,7 @@
                                 {{ $commentaire->id ?? '' }}
                             </td>
                             <td>
-                                {{ $commentaire->lecon->label ?? '' }}
+                                {{ $commentaire->lesson->label ?? '' }}
                             </td>
                             <td>
                                 {{ $commentaire->utilisateur->name ?? '' }}

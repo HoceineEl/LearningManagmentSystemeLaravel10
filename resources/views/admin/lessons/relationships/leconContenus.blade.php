@@ -1,8 +1,8 @@
-@can('progression_create')
+@can('contenu_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.progressions.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.progression.title_singular') }}
+            <a class="btn btn-success" href="{{ route('admin.contenus.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.contenu.title_singular') }}
             </a>
         </div>
     </div>
@@ -10,28 +10,31 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.progression.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.contenu.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-leconProgressions">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-lessonContenus">
                 <thead>
                     <tr>
                         <th width="10">
 
                         </th>
                         <th>
-                            {{ trans('cruds.progression.fields.id') }}
+                            {{ trans('cruds.contenu.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.progression.fields.utilisateur') }}
+                            {{ trans('cruds.contenu.fields.lesson') }}
                         </th>
                         <th>
-                            {{ trans('cruds.progression.fields.lecon') }}
+                            {{ trans('cruds.contenu.fields.ordre') }}
                         </th>
                         <th>
-                            {{ trans('cruds.progression.fields.est_complete') }}
+                            {{ trans('cruds.contenu.fields.type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.contenu.fields.id_type') }}
                         </th>
                         <th>
                             &nbsp;
@@ -39,39 +42,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($progressions as $key => $progression)
-                        <tr data-entry-id="{{ $progression->id }}">
+                    @foreach($contenus as $key => $contenu)
+                        <tr data-entry-id="{{ $contenu->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $progression->id ?? '' }}
+                                {{ $contenu->id ?? '' }}
                             </td>
                             <td>
-                                {{ $progression->utilisateur->name ?? '' }}
+                                {{ $contenu->lesson->label ?? '' }}
                             </td>
                             <td>
-                                {{ $progression->lecon->label ?? '' }}
+                                {{ $contenu->ordre ?? '' }}
                             </td>
                             <td>
-                                <span style="display:none">{{ $progression->est_complete ?? '' }}</span>
-                                <input type="checkbox" disabled="disabled" {{ $progression->est_complete ? 'checked' : '' }}>
+                                {{ App\Models\Contenu::TYPE_SELECT[$contenu->type] ?? '' }}
                             </td>
                             <td>
-                                @can('progression_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.progressions.show', $progression->id) }}">
+                                {{ $contenu->id_type ?? '' }}
+                            </td>
+                            <td>
+                                @can('contenu_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.contenus.show', $contenu->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('progression_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.progressions.edit', $progression->id) }}">
+                                @can('contenu_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.contenus.edit', $contenu->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('progression_delete')
-                                    <form action="{{ route('admin.progressions.destroy', $progression->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('contenu_delete')
+                                    <form action="{{ route('admin.contenus.destroy', $contenu->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -93,11 +98,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('progression_delete')
+@can('contenu_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.progressions.massDestroy') }}",
+    url: "{{ route('admin.contenus.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -128,7 +133,7 @@
     order: [[ 1, 'desc' ]],
     pageLength: 10,
   });
-  let table = $('.datatable-leconProgressions:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-lessonContenus:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

@@ -121,9 +121,9 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
-    'lecon' => [
-        'title'          => 'Lecons',
-        'title_singular' => 'Lecon',
+    'lesson' => [
+        'title'          => 'lessons',
+        'title_singular' => 'lesson',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => ' ',
@@ -155,8 +155,8 @@ return [
             'updated_at_helper' => ' ',
             'deleted_at'        => 'Deleted at',
             'deleted_at_helper' => ' ',
-            'lecon'             => 'Lecon',
-            'lecon_helper'      => ' ',
+            'lesson'             => 'lesson',
+            'lesson_helper'      => ' ',
         ],
     ],
     'quizQuestion' => [
@@ -223,8 +223,8 @@ return [
         'fields'         => [
             'id'                 => 'ID',
             'id_helper'          => ' ',
-            'lecon'              => 'Lecon',
-            'lecon_helper'       => ' ',
+            'lesson'              => 'lesson',
+            'lesson_helper'       => ' ',
             'quiz'               => 'Quiz',
             'quiz_helper'        => ' ',
             'utilisateur'        => 'Utilisateur',
@@ -247,8 +247,8 @@ return [
             'id_helper'           => ' ',
             'utilisateur'         => 'Utilisateur',
             'utilisateur_helper'  => ' ',
-            'lecon'               => 'Lecon',
-            'lecon_helper'        => ' ',
+            'lesson'               => 'lesson',
+            'lesson_helper'        => ' ',
             'est_complete'        => 'Est Complete',
             'est_complete_helper' => ' ',
             'created_at'          => 'Created at',
@@ -265,8 +265,8 @@ return [
         'fields'         => [
             'id'                 => 'ID',
             'id_helper'          => ' ',
-            'lecon'              => 'Lecon',
-            'lecon_helper'       => ' ',
+            'lesson'              => 'lesson',
+            'lesson_helper'       => ' ',
             'utilisateur'        => 'Utilisateur',
             'utilisateur_helper' => ' ',
             'commentaire'        => 'Commentaire',
@@ -289,8 +289,8 @@ return [
         'fields'         => [
             'id'                 => 'ID',
             'id_helper'          => ' ',
-            'lecon'              => 'Lecon',
-            'lecon_helper'       => ' ',
+            'lesson'              => 'lesson',
+            'lesson_helper'       => ' ',
             'ordre'              => 'Ordre',
             'ordre_helper'       => ' ',
             'type'               => 'Type',

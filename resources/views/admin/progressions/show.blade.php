@@ -33,10 +33,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.progression.fields.lecon') }}
+                            {{ trans('cruds.progression.fields.lesson') }}
                         </th>
                         <td>
-                            {{ $progression->lecon->label ?? '' }}
+                            {{ $progression->lesson->label ?? '' }}
                         </td>
                     </tr>
                     <tr>

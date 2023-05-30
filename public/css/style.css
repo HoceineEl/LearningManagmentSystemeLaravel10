@@ -1,0 +1,225 @@
+/* body {
+    width: 75%;
+    font-size: 18px;
+    line-height: 20px;
+    color: rgb(40, 46, 53);
+    margin: auto;
+    padding: 0;
+}
+.btn {
+    background-color: rgb(200, 203, 207);
+    padding: 1%;
+    margin: 5px;
+    border: 1px solid rgb(169, 172, 175);
+    border-radius: 5px;
+}
+.input {
+    border: none;
+    width: 500px;
+    height: 35px;
+    margin: auto;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.842);
+    border: 1px solid rgb(122, 122, 122);
+    color: rgb(77, 79, 83);
+    font-size: 17px;
+    padding-left: 10px;
+    margin-left: 10px;
+}
+
+.input:focus {
+    width: 455px;
+    height: 30px;
+    border: 1px solid rgb(165, 187, 212);
+    outline: 3px solid rgb(165, 187, 212);
+
+
+}
+
+.input-section {
+    border: none;
+    width: 700px;
+    height: 40px;
+    margin: auto;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.842);
+    color: rgb(77, 79, 83);
+    border: 1px solid rgb(122, 122, 122);
+    font-size: 17px;
+    padding-left: 10px;
+    margin-left: 10px;
+}
+
+.input-section:focus {
+    width: 655px;
+    height: 35px;
+    border: 1px solid rgb(165, 187, 212);
+    outline: 3px solid rgb(165, 187, 212);
+
+}
+
+
+.button {
+    border: none;
+    width: 8%;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 10px;
+
+}
+
+.btn {
+    display: block;
+}
+
+.save-button {
+    background-color: rgb(183, 204, 223);
+    border: 1px solid rgb(98, 115, 128);
+    color: rgb(73, 73, 73);
+    margin-left: 5px;
+
+}
+
+.save-button:hover {
+    background-color: rgb(119, 138, 155);
+    border: 1px solid rgb(98, 115, 128);
+    color: rgb(240, 247, 253);
+}
+
+.cancel-button {
+    background-color: rgb(161, 177, 177);
+    border: 1px solid rgb(83, 87, 87);
+    margin-left: 5px;
+
+}
+
+.cancel-button:hover {
+    background-color: rgb(103, 108, 116);
+    border: 1px solid rgb(123, 127, 131);
+    color: rgb(246, 250, 253);
+}
+
+
+.save-button_sec {
+    background-color: rgb(183, 204, 223);
+    border: 1px solid rgb(98, 115, 128);
+    color: rgb(73, 73, 73);
+    width: 9%;
+    height: 40px;
+    font-size: large;
+    margin-left: 5px;
+}
+
+.save-button_sec:hover {
+    background-color: rgb(119, 138, 155);
+    border: 1px solid rgb(98, 115, 128);
+    color: rgb(240, 247, 253);
+}
+
+.cancel-button_sec {
+    background-color: rgb(161, 177, 177);
+    border: 1px solid rgb(83, 87, 87);
+    width: 9%;
+    height: 40px;
+    font-size: large;
+    margin-left: 5px;
+
+}
+
+.cancel-button_sec:hover {
+    background-color: rgb(103, 108, 116);
+    border: 1px solid rgb(123, 127, 131);
+    color: rgb(246, 250, 253);
+}
+
+.publish-btn {
+    text-decoration: none;
+    background-color: rgb(253, 253, 253);
+    padding: 5px 10px;
+    border-radius: 30px;
+    border: 0.5px solid rgb(160, 167, 172);
+    position: relative;
+    right: 0;
+    left: 75%;
+    color: rgb(31, 33, 37);
+}
+
+.section-h-btn {
+    text-decoration: none;
+    background-color: rgb(253, 253, 253);
+    padding: 5px 10px;
+    border-radius: 30px;
+    border: 0.5px solid rgb(160, 167, 172);
+    position: relative;
+    right: 0;
+    left: 475px;
+    color: rgb(31, 33, 37);
+
+
+}
+*/
+ul {
+    list-style-type: none;
+    /* padding: 0;
+    margin: 0; */
+    margin-bottom: 5px;
+    /*border-radius: 5px; */
+}
+
+.input {
+    background-color: rgba(255, 255, 255, 0.842);
+}
+
+.input-section {
+    background-color: rgba(255, 255, 255, 0.842);
+}
+
+
+.lesson {
+    background-color: rgba(194, 204, 218, 0.795);
+
+}
+
+.section-list>li,
+.lesson-list>li {
+    padding: 2%;
+    margin: 5px;
+    border: 1px solid rgb(169, 172, 175);
+    border-radius: 5px;
+
+}
+
+.section {
+    background-color: #1d2c3b11;
+}
+
+
+.handle-section {
+    cursor: grab;
+    font-size: 30px;
+
+}
+
+.handle {
+    cursor: grab;
+
+}
+
+.lesson-list {
+    margin-top: 3%;
+}
+
+.lesson-link {
+    text-decoration: none;
+    color: rgb(81, 84, 90)
+}
+
+.lesson-link:hover {
+    text-decoration: none;
+    color: rgb(53, 55, 59)
+}
+
+#section-title {
+    font-size: 30px;
+    margin-left: 5px;
+}

@@ -20,7 +20,7 @@ class ContenusApiController extends Controller
     {
         abort_if(Gate::denies('contenu_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ContenuResource(Contenu::with(['lecon'])->get());
+        return new ContenuResource(Contenu::with(['lesson'])->get());
     }
 
     public function store(StoreContenuRequest $request)
@@ -36,7 +36,7 @@ class ContenusApiController extends Controller
     {
         abort_if(Gate::denies('contenu_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ContenuResource($contenu->load(['lecon']));
+        return new ContenuResource($contenu->load(['lesson']));
     }
 
     public function update(UpdateContenuRequest $request, Contenu $contenu)
