@@ -50,7 +50,7 @@
                 <span id="section-title">{{ $section->label }}</span>
                 <a href="" class="section-h-btn">Quick Actions</a>
                 <ul class="lesson-list" data-section-id="{{ $section->id }}">
-                  <button id="" class="btn btn-el">+ Add Lesson</button>
+                  <button  class="btn btn-outline-dark btn-el">+ Add Lesson</button>
                   @if(isset($lessons[$section->id]))
                   @foreach($lessons[$section->id] as $lesson)
                   <li class="lesson" data-lesson-id="{{ $lesson->id }}">

@@ -211,7 +211,7 @@ document.getElementById("btn").addEventListener("click", function () {
                 newDiv1.id = "lesson-box";
                 newDiv1.style = "display: inline;";
                 newDiv1.innerHTML =
-                    "<input value='New Lesson' class='btn btn-primary button save-button' type='text' name='' ><button class='btn btn-secondary button cancel-button'>Save</button><a href='' class='button'>Cancel</a>";
+                    "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text'><button class='btn btn-primary save-button'>Save</button><a href='' class='btn btn-secondary cancel-button'>Cancel</a>";
                 // add all the elements to the ul element with id section-list.
                 var currentLi = newUl.parentElement;
                 var lessonList =
@@ -247,6 +247,7 @@ document.getElementById("btn").addEventListener("click", function () {
                 };
                 var lessonId;
                 // Send the lesson data to the server
+
                 $.ajax({
                     url: "/saveLesson", // Update with the appropriate URL
                     type: "POST",
@@ -373,7 +374,7 @@ addBtns.forEach(function (addBtn) {
         newDiv1.id = "lesson-box";
         newDiv1.style = "display: inline;";
         newDiv1.innerHTML =
-            "<input value='New Lesson' class='input' type='text' name='' ><button class='button save-button'>Save</button><button class='button cancel-button'>Cancel</button>";
+            "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text' name='' ><button class='btn btn-primary save-button'>Save</button><button class='btn btn-secondary cancel-button'>Cancel</button>";
         ul.appendChild(newLi1);
         newLi1.append(newIcon1, newDiv1);
         var newInput = newDiv1.querySelector(".input");
@@ -438,6 +439,7 @@ addBtns.forEach(function (addBtn) {
                 publish_btn.className = "publish-btn";
                 row.replaceWith(link, publish_btn);
 
+                console.log("lesson id for update : ", lessonId);
                 ////////////://///////////////////////////////////////
                 $.ajax({
                     url: "/api/lessons/" + lessonId,
