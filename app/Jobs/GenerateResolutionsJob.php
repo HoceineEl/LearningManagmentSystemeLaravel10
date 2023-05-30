@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\LessonVideo;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -49,11 +50,10 @@ class GenerateResolutionsJob implements ShouldQueue
     public function handle()
     {
         try {
+            $this->updateConversionProgress('Watermarking', 0);
             $inputPath = $this->storagePath . '/' . $this->filename;
             $newFilename = pathinfo($this->filename, PATHINFO_FILENAME);
-            $resolutions = ['1500', '1000'];
-            $this->updateConversionProgress('Watermarking', 0);
-            $this->simulateConversionProgress();
+            $this->simulateWatermarkingProgress();
             // Add watermark to the original video
             $watermarkedFilename = $this->addWatermark($inputPath);
 
@@ -64,13 +64,13 @@ class GenerateResolutionsJob implements ShouldQueue
             $this->createDemoVideo($watermarkedFilename, $newFilename);
 
             // Generate resolutions
-            $this->generateResolutions($resolutions, $newFilename);
+            $this->generateResolutions($newFilename);
 
             // Clean up files
             $this->cleanupFiles($inputPath, $watermarkedFilename);
 
             // Update completion status
-            $this->updateConversionProgress('Completed successfully', 404);
+
         } catch (\Exception $e) {
             // Handle the exception and retrieve the error message
             $errorMessage = $e->getMessage();
@@ -78,7 +78,7 @@ class GenerateResolutionsJob implements ShouldQueue
             // Log the error, return a response, or perform any other necessary action
             // based on the error message
         } finally {
-            Redis::set('current_task', '');
+            $this->updateConversionProgress('', 404);
         }
     }
 
@@ -102,7 +102,7 @@ class GenerateResolutionsJob implements ShouldQueue
     /**
      * Simulate progress for video conversion.
      */
-    private function simulateConversionProgress()
+    private function simulateWatermarkingProgress()
     {
         $progress = 0;
         while ($progress < 100) {
@@ -144,42 +144,50 @@ class GenerateResolutionsJob implements ShouldQueue
      * @param array $resolutions
      * @param string $newFilename
      */
-    private function generateResolutions(array $resolutions, string $newFilename)
+    private function generateResolutions(string $newFilename)
     {
 
+        try {
 
-        $video = FFMpeg::fromDisk('ffmpeg')
-            ->open('watermarked_' . $this->filename)
-            ->exportForHLS()
-            ->setSegmentLength(10)
-            ->addFormat((new X264('aac'))->setKiloBitrate(1500))
-            ->addFormat((new X264('aac'))->setKiloBitrate(1000))
-            ->addFormat((new X264('aac'))->setKiloBitrate(700))
-            ->addFormat((new X264('aac'))->setKiloBitrate(300))
-            ->onProgress(function ($progress) {
-                $this->updateConversionProgress('HLS conversion', $progress);
-            })
-            ->toDisk('public')
-            ->save('videos/' . $newFilename . '/' . $newFilename . '.m3u8');
-        $duration = $video->getDurationInSeconds();
-        $this->saveResolution($newFilename . '.m3u8', $duration);
-        $filePath = $this->storagePath . '/'  . $newFilename . '/' . $newFilename . '.m3u8';
-        $fileContent = file_get_contents($filePath);
-        $replacements = [
-            'RESOLUTION=1920x1080',
-            'RESOLUTION=1920x720',
-            'RESOLUTION=1920x480',
-            'RESOLUTION=1920x244'
-        ];
+            $lowBitrate = (new X264)->setKiloBitrate(250);
+            $midBitrate = (new X264)->setKiloBitrate(500);
+            $highBitrate = (new X264)->setKiloBitrate(1000);
+            $superBitrate = (new X264)->setKiloBitrate(1500);
+            $video = FFMpeg::fromDisk('ffmpeg')
+                ->open('watermarked_' . $this->filename)
+                ->exportForHLS()
+                ->setSegmentLength(2)
+                ->addFormat($superBitrate)
+                ->addFormat($highBitrate)
+                ->addFormat($midBitrate)
+                ->addFormat($lowBitrate)
+                ->onProgress(function ($progress) {
+                    $this->updateConversionProgress('HLS conversion', $progress);
+                })
+                ->toDisk('public')
+                ->save('videos/' . $newFilename . '/' . $newFilename . '.m3u8');
+            $duration = $video->getDurationInSeconds();
+            $this->saveResolution($newFilename . '.m3u8', $duration);
+            $filePath = $this->storagePath . '/'  . $newFilename . '/' . $newFilename . '.m3u8';
+            $fileContent = file_get_contents($filePath);
+            $replacements = [
+                'RESOLUTION=1920*1080',
+                'RESOLUTION=1920x720',
+                'RESOLUTION=1920x480',
+                'RESOLUTION=1920x144'
+            ];
 
-        $pattern = "/RESOLUTION=\d+x\d+/";
+            $pattern = "/RESOLUTION=\d+x\d+/";
 
-        $modifiedContent = preg_replace_callback($pattern, function ($matches) use (&$replacements) {
-            return array_shift($replacements);
-        }, $fileContent, 4);
+            $modifiedContent = preg_replace_callback($pattern, function ($matches) use (&$replacements) {
+                return array_shift($replacements);
+            }, $fileContent, 4);
 
-        // Save the modified content back to the file
-        file_put_contents($filePath, $modifiedContent);
+            // Save the modified content back to the file
+            file_put_contents($filePath, $modifiedContent);
+        } catch (Exception $e) {
+            echo 'error = ' . $e;
+        }
     }
 
     /**
@@ -208,7 +216,6 @@ class GenerateResolutionsJob implements ShouldQueue
     {
         unlink($inputPath);
         unlink($watermarkedFilename);
-        // Resolution::where('resolution', '1080')->delete();
     }
 
     /**

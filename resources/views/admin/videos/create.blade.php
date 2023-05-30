@@ -1,4 +1,4 @@
-@extends('admin.videos.layout')
+@extends('layouts.admin')
 
 @section('content')
 
@@ -28,7 +28,7 @@
             </div>
             <div class="mb-3">
                 <label for="title" class="form-label">lecon</label>
-                <select class="form-select form-select-lg" name="lecon_id" id="">
+                <select class="form-select form-select-lg" name="lecon_id" id="lecon_id">
                     <option selected value="1">Routes</option>
                 </select>
             </div>
@@ -40,15 +40,15 @@
             </div>
             <div class="mb-3">
                 <div class="progress-wrapper watermark-progress completed-progress">
-                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated"></div>
-                    <div class="progress-text fw-bold "></div>
+                    <div class="progress-bar bg-warning"></div>
+                    <div class="progress-text fw-bold"></div>
                 </div>
                 <div class="progress-wrapper demo-progress completed-progress">
-                    <div class="progress-bar progress-bar-striped bg-info progress-bar-animated"></div>
+                    <div class="progress-bar bg-info"></div>
                     <div class="progress-text fw-bold"></div>
                 </div>
                 <div class="progress-wrapper hls-progress completed-progress">
-                    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated"></div>
+                    <div class="progress-bar bg-success"></div>
                     <div class="progress-text fw-bold"></div>
                 </div>
                 <div id="done-animation" class="done-animation" style="display: none;">
@@ -69,36 +69,46 @@
     <script>
         $(document).ready(function() {
             var progressInterval;
+            var isUploading = false;
+            var uploadButton = $("#upload-button");
+            var progressWrapper = $(".progress-wrapper");
+            var doneAnimation = $("#done-animation");
+            var watermarkProgressBar = $(".watermark-progress .progress-bar");
+            var demoProgressBar = $(".demo-progress .progress-bar");
+            var hlsProgressBar = $(".hls-progress .progress-bar");
+            var watermarkProgressText = $(".watermark-progress .progress-text");
+            var demoProgressText = $(".demo-progress .progress-text");
+            var hlsProgressText = $(".hls-progress .progress-text");
 
             function updateProgress() {
-                $.ajax({
-                    url: "{{ route('video-conversion-progress') }}",
-                    method: "GET",
-                    success: function(response) {
-                        var progress = response.progress;
-                        var currentTask = response.current_task;
-                        console.log(currentTask);
-                        updateProgressBar(progress, currentTask);
+                if (!isUploading) {
+                    $.ajax({
+                        url: "{{ route('video-conversion-progress') }}",
+                        method: "GET",
+                        success: function(response) {
+                            var progress = response.progress;
+                            var currentTask = response.current_task;
+                            console.log(currentTask);
+                            updateProgressBar(progress, currentTask);
 
-                        // Stop the interval if the progress is 100 and there is no current task
-
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                    },
-                });
+                            // Stop the interval if the progress is 100 and there is no current task
+                            if (progress == 404 && currentTask === '') {
+                                clearInterval(progressInterval);
+                                showUploadButton();
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
+                        },
+                    });
+                }
             }
 
             function updateProgressBar(progress, currentTask) {
-                var progressWrapper = $(".progress-wrapper");
-                var doneAnimation = $("#done-animation");
-
                 // Hide the progress bars and show the "Done" animation when progress is 100 and there is no current task
                 if (currentTask === '' && progress == 404) {
                     progressWrapper.hide();
                     doneAnimation.show();
-                    showUploadButton();
-                    clearInterval(progressInterval);
                 } else {
                     doneAnimation.hide();
                     var progressBar;
@@ -106,16 +116,16 @@
 
                     switch (currentTask) {
                         case "Watermarking":
-                            progressBar = $(".watermark-progress .progress-bar");
-                            progressText = $(".watermark-progress .progress-text");
+                            progressBar = watermarkProgressBar;
+                            progressText = watermarkProgressText;
                             break;
                         case "Demo creation":
-                            progressBar = $(".demo-progress .progress-bar");
-                            progressText = $(".demo-progress .progress-text");
+                            progressBar = demoProgressBar;
+                            progressText = demoProgressText;
                             break;
                         case "HLS conversion":
-                            progressBar = $(".hls-progress .progress-bar");
-                            progressText = $(".hls-progress .progress-text");
+                            progressBar = hlsProgressBar;
+                            progressText = hlsProgressText;
                             break;
                         default:
                             return;
@@ -123,7 +133,7 @@
 
                     progressText.text(currentTask + ": " + progress + "%");
 
-                    // Show the progress bar if it was hidden and there is progress
+                    // Show the progress bar if there is progress
                     if (progress > 0 && progress <= 100) {
                         progressBar.css("width", progress + "%");
                         progressBar.parent(".progress-wrapper").show();
@@ -132,43 +142,51 @@
                     }
                 }
             }
-            var uploadButton = $("#upload-button");
-            var uploadSpinner = $(".spinner-border");
-            var uploadingText = $(".visually-hidden:contains('Uploading...')");
-            var uploadText = $(".upload");
 
             function showUploadButton() {
+                var uploadSpinner = $(".spinner-border");
+                var uploadingText = $(".visually-hidden:contains('Uploading...')");
+                var uploadText = $(".upload");
+
                 uploadSpinner.addClass("visually-hidden");
                 uploadingText.addClass("visually-hidden");
                 uploadText.removeClass("visually-hidden");
+                uploadButton.removeClass("disabled");
             }
 
             // Handle the upload button click event
-            $("#upload-button").on("click", function() {
-                uploadSpinner.removeClass("visually-hidden");
-                uploadingText.removeClass("visually-hidden");
-                uploadText.addClass("visually-hidden");
-                var formData = new FormData($("#upload-form")[0]);
+            uploadButton.on("click", function() {
+                if (!isUploading) {
+                    isUploading = true;
+                    var formData = new FormData($("#upload-form")[0]);
 
-                $.ajax({
-                    url: "{{ route('videos.store') }}",
-                    method: "POST",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                       
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error response
-                        console.log(error);
-                    },
-                });
+                    uploadButton.addClass("disabled");
+                    progressWrapper.show();
+
+                    $.ajax({
+                        url: "{{ route('videos.store') }}",
+                        method: "POST",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            // Handle success response
+                            console.log(response);
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error response
+                            console.log(error);
+                        },
+                        complete: function() {
+                            isUploading = false;
+                        }
+                    });
+                }
             });
 
             // Start the progress update interval after the upload button is clicked
-            $("#upload-button").on("click", function() {
-                progressInterval = setInterval(updateProgress, 1000);
+            uploadButton.on("click", function() {
+                progressInterval = setInterval(updateProgress, 2000);
             });
         });
     </script>
