@@ -10,12 +10,7 @@
     </div>
 @endcan --}}
 <div class="card">
-        {{-- <form action="{{route('section.save')}}" method="post">
-          @csrf
-          <input class="form-control m-2" type="text" name="sectionName" placeholder="Enter section">
-          <input class="form-control m-2" type="text" name="position" placeholder="Enter position">
-          <button class="btn btn-success m-2" type="submit">Save</button>
-        </form> --}}
+      
         <div class="card-body" id="main">
             {{-- <ul class="section-list">
               <li class="section">
@@ -64,10 +59,10 @@
               </li>
             </ul>
             @endforeach
+
+            <button class="btn btn-dark" id="btn">Add New Section</button>
           </div>
-          <button id="btn"
-            style="padding: 2%;background-color: rgb(240, 244, 248);margin-bottom: 10px;border-radius: 5px ;border: 1px solid grey;">Add
-            New Section</button>
+         
     </div>
 
 

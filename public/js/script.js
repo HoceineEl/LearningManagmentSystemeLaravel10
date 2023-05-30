@@ -91,7 +91,6 @@ for (var i = 0; i < nestedSortables.length; i++) {
                     ),
                 },
             });
-
             $.ajax({
                 url: "/updateLessonPosition", // Update with the appropriate URL
                 type: "PUT",
@@ -178,16 +177,15 @@ document.getElementById("btn").addEventListener("click", function () {
         position: sectionPosition, // Assign the position
     };
 
+    var sectionId;
+    console.log("section Name : ", sectionName);
+    console.log("section Position : ", sectionPosition);
+    // Send the section data to the server
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-
-    var sectionId;
-    console.log("section Name : ", sectionName);
-    console.log("section Position : ", sectionPosition);
-    // Send the section data to the server
     $.ajax({
         url: "/saveSection", // Update with the appropriate URL
         type: "POST",
@@ -287,10 +285,10 @@ document.getElementById("btn").addEventListener("click", function () {
                         console.log("lesson id : ", lessonId);
                         console.log("lesson name :", name);
                         $.ajax({
-                            url: "/api/lessons/" + lessonId,
+                            url: "/lessons/" + lessonId,
                             type: "PUT",
                             headers: {
-                                "X-CSRF-TOKEN": "{{ csrf_token() }}", // Add this line if you're using Laravel's CSRF protection
+                                "X-CSRF-TOKEN": csrfToken,
                             },
                             dataType: "json",
                             data: {
@@ -335,10 +333,10 @@ document.getElementById("btn").addEventListener("click", function () {
             row.replaceWith(span, quick_action_button);
             console.log("section id for update : ", sectionId);
             $.ajax({
-                url: "/api/sections/" + sectionId,
+                url: "/sections/" + sectionId,
                 type: "PUT",
                 headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}", // Add this line if you're using Laravel's CSRF protection
+                    "X-CSRF-TOKEN": csrfToken,
                 },
                 dataType: "json",
                 data: {
@@ -348,8 +346,10 @@ document.getElementById("btn").addEventListener("click", function () {
                     // Update the section name in the UI
                     console.log("suuccessuful update section name");
                 },
-                error: function (error) {
-                    console.error(error);
+                error: function (xhr, status, error) {
+                    console.log("xhr", xhr);
+                    console.log("status", status);
+                    console.error("Error saving section:", error);
                 },
             });
         });
@@ -442,10 +442,10 @@ addBtns.forEach(function (addBtn) {
                 console.log("lesson id for update : ", lessonId);
                 ////////////://///////////////////////////////////////
                 $.ajax({
-                    url: "/api/lessons/" + lessonId,
+                    url: "/lessons/" + lessonId,
                     type: "PUT",
                     headers: {
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}", // Add this line if you're using Laravel's CSRF protection
+                        "X-CSRF-TOKEN": csrfToken,
                     },
                     dataType: "json",
                     data: {

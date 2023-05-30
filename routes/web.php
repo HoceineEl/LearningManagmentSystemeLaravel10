@@ -215,6 +215,8 @@ Route::get('/video-conversion-progress', [VideoController::class, 'getVideoConve
     // Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
     // Route::resource('sections', 'SectionsController');
 
+    Route::put('/sections/{section}',[SectionController::class,'update']);
+    Route::put('/lessons/{lesson}',[LessonController::class,'update']);
     // Lessons
     Route::get('/',[ LessonController::class,'index'])->name('section.index');
     Route::post('/saveLesson',[ LessonController::class,'store']);

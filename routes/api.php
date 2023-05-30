@@ -47,5 +47,4 @@ use Illuminate\Support\Facades\Route;
     // User Alerts
     Route::apiResource('user-alerts', 'UserAlertsApiController', ['except' => ['update']]);
 });
-Route::put('/sections/{section}',[SectionController::class,'update']);
-Route::put('/lessons/{lesson}',[LessonController::class,'update']);
+
