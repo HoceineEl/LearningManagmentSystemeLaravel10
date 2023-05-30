@@ -223,3 +223,7 @@ Route::get('/video-conversion-progress', [VideoController::class, 'getVideoConve
     // Route::resource('lecons', 'LeconsController');
     
     // Route::post('/saveSectionEx',[ SectionController::class,'storeEx'])->name('section.save');
+
+
+// Abdallah
+Route::get('dashboard', 'DashboardController@index')->name('dashboard');
