@@ -16,7 +16,7 @@
                         @endif
 
                         <div class="card">
-                            <div class="chart">
+                            <div class="chart" style="width:60%; margin: auto">
                                 <canvas id="chart1"></canvas>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                         display: true,
                         text: 'Number of courses published',
                         font: {
-                            size: 25
+                            size: 35
                         }
                     },
                     legend: {
