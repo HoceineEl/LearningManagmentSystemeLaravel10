@@ -16,7 +16,7 @@
                         @endif
 
                         <div style="overflow-x: auto;">
-                            <h3>Les Utilisateurs</h3>
+                            <h3>Users</h3>
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -28,6 +28,9 @@
                                         </th>
                                         <th>
                                             Email
+                                        </th>
+                                        <th>
+                                            Roles
                                         </th>
                                     </tr>
                                 </thead>
@@ -43,10 +46,13 @@
                                             <td>
                                                 {{ $user['email'] }}
                                             </td>
+                                            <td>
+                                                {{ $user['role'] }}
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td>
+                                            <td colspan="4">
                                                 Aucun utilisateur
                                             </td>
                                         </tr>

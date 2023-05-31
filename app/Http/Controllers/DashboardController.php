@@ -10,8 +10,11 @@ class DashboardController
 {
     public function index()
     {
-        $users = User::all()->toArray();
         $cours = Cour::all()->toArray();
+        $users = User::all();
+        foreach ($users as  $user) {
+            $user->role = $user->roles[0]->title;
+        }
         return view('dashboard', compact('cours', 'users'));
     }
 }
