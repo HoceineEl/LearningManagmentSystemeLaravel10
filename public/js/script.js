@@ -1,18 +1,18 @@
 //for the elements tha are added by default in the html section
-var buttons = document.querySelectorAll(".save-button");
+// var buttons = document.querySelectorAll(".save-button");
 
-buttons.forEach(function (button) {
-    button.addEventListener("click", function () {
-        var row = button.parentNode;
-        var nameInput = row.querySelector("#input");
-        var name = nameInput.value;
-        var link = document.createElement("a");
-        link.href = "#";
-        link.textContent = name;
-        link.className = "lesson-link";
-        row.replaceWith(link);
-    });
-});
+// buttons.forEach(function (button) {
+//     button.addEventListener("click", function () {
+//         var row = button.parentNode;
+//         var nameInput = row.querySelector("#input");
+//         var name = nameInput.value;
+//         var link = document.createElement("a");
+//         link.href = "#";
+//         link.textContent = name;
+//         link.className = "lesson-link";
+//         row.replaceWith(link);
+//     });
+// });
 
 // the drag and drop events :
 var nestedSortables = document.getElementById("main");
@@ -154,13 +154,57 @@ document.getElementById("btn").addEventListener("click", function () {
         group: "again",
         handle: ".handle",
         animation: 200,
+        onEnd: function (event) {
+            // Get the updated positions of the lessons within the section
+
+            var sections = document.getElementsByClassName("section");
+            var lessonPositions = [];
+
+            Array.from(sections).forEach(function (section) {
+                var lessons = section.getElementsByClassName("lesson");
+                Array.from(lessons).forEach(function (lesson, index) {
+                    var sectionId = section.dataset.sectionId;
+                    var lessonId = lesson.dataset.lessonId;
+                    lessonPositions.push({
+                        sectionId: sectionId,
+                        lessonId: lessonId,
+                        position: index + 1,
+                    });
+                });
+            });
+            console.log(lessonPositions);
+            // Send the updated positions to the server
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+            });
+            $.ajax({
+                url: "/updateLessonPosition", // Update with the appropriate URL
+                type: "PUT",
+                dataType: "json",
+                data: JSON.stringify(lessonPositions),
+                contentType: "application/json",
+                success: function (response) {
+                    console.log(
+                        "Lesson positions updated successfully",
+                        response
+                    );
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error updating lesson positions:", error);
+                },
+            });
+        },
     });
-    new Sortable(section_item, {
-        group: "shared",
-        handle: ".handle-section",
-        animation: 200,
-        nested: true,
-    });
+    // new Sortable(section_item, {
+    //     group: "shared",
+    //     handle: ".handle-section",
+    //     animation: 200,
+    //     nested: true,
+    // });
     var newInputSection = newDiv.querySelector(".input-section");
     newInputSection.focus();
     newInputSection.select();
@@ -449,7 +493,9 @@ addBtns.forEach(function (addBtn) {
                     url: "/lessons/" + lessonId,
                     type: "PUT",
                     headers: {
-                        "X-CSRF-TOKEN": csrfToken,
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
                     },
                     dataType: "json",
                     data: {
