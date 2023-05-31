@@ -15,12 +15,52 @@
                             </div>
                         @endif
 
+                        <div style="overflow-x: auto;">
+                            <h3>Les Utilisateurs</h3>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($users as $user)
+                                        <tr>
+                                            <td>
+                                                {{ $user['id'] }}
+                                            </td>
+                                            <td>
+                                                {{ $user['name'] }}
+                                            </td>
+                                            <td>
+                                                {{ $user['email'] }}
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td>
+                                                Aucun utilisateur
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="card">
-                            <div class="chart" style="width:60%; margin: auto">
+                            <div class="chart">
                                 <canvas id="chart1"></canvas>
                             </div>
                         </div>
-                        
+
                         {{-- <div class="card">
                             <div class="chart">
                                 <canvas id="chart2"></canvas>
