@@ -58,4 +58,13 @@ class SectionController extends Controller
         
         return response()->json(['message' => 'Section positions updated successfully']);
 }
+    public function edit($id){
+        $sections=Section::all();
+        $one=Section::find($id);
+        $data=[
+            'sections'=>$sections,
+            'sec'=>$one,
+        ];
+    return view('admin.lessons.edit',$data);
+    }
 }

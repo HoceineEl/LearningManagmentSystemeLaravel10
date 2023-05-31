@@ -52,15 +52,15 @@
             <ul class="section-list" data-section-id="{{ $section->id }}">
               <li class="section" data-section-id="{{ $section->id }}">
                 <div class="d-flex justify-content-between">
-                  <div>
+                  <div class="header">
                     <i class="fa fa-bars handle-section"></i>
                     <span id="section-title">{{ $section->label }}</span>
                   </div>
                   <div>
                     <span id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v info-section"></i></span>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li><a class="dropdown-item" href="#">Edit</a></li>
-                      <li><a class="dropdown-item" href="#">Delete</a></li>
+                      <li><button class="dropdown-item edit-section" >Edit</button></li>
+                      <li><button class="dropdown-item delete-section" >Delete</button></li>
                       {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
                     </ul>
                   </div>
@@ -77,8 +77,8 @@
                     <div class="d-flex">
                       <span id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v info"></i></span>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Edit</a></li>
-                        <li><a class="dropdown-item" href="#">Delete</a></li>
+                        <li><button class="dropdown-item edit-lesson" >Edit</button></li>
+                        <li><button class="dropdown-item delete-lesson" >Delete</button></li>
                         {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
                       </ul>
                     </div>
