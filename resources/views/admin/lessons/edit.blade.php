@@ -2,56 +2,95 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.lesson.title_singular') }}
-    </div>
-
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.lessons.update", [$lesson->id]) }}" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
-            <div class="form-group">
-                <label class="required" for="label">{{ trans('cruds.lesson.fields.label') }}</label>
-                <input class="form-control {{ $errors->has('label') ? 'is-invalid' : '' }}" type="text" name="label" id="label" value="{{ old('label', $lesson->label) }}" required>
-                @if($errors->has('label'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('label') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.lesson.fields.label_helper') }}</span>
+      
+    <div class="card-body" id="main">
+      
+        {{-- <ul class="section-list">
+          <li class="section">
+            <i class="fa fa-bars handle-section"></i>
+            <span id="section-title">Item 6</span>
+            <ul class="lesson-list">
+              <button id="" class="btn btn-outline-dark btn-el">+ Add Lesson</button>
+                <li class="lesson">
+                  <i class="fa fa-bars handle"></i>
+                  <div id="lesson-box" style="display: inline;">
+                    <input value="New Lesson" class="form-control input m-2 border border-dark" type="text" name="" id="input">
+                    <button class="btn btn-primary button save-button">Save</button>
+                    <button class="btn btn-light button cancel-button">Cancel</button>
+                  </div>
+                  <div class="dropdown">
+                    <span id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v handle"></i>
+                    </span>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" href="#">Action</a></li>
+                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                  </div>
+                </li>
+              <li class="lesson">
+                <i class="fa fa-bars handle"></i>
+                <div id="lesson-box" style="display: inline;">
+                  <input value="New Lesson" class="form-control input m-2 border border-dark" type="text" id="input">
+                  <button class="btn btn-primary button save-button">Save</button>
+                  <button class="btn btn-light button cancel-button">Cancel</button>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul> --}}
+    
+        @foreach($sections as $section)
+        <ul class="section-list" data-section-id="{{ $section->id }}">
+          <li class="section" data-section-id="{{ $section->id }}">
+            <div class="d-flex justify-content-between">
+              <div>
+                <i class="fa fa-bars handle-section"></i>
+                <span id="section-title">{{ $section->label }}</span>
+              </div>
+              <div class="d-flex">
+                <span id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v handle"></i></span>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="#">Edit</a></li>
+                  <li><a class="dropdown-item" href="#">Delete</a></li>
+                  {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
+                </ul>
+              </div>
             </div>
-            <div class="form-group">
-                <label class="required" for="section_id">{{ trans('cruds.lesson.fields.section') }}</label>
-                <select class="form-control select2 {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section_id" id="section_id" required>
-                    @foreach($sections as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('section_id') ? old('section_id') : $lesson->section->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('section'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('section') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.lesson.fields.section_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="position">{{ trans('cruds.lesson.fields.position') }}</label>
-                <input class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}" type="number" name="position" id="position" value="{{ old('position', $lesson->position) }}" step="1" required>
-                @if($errors->has('position'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('position') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.lesson.fields.position_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
-    </div>
+            <ul class="lesson-list" data-section-id="{{ $section->id }}">
+              <button  class="btn btn-outline-dark btn-el">+ Add Lesson</button>
+              @if(isset($lessons[$section->id]))
+              @foreach($lessons[$section->id] as $lesson)
+              <li class="lesson d-flex justify-content-between" data-lesson-id="{{ $lesson->id }}">
+                <div>
+                  <i class="fa fa-bars handle"></i>
+                  <a href="#" id="lesson-link">{{ $lesson->label }}</a>
+                </div>
+                <div class="d-flex">
+                  <span id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v handle"></i></span>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                    {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
+                  </ul>
+                </div>
+              </li>
+              @endforeach
+              @endif
+            </ul>
+          </li>
+        </ul>
+        @endforeach
+      </div>
+      <div>
+        <button class="btn btn-dark" id="btn">+ Add New Section</button>
+      </div>
 </div>
+
+
+
+
+@endsection
 
 
 

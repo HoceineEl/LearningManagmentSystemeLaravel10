@@ -245,6 +245,10 @@ document.getElementById("btn").addEventListener("click", function () {
                 // create the li element
                 var newLi1 = document.createElement("li");
                 newLi1.className = "lesson";
+                var header = document.createElement("div");
+                header.className = "header d-flex justify-content-between";
+                //create the div that contains the icon in the input Or lesson_name
+                var div = document.createElement("div");
                 // create the icon and the title of the lesson as a span:
                 var newIcon1 = document.createElement("i");
                 newIcon1.className = "fa fa-bars handle";
@@ -260,7 +264,9 @@ document.getElementById("btn").addEventListener("click", function () {
                     currentLi.getElementsByClassName("lesson-list");
                 var lastLesson = lessonList[lessonList.length - 1];
                 lastLesson.appendChild(newLi1);
-                newLi1.append(newIcon1, newDiv1);
+                newLi1.appendChild(header);
+                header.append(div);
+                div.append(newIcon1, newDiv1);
                 // newDiv1.append(newInput, newBtn1, newBtn2);
                 var newInput = newDiv1.querySelector(".input");
                 newInput.focus();
@@ -316,16 +322,22 @@ document.getElementById("btn").addEventListener("click", function () {
                         var row = button.parentNode;
                         var nameInput = row.querySelector(".input");
                         var name = nameInput.value;
+                        var header = row.closest(".header");
+                        var parent = row.parentNode;
                         // Create an object to send the data
                         var link = document.createElement("a");
                         link.href = "#";
                         link.textContent = name;
                         link.className = "lesson-link";
-                        var publish_btn = document.createElement("a");
-                        publish_btn.href = "#";
-                        publish_btn.textContent = "Publish";
-                        publish_btn.className = "publish-btn";
-                        row.replaceWith(link, publish_btn);
+                        link.style =
+                            "text-decoration:none;color:rgb(81, 84, 90)";
+                        var dropdown = document.createElement("div");
+                        dropdown.innerHTML =
+                            " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v handle'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
+
+                        row.replaceWith(link);
+                        header.appendChild(dropdown);
+
                         console.log("lesson id : ", lessonId);
                         console.log("lesson name :", name);
                         $.ajax({
@@ -368,6 +380,8 @@ document.getElementById("btn").addEventListener("click", function () {
     buttons1.forEach(function (button) {
         button.addEventListener("click", function () {
             var row = button.parentElement;
+            var div = document.createElement("div");
+            div;
             var span = document.createElement("span");
             span.id = "section-title";
             var sectionNm = newInputSection.value;
@@ -412,6 +426,12 @@ addBtns.forEach(function (addBtn) {
         var ul = addBtn.parentElement;
         var newLi1 = document.createElement("li");
         newLi1.className = "lesson";
+        ////////////////////////:
+
+        var header = document.createElement("div");
+        header.className = "header d-flex justify-content-between";
+        //create the div that contains the icon in the input Or lesson_name
+        var div = document.createElement("div");
 
         // create the icon and the title of the lesson as a span:
         var newIcon1 = document.createElement("i");
@@ -424,7 +444,9 @@ addBtns.forEach(function (addBtn) {
         newDiv1.innerHTML =
             "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text' name='' ><button class='btn btn-primary save-button'>Save</button><button class='btn btn-secondary cancel-button'>Cancel</button>";
         ul.appendChild(newLi1);
-        newLi1.append(newIcon1, newDiv1);
+        newLi1.appendChild(header);
+        header.append(div);
+        div.append(newIcon1, newDiv1);
         var newInput = newDiv1.querySelector(".input");
         newInput.focus();
         newInput.select();
@@ -475,18 +497,20 @@ addBtns.forEach(function (addBtn) {
                 var row = button.parentNode;
                 var nameInput = row.querySelector(".input");
                 var name = nameInput.value;
+                var header = row.closest(".header");
                 // Create an object to send the data
 
                 var link = document.createElement("a");
                 link.href = "#";
                 link.textContent = name;
                 link.className = "lesson-link";
-                var publish_btn = document.createElement("a");
-                publish_btn.href = "#";
-                publish_btn.textContent = "Publish";
-                publish_btn.className = "publish-btn";
-                row.replaceWith(link, publish_btn);
 
+                link.style = "text-decoration:none;color:rgb(81, 84, 90)";
+                var dropdown = document.createElement("div");
+                dropdown.innerHTML =
+                    " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v handle'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
+                row.replaceWith(link);
+                header.appendChild(dropdown);
                 console.log("lesson id for update : ", lessonId);
                 ////////////://///////////////////////////////////////
                 $.ajax({
