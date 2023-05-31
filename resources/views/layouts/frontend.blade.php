@@ -120,7 +120,7 @@
                                             {{ trans('cruds.cour.title') }}
                                         </a>
                                     @endcan
-                                    @can('section_access')
+                                    {{-- @can('section_access')
                                         <a class="dropdown-item" href="{{ route('frontend.sections.index') }}">
                                             {{ trans('cruds.section.title') }}
                                         </a>
@@ -129,7 +129,7 @@
                                         <a class="dropdown-item" href="{{ route('frontend.lecons.index') }}">
                                             {{ trans('cruds.lecon.title') }}
                                         </a>
-                                    @endcan
+                                    @endcan --}}
                                     @can('quiz_access')
                                         <a class="dropdown-item" href="{{ route('frontend.quizzes.index') }}">
                                             {{ trans('cruds.quiz.title') }}

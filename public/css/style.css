@@ -209,12 +209,12 @@ ul {
     margin-top: 3%;
 }
 
-.lesson-link {
+#lesson-link {
     text-decoration: none;
     color: rgb(81, 84, 90)
 }
 
-.lesson-link:hover {
+#lesson-link:hover {
     text-decoration: none;
     color: rgb(53, 55, 59)
 }

@@ -91,7 +91,7 @@
                 </a>
             </li>
         @endcan
-        @can('lecon_access')
+        {{-- @can('lesson_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.lecons.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/lecons") || request()->is("admin/lecons/*") ? "c-active" : "" }}">
                     <i class="fa-fw fas fa-align-left c-sidebar-nav-icon">
@@ -100,7 +100,7 @@
                     {{ trans('cruds.lecon.title') }}
                 </a>
             </li>
-        @endcan
+        @endcan --}}
         @can('quiz_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.quizzes.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/quizzes") || request()->is("admin/quizzes/*") ? "c-active" : "" }}">

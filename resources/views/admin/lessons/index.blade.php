@@ -12,7 +12,7 @@
 <div class="card">
       
         <div class="card-body" id="main">
-            {{-- <ul class="section-list">
+            <ul class="section-list">
               <li class="section">
                 <i class="fa fa-bars handle-section"></i>
                 <span id="section-title">Item 6</span>
@@ -36,7 +36,7 @@
                   </li>
                 </ul>
               </li>
-            </ul> --}}
+            </ul>
         
             @foreach($sections as $section)
             <ul class="section-list" data-section-id="{{ $section->id }}">
@@ -116,6 +116,6 @@
   });
   
 })
-
 </script>
+
 @endsection

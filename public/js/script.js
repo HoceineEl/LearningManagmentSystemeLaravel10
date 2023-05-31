@@ -288,7 +288,9 @@ document.getElementById("btn").addEventListener("click", function () {
                             url: "/lessons/" + lessonId,
                             type: "PUT",
                             headers: {
-                                "X-CSRF-TOKEN": csrfToken,
+                                "X-CSRF-TOKEN": $(
+                                    'meta[name="csrf-token"]'
+                                ).attr("content"),
                             },
                             dataType: "json",
                             data: {
@@ -336,7 +338,9 @@ document.getElementById("btn").addEventListener("click", function () {
                 url: "/sections/" + sectionId,
                 type: "PUT",
                 headers: {
-                    "X-CSRF-TOKEN": csrfToken,
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
                 },
                 dataType: "json",
                 data: {
