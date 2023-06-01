@@ -478,7 +478,7 @@ editBtns.forEach(function (btn) {
                 header.appendChild(dropdown);
                 console.log("section id for update : ", sectionId);
                 $.ajax({
-                    url: "/sections/" + sectionId,
+                    url: "/soections/" + sectionId,
                     type: "PUT",
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(

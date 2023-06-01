@@ -30,6 +30,7 @@ class LessonController extends Controller
         $sectionId = $request->input('sectionId');
         $position = $request->input('position');
 
+        
         // Create a new lesson
         $lesson = new Lesson();
         $lesson->label = $lessonName;
