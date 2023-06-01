@@ -121,6 +121,11 @@ document.getElementById("btn").addEventListener("click", function () {
     var newLi = document.createElement("li");
     newLi.className = "section";
 
+    //
+    var header = document.createElement("div");
+    header.className = "d-flex justify-content-between header";
+    var div = document.createElement("div");
+
     // create the icon handler:
     var newIcon = document.createElement("i");
     newIcon.className = "fa fa-bars handle-section";
@@ -147,7 +152,9 @@ document.getElementById("btn").addEventListener("click", function () {
     // var lastSection = document.getElementById("body");
     section_item.appendChild(newUls);
     newUls.appendChild(newLi);
-    newLi.append(newIcon, newDiv, newUl);
+    newLi.append(header, newUl);
+    header.appendChild(div);
+    div.append(newIcon, newDiv);
     newUl.appendChild(newBtn);
 
     new Sortable(newUl, {
@@ -244,9 +251,9 @@ document.getElementById("btn").addEventListener("click", function () {
             newBtn.addEventListener("click", function () {
                 // create the li element
                 var newLi1 = document.createElement("li");
-                newLi1.className = "lesson";
-                var header = document.createElement("div");
-                header.className = "header d-flex justify-content-between";
+                newLi1.className = "lesson d-flex justify-content-between";
+                // var header = document.createElement("div");
+                // header.className = "header d-flex justify-content-between";
                 //create the div that contains the icon in the input Or lesson_name
                 var div = document.createElement("div");
                 // create the icon and the title of the lesson as a span:
@@ -264,8 +271,7 @@ document.getElementById("btn").addEventListener("click", function () {
                     currentLi.getElementsByClassName("lesson-list");
                 var lastLesson = lessonList[lessonList.length - 1];
                 lastLesson.appendChild(newLi1);
-                newLi1.appendChild(header);
-                header.append(div);
+                newLi1.appendChild(div);
                 div.append(newIcon1, newDiv1);
                 // newDiv1.append(newInput, newBtn1, newBtn2);
                 var newInput = newDiv1.querySelector(".input");
@@ -322,8 +328,8 @@ document.getElementById("btn").addEventListener("click", function () {
                         var row = button.parentNode;
                         var nameInput = row.querySelector(".input");
                         var name = nameInput.value;
-                        var header = row.closest(".header");
-                        var parent = row.parentNode;
+                        var Parent_Li = row.closest(".lesson");
+
                         // Create an object to send the data
                         var link = document.createElement("a");
                         link.href = "#";
@@ -333,10 +339,10 @@ document.getElementById("btn").addEventListener("click", function () {
                             "text-decoration:none;color:rgb(81, 84, 90)";
                         var dropdown = document.createElement("div");
                         dropdown.innerHTML =
-                            " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v handle'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
+                            " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
 
                         row.replaceWith(link);
-                        header.appendChild(dropdown);
+                        Parent_Li.appendChild(dropdown);
 
                         console.log("lesson id : ", lessonId);
                         console.log("lesson name :", name);
@@ -380,17 +386,89 @@ document.getElementById("btn").addEventListener("click", function () {
     buttons1.forEach(function (button) {
         button.addEventListener("click", function () {
             var row = button.parentElement;
-            var div = document.createElement("div");
-            div;
+            var header = row.closest(".header");
             var span = document.createElement("span");
             span.id = "section-title";
             var sectionNm = newInputSection.value;
             span.textContent = sectionNm;
-            var quick_action_button = document.createElement("a");
-            quick_action_button.href = "#";
-            quick_action_button.textContent = "Quick Action";
-            quick_action_button.className = "section-h-btn";
-            row.replaceWith(span, quick_action_button);
+            var dropdown = document.createElement("div");
+            dropdown.innerHTML =
+                " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
+
+            row.replaceWith(span);
+            header.appendChild(dropdown);
+            console.log("section id for update : ", sectionId);
+            $.ajax({
+                url: "/sections/" + sectionId,
+                type: "PUT",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                dataType: "json",
+                data: {
+                    name: sectionNm,
+                },
+                success: function (data) {
+                    // Update the section name in the UI
+                    console.log("suuccessuful update section name");
+                },
+                error: function (xhr, status, error) {
+                    console.log("xhr", xhr);
+                    console.log("status", status);
+                    console.error("Error saving section:", error);
+                },
+            });
+        });
+    });
+});
+
+//exists already
+
+var editBtns = document.querySelectorAll(".edit-section");
+editBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+        var span = btn.closest(".header").querySelector(".section-title");
+        var newDiv = document.createElement("div");
+        newDiv.id = "section-box";
+        newDiv.style = "display: inline;";
+        var sec = btn.closest(".section");
+        var section_name = sec.dataset.sectionName;
+        console.log("section_name : ", section_name);
+        var newInput = document.createElement("input");
+        newInput.className =
+            "form-control form-control-lg m-2 border border-dark input-section";
+        newInput.type = "text";
+        newInput.value = section_name;
+        var saveBtn = document.createElement("button");
+        saveBtn.className = "btn btn-primary button save-button_sec";
+        saveBtn.textContent = "Save";
+        var cancelBtn = document.createElement("a");
+        cancelBtn.href = "";
+        cancelBtn.className = "btn btn-light button cancel-button_sec";
+        cancelBtn.textContent = "Cancel";
+        // newDiv.innerHTML =
+        //     "<button class='btn btn-primary button save-button_sec'>Save</button><a href='' class='btn btn-light button cancel-button_sec'>Cancel</a>";
+        console.log(span);
+        newDiv.append(newInput, saveBtn, cancelBtn);
+        span.replaceWith(newDiv);
+    });
+    var buttons1 = document.querySelectorAll(".save-button_sec");
+    buttons1.forEach(function (button) {
+        button.addEventListener("click", function () {
+            var row = button.parentElement;
+            var header = row.closest(".header");
+            var span = document.createElement("span");
+            span.id = "section-title";
+            var sectionNm = newInputSection.value;
+            span.textContent = sectionNm;
+            var dropdown = document.createElement("div");
+            dropdown.innerHTML =
+                " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
+
+            row.replaceWith(span);
+            header.appendChild(dropdown);
             console.log("section id for update : ", sectionId);
             $.ajax({
                 url: "/sections/" + sectionId,
@@ -425,11 +503,11 @@ addBtns.forEach(function (addBtn) {
         console.log(addBtn);
         var ul = addBtn.parentElement;
         var newLi1 = document.createElement("li");
-        newLi1.className = "lesson";
+        newLi1.className = "lesson d-flex justify-content-between";
         ////////////////////////:
 
-        var header = document.createElement("div");
-        header.className = "header d-flex justify-content-between";
+        // var header = document.createElement("div");
+        // header.className = "header d-flex justify-content-between";
         //create the div that contains the icon in the input Or lesson_name
         var div = document.createElement("div");
 
@@ -444,8 +522,7 @@ addBtns.forEach(function (addBtn) {
         newDiv1.innerHTML =
             "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text' name='' ><button class='btn btn-primary save-button'>Save</button><button class='btn btn-secondary cancel-button'>Cancel</button>";
         ul.appendChild(newLi1);
-        newLi1.appendChild(header);
-        header.append(div);
+        newLi1.appendChild(div);
         div.append(newIcon1, newDiv1);
         var newInput = newDiv1.querySelector(".input");
         newInput.focus();
@@ -497,7 +574,7 @@ addBtns.forEach(function (addBtn) {
                 var row = button.parentNode;
                 var nameInput = row.querySelector(".input");
                 var name = nameInput.value;
-                var header = row.closest(".header");
+                var parent_li = row.closest(".lesson");
                 // Create an object to send the data
 
                 var link = document.createElement("a");
@@ -508,11 +585,10 @@ addBtns.forEach(function (addBtn) {
                 link.style = "text-decoration:none;color:rgb(81, 84, 90)";
                 var dropdown = document.createElement("div");
                 dropdown.innerHTML =
-                    " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v handle'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
+                    " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
                 row.replaceWith(link);
-                header.appendChild(dropdown);
+                parent_li.appendChild(dropdown);
                 console.log("lesson id for update : ", lessonId);
-                ////////////://///////////////////////////////////////
                 $.ajax({
                     url: "/lessons/" + lessonId,
                     type: "PUT",
