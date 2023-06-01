@@ -15,12 +15,58 @@
                             </div>
                         @endif
 
+                        <div style="overflow-x: auto;">
+                            <h3>Users</h3>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Roles
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($users as $user)
+                                        <tr>
+                                            <td>
+                                                {{ $user['id'] }}
+                                            </td>
+                                            <td>
+                                                {{ $user['name'] }}
+                                            </td>
+                                            <td>
+                                                {{ $user['email'] }}
+                                            </td>
+                                            <td>
+                                                {{ $user['role'] }}
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4">
+                                                Aucun utilisateur
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="card">
                             <div class="chart">
                                 <canvas id="chart1"></canvas>
                             </div>
                         </div>
-                        
+
                         {{-- <div class="card">
                             <div class="chart">
                                 <canvas id="chart2"></canvas>
@@ -119,7 +165,7 @@
                         display: true,
                         text: 'Number of courses published',
                         font: {
-                            size: 25
+                            size: 35
                         }
                     },
                     legend: {

@@ -213,15 +213,17 @@ Route::get('/video-conversion-progress', [VideoController::class, 'getVideoConve
 // Sections
 Route::post('/saveSection', [SectionController::class, 'store']);
 Route::put('/updateSectionPosition', [SectionController::class, 'updatePosition']);
+Route::get('/editSection', [SectionController::class, 'edit'])->name('section.edit');
 // Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
 // Route::resource('sections', 'SectionsController');
 
 Route::put('/sections/{section}', [SectionController::class, 'update']);
 Route::put('/lessons/{lesson}', [LessonController::class, 'update']);
 // Lessons
-Route::get('/section', [LessonController::class, 'index'])->name('section.index');
+Route::get('/lessons', [LessonController::class, 'index'])->name('section.index');
 Route::post('/saveLesson', [LessonController::class, 'store']);
 Route::put('/updateLessonPosition', [LessonController::class, 'updatePosition']);
+
 // Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
 // Route::resource('lecons', 'LeconsController');
 

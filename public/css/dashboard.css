@@ -1,0 +1,14 @@
+h3 {
+    font-family: lato;
+    color: #777;
+    font-weight: 500;
+}
+
+.chart {
+    width: 60%;
+    margin: auto
+}
+
+table{
+    text-align: center;
+}

@@ -197,12 +197,20 @@ ul {
 .handle-section {
     cursor: grab;
     font-size: 30px;
-
 }
 
 .handle {
     cursor: grab;
+}
 
+
+.info-section {
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.info {
+    cursor: pointer;
 }
 
 .lesson-list {
@@ -211,7 +219,7 @@ ul {
 
 #lesson-link {
     text-decoration: none;
-    color: rgb(81, 84, 90)
+    color: rgb(81, 84, 90);
 }
 
 #lesson-link:hover {

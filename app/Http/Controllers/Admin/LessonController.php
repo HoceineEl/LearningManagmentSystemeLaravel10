@@ -63,7 +63,7 @@ class LessonController extends Controller
             $lesson->section_id = $lessonPosition['sectionId'];
             $lesson->save();
         }
-
+        
         return response()->json(['message' => 'Lesson positions updated hssd successfully']);
   
     }
