@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\GenerateResolutionsJob;
+use App\Models\Lesson;
 use App\Models\LessonVideo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -24,10 +25,13 @@ class VideoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Lesson $lesson)
     {
-        return view('admin.videos.create');
+        return view('admin.videos.create', compact('lesson'));
     }
+
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -61,6 +65,7 @@ class VideoController extends Controller
             // Update Redis with progress and task after file upload
             Redis::set('current_task', 'Processing');
             Redis::set('video_conversion_progress', 100);
+            
 
             // Perform any additional tasks (e.g., video conversion, watermarking, etc.)
             Queue::push(new GenerateResolutionsJob($storagePath, $filename, $request['title'], $request['lecon_id']));

@@ -98,7 +98,7 @@
                 </a>
             </li>
         @endcan
-        @can('video_access')
+        {{-- @can('lesson_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('videos.create') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/videos') || request()->is('admin/videos/*') ? 'c-active' : '' }}">
@@ -108,7 +108,7 @@
                     {{ trans('cruds.video.title') }}
                 </a>
             </li>
-        @endcan
+        @endcan --}}
         @can('quiz_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.quizzes.index') }}"

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\VideoController;
-use App\Models\Video;
+use App\Models\LessonVideo;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\LessonController;
 use Illuminate\Support\Facades\Http;
@@ -198,6 +198,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 // HOUCEIN
 
 Route::post('clearVideos', [VideoController::class, 'clear'])->name('videos.clear');
+Route::get('/videos/create/{lesson}', [VideoController::class, 'create'])->name('videos.create');
 Route::resource('videos', VideoController::class);
 Route::get('/captions/example.vtt', function () {
     $response = Http::get('http://ffmpegvideojs.test/captions/example.vtt');
@@ -209,20 +210,22 @@ Route::get('/video-conversion-progress', [VideoController::class, 'getVideoConve
 
 // Hamza 
 
-    // Sections
-    Route::post('/saveSection',[ SectionController::class,'store']);
-    Route::put('/updateSectionPosition',[ SectionController::class,'updatePosition']);
-    // Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
-    // Route::resource('sections', 'SectionsController');
+// Sections
+Route::post('/saveSection', [SectionController::class, 'store']);
+Route::put('/updateSectionPosition', [SectionController::class, 'updatePosition']);
+// Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
+// Route::resource('sections', 'SectionsController');
 
-    // Lessons
-    Route::get('/',[ LessonController::class,'index'])->name('section.index');
-    Route::post('/saveLesson',[ LessonController::class,'store']);
-    Route::put('/updateLessonPosition',[ LessonController::class,'updatePosition']);
-    // Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
-    // Route::resource('lecons', 'LeconsController');
-    
-    // Route::post('/saveSectionEx',[ SectionController::class,'storeEx'])->name('section.save');
+Route::put('/sections/{section}', [SectionController::class, 'update']);
+Route::put('/lessons/{lesson}', [LessonController::class, 'update']);
+// Lessons
+Route::get('/section', [LessonController::class, 'index'])->name('section.index');
+Route::post('/saveLesson', [LessonController::class, 'store']);
+Route::put('/updateLessonPosition', [LessonController::class, 'updatePosition']);
+// Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
+// Route::resource('lecons', 'LeconsController');
+
+// Route::post('/saveSectionEx',[ SectionController::class,'storeEx'])->name('section.save');
 
 
 // Abdallah

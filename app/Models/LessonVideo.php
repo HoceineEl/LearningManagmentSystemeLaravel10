@@ -11,6 +11,7 @@ class LessonVideo extends Model
     protected $fillable = [
         'title',
         'path',
+        'lesson_id'
     ];
     public function lecon(){
         return $this->belongsTo(Lecon::class);

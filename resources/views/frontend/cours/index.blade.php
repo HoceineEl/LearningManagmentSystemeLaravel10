@@ -28,9 +28,9 @@
                                     <th>
                                         {{ trans('cruds.cour.fields.nom') }}
                                     </th>
-                                    <th>
+                                    {{-- <th>
                                         {{ trans('cruds.cour.fields.cover') }}
-                                    </th>
+                                    </th> --}}
                                     <th>
                                         {{ trans('cruds.cour.fields.auteur') }}
                                     </th>
@@ -48,13 +48,13 @@
                                         <td>
                                             {{ $cour->nom ?? '' }}
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             @if($cour->cover)
                                                 <a href="{{ $cour->cover->getUrl() }}" target="_blank" style="display: inline-block">
                                                     <img src="{{ $cour->cover->getUrl('thumb') }}">
                                                 </a>
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             {{ $cour->auteur->name ?? '' }}
                                         </td>

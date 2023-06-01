@@ -34,7 +34,7 @@ class GenerateResolutionsJob implements ShouldQueue
      * @param string $title
      * @param string $lecon_id
      */
-    public function __construct(string $storagePath, string $filename, string $title, string $lecon_id)
+    public function __construct(string $storagePath, string $filename, string $title,  $lecon_id)
     {
         $this->filename = $filename;
         $this->storagePath = $storagePath;
@@ -50,6 +50,7 @@ class GenerateResolutionsJob implements ShouldQueue
     public function handle()
     {
         try {
+
             $this->updateConversionProgress('Watermarking', 0);
             $inputPath = $this->storagePath . '/' . $this->filename;
             $newFilename = pathinfo($this->filename, PATHINFO_FILENAME);
@@ -200,7 +201,7 @@ class GenerateResolutionsJob implements ShouldQueue
     {
         $resolutionModel = new LessonVideo();
         $resolutionModel->title = $this->title;
-        $resolutionModel->lecon_id = $this->lecon_id;
+        $resolutionModel->lesson_id = $this->lecon_id;
         $resolutionModel->duration = $duration;
         $resolutionModel->path = $outputFilename;
         $resolutionModel->save();

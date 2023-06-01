@@ -7,11 +7,9 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>{{ trans('panel.site_title') }}</title>
-    <link rel="stylesheet" href="{{ asset('css/create.video.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.video.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.video.css') }}">
-    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -28,15 +26,20 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css"
         rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+    @yield('styles')
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
         integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-        crossorigin="anonymous">
-    @yield('styles')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('css/create.video.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.video.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.video.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+
 </head>
 
 <body class="c-app">
@@ -147,11 +150,15 @@
             </form>
         </div>
     </div>
-    <script src="{{ asset('js/script.js') }}"></script>
+
+    {{-- <script>
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    </script>     --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
+
     <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
@@ -172,48 +179,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"></script>
+
     <script>
         $(function() {
-            let copyButtonTrans =
-                '{{ trans('
-                                                                global.datatables.copy ') }}'
-            let csvButtonTrans =
-                '{{ trans('
-                                                                global.datatables.csv ') }}'
-            let excelButtonTrans =
-                '{{ trans('
-                                                                global.datatables.excel ') }}'
-            let pdfButtonTrans =
-                '{{ trans('
-                                                                global.datatables.pdf ') }}'
-            let printButtonTrans =
-                '{{ trans('
-                                                                global.datatables.print ') }}'
-            let colvisButtonTrans =
-                '{{ trans('
-                                                                global.datatables.colvis ') }}'
-            let selectAllButtonTrans =
-                '{{ trans('
-                                                                global.select_all ') }}'
-            let selectNoneButtonTrans =
-                '{{ trans('
-                                                                global.deselect_all ') }}'
+            let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
+            let csvButtonTrans = '{{ trans('global.datatables.csv') }}'
+            let excelButtonTrans = '{{ trans('global.datatables.excel') }}'
+            let pdfButtonTrans = '{{ trans('global.datatables.pdf') }}'
+            let printButtonTrans = '{{ trans('global.datatables.print') }}'
+            let colvisButtonTrans = '{{ trans('global.datatables.colvis') }}'
+            let selectAllButtonTrans = '{{ trans('global.select_all') }}'
+            let selectNoneButtonTrans = '{{ trans('global.deselect_all') }}'
+
             let languages = {
                 'fr': 'https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json',
                 'en': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/English.json',
                 'ar': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Arabic.json'
-            }; <<
-            <<
-            <<
-            <
-            HEAD
-
-                ===
-                ===
-                = >>>
-                >>>
-                >
-                12 b83430de272fea79fd0e97c2d0b1857c856d15
+            };
             $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, {
                 className: 'btn'
             })
@@ -310,18 +296,7 @@
                         }
                     }
                 ]
-            }); <<
-            <<
-            <<
-            <
-            HEAD
-
-                ===
-                ===
-                = >>>
-                >>>
-                >
-                12 b83430de272fea79fd0e97c2d0b1857c856d15
+            });
             $.fn.dataTable.ext.classes.sPageButton = '';
         });
     </script>
@@ -360,35 +335,30 @@
                 },
                 templateResult: formatItem,
                 templateSelection: formatItemSelection,
-                placeholder: '{{ trans('
-                                                                                global.search ') }}...',
+                placeholder: '{{ trans('global.search') }}...',
                 language: {
                     inputTooShort: function(args) {
                         var remainingChars = args.minimum - args.input.length;
-                        var translation =
-                            '{{ trans('
-                                                                                                                                        global.search_input_too_short ') }}';
+                        var translation = '{{ trans('global.search_input_too_short') }}';
+
                         return translation.replace(':count', remainingChars);
                     },
                     errorLoading: function() {
-                        return '{{ trans('
-                                                                                                                        global.results_could_not_be_loaded ') }}';
+                        return '{{ trans('global.results_could_not_be_loaded') }}';
                     },
                     searching: function() {
-                        return '{{ trans('
-                                                                                                                        global.searching ') }}';
+                        return '{{ trans('global.searching') }}';
                     },
                     noResults: function() {
-                        return '{{ trans('
-                                                                                                                        global.no_results ') }}';
+                        return '{{ trans('global.no_results') }}';
                     },
                 }
+
             });
 
             function formatItem(item) {
                 if (item.loading) {
-                    return '{{ trans('
-                                                                                                    global.searching ') }}...';
+                    return '{{ trans('global.searching ') }}...';
                 }
                 var markup = "<div class='searchable-link' href='" + item.url + "'>";
                 markup += "<div class='searchable-title'>" + item.model + "</div>";
@@ -402,8 +372,7 @@
 
             function formatItemSelection(item) {
                 if (!item.model) {
-                    return '{{ trans('
-                                                                                                    global.search ') }}...';
+                    return '{{ trans('global.search') }}...';
                 }
                 return item.model;
             }
@@ -414,6 +383,7 @@
         });
     </script>
     @yield('scripts')
+
 </body>
 
 </html>

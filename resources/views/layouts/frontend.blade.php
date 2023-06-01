@@ -120,16 +120,6 @@
                                             {{ trans('cruds.cour.title') }}
                                         </a>
                                     @endcan
-                                    @can('section_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.sections.index') }}">
-                                            {{ trans('cruds.section.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('lecon_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.lecons.index') }}">
-                                            {{ trans('cruds.lecon.title') }}
-                                        </a>
-                                    @endcan
                                     @can('quiz_access')
                                         <a class="dropdown-item" href="{{ route('frontend.quizzes.index') }}">
                                             {{ trans('cruds.quiz.title') }}
@@ -251,6 +241,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('assets/vendor/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/dom-factory.js') }}"></script>
+<script src="{{ asset('assets/vendor/material-design-kit.js') }}"></script>
+<script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('assets/js/hljs.js') }}"></script>
+
 @yield('scripts')
 
 </html>

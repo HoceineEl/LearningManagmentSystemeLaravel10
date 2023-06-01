@@ -11,6 +11,7 @@ class CreateQuizzesTable extends Migration
         Schema::create('quizzes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nom');
+            $table->foreignId('lesson_id')->constrained('lessons')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

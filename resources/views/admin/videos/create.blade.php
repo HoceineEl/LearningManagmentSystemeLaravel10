@@ -1,5 +1,7 @@
 @extends('layouts.admin')
-
+@section('styles')
+    @include('admin.videos.scripts.scripts')
+@endsection
 @section('content')
 
     @if (session('success'))
@@ -26,13 +28,7 @@
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="title" name="title" required>
             </div>
-            <div class="mb-3">
-                <label for="title" class="form-label">lecon</label>
-                <select class="form-select form-select-lg" name="lecon_id" id="lecon_id">
-                    <option selected value="1">Routes</option>
-                </select>
-            </div>
-
+            <input type="hidden" value="{{ $lesson->id }}" id="lecon_id" name="lecon_id" required>
             <div class="mb-3">
                 <label for="video" class="form-label">Video</label>
                 <input id="video" name="video" type="file" class="file" data-show-upload="false"
@@ -143,6 +139,17 @@
                 }
             }
 
+            function clearProgressBar() {
+                doneAnimation.hide();
+                watermarkProgressBar.css("width", 0 + "%");
+                demoProgressBar.css("width", 0 + "%");
+                hlsProgressBar.css("width", 0 + "%");
+                watermarkProgressText.text('');
+                demoProgressText.text('');
+                hlsProgressText.text('');
+
+            }
+
             function showUploadButton() {
                 var uploadSpinner = $(".spinner-border");
                 var uploadingText = $(".visually-hidden:contains('Uploading...')");
@@ -159,7 +166,7 @@
                 if (!isUploading) {
                     isUploading = true;
                     var formData = new FormData($("#upload-form")[0]);
-
+                    clearProgressBar();
                     uploadButton.addClass("disabled");
                     progressWrapper.show();
 

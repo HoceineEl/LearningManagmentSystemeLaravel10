@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-{{-- @can('lesson_create')
+    {{-- @can('lesson_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="#">
@@ -9,13 +9,8 @@
         </div>
     </div>
 @endcan --}}
-<div class="card">
-        {{-- <form action="{{route('section.save')}}" method="post">
-          @csrf
-          <input class="form-control m-2" type="text" name="sectionName" placeholder="Enter section">
-          <input class="form-control m-2" type="text" name="position" placeholder="Enter position">
-          <button class="btn btn-success m-2" type="submit">Save</button>
-        </form> --}}
+    <div class="card">
+
         <div class="card-body" id="main">
             {{-- <ul class="section-list">
               <li class="section">
@@ -42,85 +37,132 @@
                 </ul>
               </li>
             </ul> --}}
-        
-            @foreach($sections as $section)
-            <ul class="section-list" data-section-id="{{ $section->id }}">
-              <li class="section" data-section-id="{{ $section->id }}">
-                <i class="fa fa-bars handle-section"></i>
-                <span id="section-title">{{ $section->label }}</span>
-                <a href="" class="section-h-btn">Quick Actions</a>
-                <ul class="lesson-list" data-section-id="{{ $section->id }}">
-                  <button  class="btn btn-outline-dark btn-el">+ Add Lesson</button>
-                  @if(isset($lessons[$section->id]))
-                  @foreach($lessons[$section->id] as $lesson)
-                  <li class="lesson" data-lesson-id="{{ $lesson->id }}">
-                    <i class="fa fa-bars handle"></i>
-                    <a href="#" id="lesson-link">{{ $lesson->label }}</a>
-                    <a href="#" class="publish-btn">Publish</a>
-                  </li>
-                  @endforeach
-                  @endif
+            @foreach ($sections as $section)
+                <ul class="section-list" data-section-id="{{ $section->id }}">
+                    <li class="section" data-section-id="{{ $section->id }}">
+                        <i class="fa fa-bars handle-section"></i>
+                        <span id="section-title">{{ $section->label }}</span>
+                        <a href="" class="section-h-btn">Quick Actions</a>
+                        <ul class="lesson-list" data-section-id="{{ $section->id }}">
+                            <button class="btn btn-outline-dark btn-el">+ Add Lesson</button>
+                            @if (isset($lessons[$section->id]))
+                                @foreach ($lessons[$section->id] as $lesson)
+                                    <li class="lesson" data-lesson-id="{{ $lesson->id }}">
+                                        <i class="fa fa-bars handle"></i>
+                                        <a href="#" id="lesson-link" data-toggle="modal"
+                                            data-target="#addContentModal{{ $lesson->id }}">
+                                            {{ $lesson->label }}
+                                        </a>
+                                        <a href="#" class="publish-btn">Publish</a>
+                                    </li>
+
+                                    <!-- Add Content Modal for Lesson ID -->
+                                    <div class="modal fade" id="addContentModal{{ $lesson->id }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="addContentModalLabel{{ $lesson->id }}"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="addContentModalLabel{{ $lesson->id }}">Add
+                                                        Content for {{ $lesson->id }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="content-list">
+                                                        <li>
+                                                            <a
+                                                                href="{{ route('videos.create', ['lesson' => $lesson->id]) }}">
+                                                                <i class="fa fa-video-camera"></i> Add Video
+                                                            </a>
+
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="fa fa-question-circle"></i> Add Quiz
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </ul>
+                    </li>
                 </ul>
-              </li>
-            </ul>
             @endforeach
-          </div>
-          <button id="btn"
-            style="padding: 2%;background-color: rgb(240, 244, 248);margin-bottom: 10px;border-radius: 5px ;border: 1px solid grey;">Add
-            New Section</button>
+
+
+        </div>
+        <div>
+            <button class="btn btn-dark" id="btn">Add New Section</button>
+        </div>
     </div>
-
-
-
-
 @endsection
 @section('scripts')
-@parent
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('lesson_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
+    @parent
+    <script>
+        $(function() {
+            let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+            @can('lesson_delete')
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+                let deleteButton = {
+                    text: deleteButtonTrans,
+                    url: "",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).nodes(), function(entry) {
+                            return $(entry).data('entry-id')
+                        });
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-        return
-      }
+                            return
+                        }
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
+                }
+                dtButtons.push(deleteButton)
+            @endcan
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 10,
-  });
-  let table = $('.datatable-lesson:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-  
-})
+            $.extend(true, $.fn.dataTable.defaults, {
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ],
+                pageLength: 10,
+            });
+            let table = $('.datatable-lesson:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust();
+            });
 
-</script>
+        })
+    </script>
 @endsection
