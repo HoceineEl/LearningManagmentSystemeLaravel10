@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 @section('content')
     <div class="card">
+
         <div class="card-body" id="main">
+
+
+
             @foreach ($sections as $section)
                 <ul class="section-list" data-section-id="{{ $section->id }}">
                     <li class="section" data-section-name="{{ $section->label }}" data-section-id="{{ $section->id }}">
@@ -27,7 +31,10 @@
                                     <li class="lesson d-flex justify-content-between" data-lesson-id="{{ $lesson->id }}">
                                         <div>
                                             <i class="fa fa-bars handle"></i>
-                                            <a href="#" id="lesson-link">{{ $lesson->label }}</a>
+                                            <a href="#" id="lesson-link" data-toggle="modal"
+                                                data-target="#addContentModal{{ $lesson->id }}">
+                                                {{ $lesson->label }}
+                                            </a>
                                         </div>
                                         <div>
                                             <span id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -39,6 +46,39 @@
                                             </ul>
                                         </div>
                                     </li>
+                                    <div class="modal fade" id="addContentModal{{ $lesson->id }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="addContentModalLabel{{ $lesson->id }}"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="addContentModalLabel{{ $lesson->id }}">
+                                                        Add
+                                                        Content for {{ $lesson->id }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="content-list">
+                                                        <li>
+                                                            <a
+                                                                href="{{ route('videos.create', ['lesson' => $lesson->id]) }}">
+                                                                <i class="fa fa-video-camera"></i> Add Video
+                                                            </a>
+
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="fa fa-question-circle"></i> Add Quiz
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             @endif
                         </ul>
