@@ -1,4 +1,4 @@
-@extends('admin.videos.layout')
+@extends('layouts.admin')
 
 @section('content')
     <div class="row">
@@ -36,7 +36,7 @@
                                 $formattedSeconds = str_pad($seconds, 2, '0', STR_PAD_LEFT);
                             @endphp
 
-                            <p class="card-text fw-bold">{{ $video->lecon->label }}</p>
+                            {{-- <p class="card-text fw-bold">{{ $video->lecon->label }}</p> --}}
                             <p class="card-text">{{ $formattedHours }}:{{ $formattedMinutes }}:{{ $formattedSeconds }}</p>
 
 

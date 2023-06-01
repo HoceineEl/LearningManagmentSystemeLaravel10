@@ -172,7 +172,7 @@ class GenerateResolutionsJob implements ShouldQueue
             $filePath = $this->storagePath . '/'  . $newFilename . '/' . $newFilename . '.m3u8';
             $fileContent = file_get_contents($filePath);
             $replacements = [
-                'RESOLUTION=1920*1080',
+                'RESOLUTION=1920x1080',
                 'RESOLUTION=1920x720',
                 'RESOLUTION=1920x480',
                 'RESOLUTION=1920x144'

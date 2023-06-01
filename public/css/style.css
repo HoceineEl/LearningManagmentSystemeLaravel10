@@ -227,7 +227,7 @@ ul {
     color: rgb(53, 55, 59)
 }
 
-#section-title {
+.section-title {
     font-size: 30px;
     margin-left: 5px;
 }

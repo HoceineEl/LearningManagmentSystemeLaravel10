@@ -28,7 +28,7 @@
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="title" name="title" required>
             </div>
-            <input type="hidden" value="{{ $lesson->id }}" id="lecon_id" name="lecon_id" required>
+            <input type="hidden" value="3" id="lecon_id" name="lecon_id" required>
             <div class="mb-3">
                 <label for="video" class="form-label">Video</label>
                 <input id="video" name="video" type="file" class="file" data-show-upload="false"

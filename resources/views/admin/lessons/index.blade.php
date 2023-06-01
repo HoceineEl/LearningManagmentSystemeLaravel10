@@ -1,6 +1,14 @@
 @extends('layouts.admin')
 @section('content')
-
+    {{-- @can('lesson_create')
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="#">
+                {{ trans('global.add') }} {{ trans('cruds.lesson.title_singular') }}
+            </a>
+        </div>
+    </div>
+@endcan --}}
     <div class="card">
 
         <div class="card-body" id="main">
@@ -39,105 +47,48 @@
                 </ul>
               </li>
             </ul> --}}
+
             @foreach ($sections as $section)
                 <ul class="section-list" data-section-id="{{ $section->id }}">
                     <li class="section" data-section-id="{{ $section->id }}">
-                        <i class="fa fa-bars handle-section"></i>
-                        <span id="section-title">{{ $section->label }}</span>
-                        <a href="" class="section-h-btn">Quick Actions</a>
+                        <div class="d-flex justify-content-between">
+                            <div class="header">
+                                <i class="fa fa-bars handle-section"></i>
+                                <span id="section-title">{{ $section->label }}</span>
+                            </div>
+                            <div>
+                                <span id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                        class="fa fa-ellipsis-v info-section"></i></span>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><button class="dropdown-item edit-section">Edit</button></li>
+                                    <li><button class="dropdown-item delete-section">Delete</button></li>
+                                    {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
+                                </ul>
+                            </div>
+                        </div>
                         <ul class="lesson-list" data-section-id="{{ $section->id }}">
                             <button class="btn btn-outline-dark btn-el">+ Add Lesson</button>
                             @if (isset($lessons[$section->id]))
                                 @foreach ($lessons[$section->id] as $lesson)
-                                    <li class="lesson" data-lesson-id="{{ $lesson->id }}">
-                                        <i class="fa fa-bars handle"></i>
-                                        <a href="#" id="lesson-link" data-toggle="modal"
-                                            data-target="#addContentModal{{ $lesson->id }}">
-                                            {{ $lesson->label }}
-                                        </a>
-                                        <a href="#" class="publish-btn">Publish</a>
-                                    </li>
-
-                                    <!-- Add Content Modal for Lesson ID -->
-                                    <div class="modal fade" id="addContentModal{{ $lesson->id }}" tabindex="-1"
-                                        role="dialog" aria-labelledby="addContentModalLabel{{ $lesson->id }}"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="addContentModalLabel{{ $lesson->id }}">Add
-                                                        Content for {{ $lesson->id }}</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <ul class="content-list">
-                                                        <li>
-                                                            <a
-                                                                href="{{ route('videos.create', ['lesson' => $lesson->id]) }}">
-                                                                <i class="fa fa-video-camera"></i> Add Video
-                                                            </a>
-
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i class="fa fa-question-circle"></i> Add Quiz
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                    <li class="lesson d-flex justify-content-between" data-lesson-id="{{ $lesson->id }}">
+                                        <div>
+                                            <i class="fa fa-bars handle"></i>
+                                            <a href="#" id="lesson-link">{{ $lesson->label }}</a>
                                         </div>
-                                    </div>
+                                        <div class="d-flex">
+                                            <span id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                aria-expanded="false"><i class="fa fa-ellipsis-v info"></i></span>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><button class="dropdown-item edit-lesson">Edit</button></li>
+                                                <li><button class="dropdown-item delete-lesson">Delete</button></li>
+                                                {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
+                                            </ul>
+                                        </div>
+                                    </li>
                                 @endforeach
                             @endif
                         </ul>
-                    </li>
-
-                    @foreach ($sections as $section)
-                        <ul class="section-list" data-section-id="{{ $section->id }}">
-                            <li class="section" data-section-id="{{ $section->id }}">
-                                <div class="d-flex justify-content-between">
-                                    <div class="header">
-                                        <i class="fa fa-bars handle-section"></i>
-                                        <span id="section-title">{{ $section->label }}</span>
-                                    </div>
-                                    <div>
-                                        <span id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i
-                                                class="fa fa-ellipsis-v info-section"></i></span>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li><button class="dropdown-item edit-section">Edit</button></li>
-                                            <li><button class="dropdown-item delete-section">Delete</button></li>
-                                            {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
-                                        </ul>
-                                    </div>
-                                </div>
-                                <ul class="lesson-list" data-section-id="{{ $section->id }}">
-                                    <button class="btn btn-outline-dark btn-el">+ Add Lesson</button>
-                                    @if (isset($lessons[$section->id]))
-                                        @foreach ($lessons[$section->id] as $lesson)
-                                            <li class="lesson d-flex justify-content-between"
-                                                data-lesson-id="{{ $lesson->id }}">
-                                                <div>
-                                                    <i class="fa fa-bars handle"></i>
-                                                    <a href="#" id="lesson-link">{{ $lesson->label }}</a>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <span id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                        aria-expanded="false"><i class="fa fa-ellipsis-v info"></i></span>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><button class="dropdown-item edit-lesson">Edit</button></li>
-                                                        <li><button class="dropdown-item delete-lesson">Delete</button></li>
-                                                        {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    @endif
-                                </ul>
-                    @endforeach
+            @endforeach
         </div>
         <div>
             <button class="btn btn-dark" id="btn">+ Add New Section</button>
