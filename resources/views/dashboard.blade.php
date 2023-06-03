@@ -61,9 +61,12 @@
                             </table>
                         </div>
 
-                        <div class="card">
-                            <div class="chart">
-                                <canvas id="chart1"></canvas>
+                        <div class="d-flex align-items-end">
+                            <div class="chart card">
+                                <canvas id="chart1" class="chart1"></canvas>
+                            </div>
+                            <div class="chart card">
+                                <canvas id="chart2" class="chart2"></canvas>
                             </div>
                         </div>
 
@@ -83,9 +86,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx1 = document.getElementById('chart1');
-        // const ctx2 = document.getElementById('chart2');
+        const ctx2 = document.getElementById('chart2');
 
         let cours = {!! json_encode($cours) !!};
+        let truePercent = {!! json_encode($truePercent) !!};
+        let lessonNames = {!! json_encode($lessonLabels) !!};
+        truePercent = Object.values(truePercent);
+        lessonNames = Object.values(lessonNames);
 
         // data for chart 1
         let names = cours.map(cour => cour.nom);
@@ -128,8 +135,8 @@
         //         counts.push(1);
         //     }
         // }
-        // console.log(courNames)
-        // console.log(counts);
+
+        // function generating bluish colors
         function generateBluishColors(count) {
             const colors = [];
             const hue = 200; // Blue hue value
@@ -160,6 +167,7 @@
                 }]
             },
             options: {
+                aspectRatio: 0.8,
                 plugins: {
                     title: {
                         display: true,
@@ -171,11 +179,65 @@
                     legend: {
                         display: false
                     }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
                 }
             }
         });
 
-        //* chart 2
+        // chart 2
+        let chart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: lessonNames,
+                datasets: [{
+                    label: 'fished by',
+                    data: truePercent,
+                    backgroundColor: generateBluishColors(12),
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderColor: '#000',
+                    hoverBorderColor: 3
+                }]
+            },
+            options: {
+                aspectRatio: 0.8,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Percentage of users who finished the lesson',
+                        font: {
+                            size: 35
+                        }
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        suggestedMax: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + "%";
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        //* chart enrollements
         // let chart2 = new Chart(ctx2, {
         //     type: 'bar',
         //     data: {
