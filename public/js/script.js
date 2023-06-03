@@ -112,7 +112,11 @@ for (var i = 0; i < nestedSortables.length; i++) {
 }
 
 // creating the elemlents
+var cour = document.getElementById("btn").dataset.courId;
+console.log("cour id : ", cour);
 document.getElementById("btn").addEventListener("click", function () {
+    //
+
     // create the ul element
     var newUls = document.createElement("ul");
     newUls.className = "section-list";
@@ -206,12 +210,7 @@ document.getElementById("btn").addEventListener("click", function () {
             });
         },
     });
-    // new Sortable(section_item, {
-    //     group: "shared",
-    //     handle: ".handle-section",
-    //     animation: 200,
-    //     nested: true,
-    // });
+
     var newInputSection = newDiv.querySelector(".input-section");
     newInputSection.focus();
     newInputSection.select();
@@ -225,7 +224,8 @@ document.getElementById("btn").addEventListener("click", function () {
     // Create an object with the section data
     var sectionData = {
         sectionName: sectionName,
-        position: sectionPosition, // Assign the position
+        position: sectionPosition,
+        courId: cour, // Assign the position
     };
 
     var sectionId;
@@ -248,6 +248,7 @@ document.getElementById("btn").addEventListener("click", function () {
             sectionId = response.sectionId;
             console.log("section saved successfully", sectionId);
             newLi.setAttribute("data-section-id", sectionId);
+            newLi.setAttribute("data-section-name", sectionName);
             newBtn.addEventListener("click", function () {
                 // create the li element
                 var newLi1 = document.createElement("li");
@@ -338,9 +339,10 @@ document.getElementById("btn").addEventListener("click", function () {
                         link.style =
                             "text-decoration:none;color:rgb(81, 84, 90)";
                         var dropdown = document.createElement("div");
-                        dropdown.className = "dropDown";
+                        dropdown.className = "dropDownL";
+
                         dropdown.innerHTML =
-                            " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
+                            "<span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><button class='dropdown-item edit-lesson' >Edit</button></li><li><button class='dropdown-item delete-lesson' >Delete</button></li></ul>";
 
                         row.replaceWith(link);
                         Parent_Li.appendChild(dropdown);
@@ -362,6 +364,8 @@ document.getElementById("btn").addEventListener("click", function () {
                             success: function (data) {
                                 // Update the section name in the UI
                                 console.log("suuccessuful update lesson name");
+                                // location.reload();
+                                // console.log("reloaded");
                             },
                             error: function (error) {
                                 console.error(error);
@@ -374,7 +378,6 @@ document.getElementById("btn").addEventListener("click", function () {
 
         error: function (xhr, status, error) {
             // Handle any errors
-            console.log("Bro,that's not even working");
             console.log("xhr", xhr);
             console.log("status", status);
             console.error("Error saving section:", error);
@@ -390,15 +393,18 @@ document.getElementById("btn").addEventListener("click", function () {
             var header = row.closest(".header");
             var span = document.createElement("span");
             span.id = "section-title";
+            span.style = "font-size: 30px;margin-left: 5px;";
             var sectionNm = newInputSection.value;
             span.textContent = sectionNm;
             var dropdown = document.createElement("div");
             dropdown.className = "dropDown";
             dropdown.innerHTML =
-                " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
+                "<span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><button class='dropdown-item edit-section' >Edit</button></li><li><button class='dropdown-item delete-section' >Delete</button></li></ul>";
 
             row.replaceWith(span);
             header.appendChild(dropdown);
+            var li = header.parentElement;
+            li.setAttribute("data-section-name", sectionNm);
             console.log("section id for update : ", sectionId);
             $.ajax({
                 url: "/sections/" + sectionId,
@@ -414,13 +420,96 @@ document.getElementById("btn").addEventListener("click", function () {
                 },
                 success: function (data) {
                     // Update the section name in the UI
+                    var btn = dropdown.querySelector(".edit-section");
+                    console.log("button", btn);
                     console.log("suuccessuful update section name");
+
+                    console.log("reloaded");
                 },
                 error: function (xhr, status, error) {
                     console.log("xhr", xhr);
                     console.log("status", status);
                     console.error("Error saving section:", error);
                 },
+            });
+        });
+    });
+
+    var editBtns = document.querySelectorAll(".edit-section");
+    editBtns.forEach(function (btn) {
+        console.log("btn : ", btn);
+        btn.addEventListener("click", function () {
+            var span = btn.closest(".header").querySelector(".section-title");
+            var newDiv = document.createElement("div");
+            newDiv.id = "section-box";
+            var dropDown = btn.closest(".dropDown");
+
+            newDiv.style = "display: inline;";
+            var sec = btn.closest(".section");
+            var section_name = sec.dataset.sectionName;
+            console.log("section_name : ", section_name);
+            var newInput = document.createElement("input");
+            newInput.className =
+                "form-control form-control-lg m-2 border border-dark input-section";
+            newInput.type = "text";
+            newInput.value = section_name;
+            var saveBtn = document.createElement("button");
+            saveBtn.className = "btn btn-primary button save-button_sec";
+            saveBtn.textContent = "Save";
+            var cancelBtn = document.createElement("a");
+            cancelBtn.href = "";
+            cancelBtn.className = "btn btn-light button cancel-button_sec";
+            cancelBtn.textContent = "Cancel";
+            // newDiv.innerHTML =
+            //     "<button class='btn btn-primary button save-button_sec'>Save</button><a href='' class='btn btn-light button cancel-button_sec'>Cancel</a>";
+            console.log(span);
+            dropDown.remove();
+            newDiv.append(newInput, saveBtn, cancelBtn);
+            span.replaceWith(newDiv);
+            var buttons1 = document.querySelectorAll(".save-button_sec");
+            buttons1.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var row = button.parentElement;
+                    var header = row.closest(".header");
+                    var section = header.parentElement;
+                    var sectionId = section.dataset.sectionId;
+                    var span = document.createElement("span");
+                    span.id = "section-title";
+                    span.style = "font-size: 30px;margin-left: 5px;";
+
+                    var sectionNm = newInput.value;
+                    span.textContent = sectionNm;
+                    var dropdown = document.createElement("div");
+                    dropdown.className = "dropDown";
+                    dropdown.innerHTML =
+                        "<span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><button class='dropdown-item edit-section' >Edit</button></li><li><button class='dropdown-item delete-section' >Delete</button></li></ul>";
+                    row.replaceWith(span);
+                    header.appendChild(dropdown);
+                    console.log("section id for update : ", sectionId);
+                    $.ajax({
+                        url: "/sections/" + sectionId,
+                        type: "PUT",
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
+                        },
+                        dataType: "json",
+                        data: {
+                            name: sectionNm,
+                        },
+                        success: function (data) {
+                            // Update the section name in the UI
+                            console.log("suuccessuful update section name");
+                            // location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            console.log("xhr", xhr);
+                            console.log("status", status);
+                            console.error("Error saving section:", error);
+                        },
+                    });
+                });
             });
         });
     });
@@ -467,18 +556,19 @@ editBtns.forEach(function (btn) {
                 var sectionId = section.dataset.sectionId;
                 var span = document.createElement("span");
                 span.id = "section-title";
+                span.style = "font-size: 30px;margin-left: 5px;";
+
                 var sectionNm = newInput.value;
                 span.textContent = sectionNm;
                 var dropdown = document.createElement("div");
                 dropdown.className = "dropDown";
                 dropdown.innerHTML =
-                    " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
-
+                    "<span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><button class='dropdown-item edit-section' >Edit</button></li><li><button class='dropdown-item delete-section' >Delete</button></li></ul>";
                 row.replaceWith(span);
                 header.appendChild(dropdown);
                 console.log("section id for update : ", sectionId);
                 $.ajax({
-                    url: "/soections/" + sectionId,
+                    url: "/sections/" + sectionId,
                     type: "PUT",
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -492,6 +582,7 @@ editBtns.forEach(function (btn) {
                     success: function (data) {
                         // Update the section name in the UI
                         console.log("suuccessuful update section name");
+                        // location.reload();
                     },
                     error: function (xhr, status, error) {
                         console.log("xhr", xhr);
@@ -503,7 +594,93 @@ editBtns.forEach(function (btn) {
         });
     });
 });
+var editBtnsL = document.querySelectorAll(".edit-lesson");
+editBtnsL.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+        var link = btn.closest(".lesson").querySelector(".lesson-link");
+        var newDiv = document.createElement("div");
+        newDiv.id = "lesson-box";
+        var dropDown = btn.closest(".dropDownL");
+        //////
 
+        // var newDiv1 = document.createElement("div");
+        // newDiv1.id = "lesson-box";
+        // newDiv1.style = "display: inline;";
+        // newDiv1.innerHTML =
+        //     "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text'><button class='btn btn-primary save-button'>Save</button><a href='' class='btn btn-secondary cancel-button'>Cancel</a>";
+
+        // /////
+        newDiv.style = "display: inline;";
+        var less = btn.closest(".lesson");
+        var lesson_name = less.dataset.lessonName;
+        console.log("lesson_name : ", lesson_name);
+        var newInput = document.createElement("input");
+        newInput.className = "form-control input m-2 border border-dark";
+        newInput.type = "text";
+        newInput.value = section_name;
+        var saveBtn = document.createElement("button");
+        saveBtn.className = "btn btn-primary button save-button";
+        saveBtn.textContent = "Save";
+        var cancelBtn = document.createElement("a");
+        cancelBtn.href = "";
+        cancelBtn.className = "btn btn-light button cancel-button";
+        cancelBtn.textContent = "Cancel";
+        console.log(link);
+        dropDown.remove();
+        newDiv.append(newInput, saveBtn, cancelBtn);
+        link.replaceWith(newDiv);
+        //
+        var buttons = document.querySelectorAll(".save-button");
+        buttons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                var row = button.parentNode;
+                var nameInput = row.querySelector(".input");
+                var name = nameInput.value;
+                var Parent_Li = row.closest(".lesson");
+
+                // Create an object to send the data
+                var link = document.createElement("a");
+                link.href = "#";
+                link.textContent = name;
+                link.className = "lesson-link";
+                link.style = "text-decoration:none;color:rgb(81, 84, 90)";
+                var dropdown = document.createElement("div");
+                dropdown.className = "dropDownL";
+
+                dropdown.innerHTML =
+                    "<span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><button class='dropdown-item edit-lesson' >Edit</button></li><li><button class='dropdown-item delete-lesson' >Delete</button></li></ul>";
+
+                row.replaceWith(link);
+                Parent_Li.appendChild(dropdown);
+
+                console.log("lesson id : ", lessonId);
+                console.log("lesson name :", name);
+                $.ajax({
+                    url: "/lessons/" + lessonId,
+                    type: "PUT",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                    },
+                    dataType: "json",
+                    data: {
+                        name: name,
+                    },
+                    success: function (data) {
+                        // Update the section name in the UI
+                        console.log("suuccessuful update lesson name");
+                        location.reload();
+                        console.log("reloaded");
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    },
+                });
+            });
+        });
+    });
+});
 // add elemlents in already exists sections  buttons
 var addBtns = document.querySelectorAll(".btn-el");
 addBtns.forEach(function (addBtn) {
@@ -594,7 +771,7 @@ addBtns.forEach(function (addBtn) {
                 var dropdown = document.createElement("div");
                 dropdown.className = "dropDown";
                 dropdown.innerHTML =
-                    " <span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><a class='dropdown-item' href='#'>Edit</a></li><li><a class='dropdown-item' href='#'>Delete</a></li></ul>";
+                    "<span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><button class='dropdown-item edit-section' >Edit</button></li><li><button class='dropdown-item delete-section' >Delete</button></li></ul>";
                 row.replaceWith(link);
                 parent_li.appendChild(dropdown);
                 console.log("lesson id for update : ", lessonId);

@@ -9,6 +9,8 @@ use App\Http\Requests\StoreCourRequest;
 use App\Http\Requests\UpdateCourRequest;
 use App\Models\Cour;
 use App\Models\User;
+use App\Models\Section;
+use App\Models\Lesson;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -84,9 +86,12 @@ class CoursController extends Controller
     {
         abort_if(Gate::denies('cour_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $cour->load('auteur', 'coursSections');
-
-        return view('admin.cours.show', compact('cour'));
+        $sections = Section::where('cour_id', $cour->id)->orderBy('position')->get();
+        $sectionIds = $sections->pluck('id')->toArray();
+        
+        $lessons = Lesson::whereIn('section_id', $sectionIds)->orderBy('position')->get()->groupBy('section_id');
+    
+        return view('admin.lessons.index', ['lessons' => $lessons, 'sections' => $sections,'cour'=>$cour->id]);
     }
 
     public function destroy(Cour $cour)

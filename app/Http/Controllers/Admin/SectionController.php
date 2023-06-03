@@ -12,11 +12,12 @@ class SectionController extends Controller
     {
         $sectionName = $request->input('sectionName');
         $position = $request->input('position');
+        $cour = $request->input('courId');
         // Create a new section
         $section = new Section();
         $section->label = $sectionName;
         $section->position=$position;
-        $section->cour_id=1;
+        $section->cour_id=$cour;
         $section->save();
         // Return the generated section ID
         return response()->json(['sectionId' => $section->id]);

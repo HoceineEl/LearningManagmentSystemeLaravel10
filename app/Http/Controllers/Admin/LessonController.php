@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-
+use App\Models\Cour;
 use App\Models\Lesson;
 use App\Models\Section;
 
@@ -13,14 +13,21 @@ class LessonController extends Controller
 {
 
     // Display The section And their Current Lessons
-    public function index()
-{
-    $lessons = Lesson::orderBy('position')->get()->groupBy('section_id');
-    $sections = Section::orderBy('position')->get();
+    public function index(Cour $cour)
+    {
+        $sections = Section::where('cour_id', $cour->id)->orderBy('position')->get();
+        $sectionIds = $sections->pluck('id')->toArray();
+        
+        $lessons = Lesson::whereIn('section_id', $sectionIds)->orderBy('position')->get()->groupBy('section_id');
+        $data=[
+            'lessons' => $lessons, 
+            'sections' => $sections,
+            'cour'=>$cour->id,
+        ];
+        
+        return view('admin.lessons.index',$data);
+    }
     
-    return view('admin.lessons.index', ['lessons' => $lessons, 'sections' => $sections]);
-    // return view('admin.lessons.index');
-}
 
 
     //stores the lesson with the inserted value

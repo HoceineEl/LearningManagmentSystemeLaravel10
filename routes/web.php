@@ -220,7 +220,7 @@ Route::get('/editSection', [SectionController::class, 'edit'])->name('section.ed
 Route::put('/sections/{section}', [SectionController::class, 'update']);
 Route::put('/lessons/{lesson}', [LessonController::class, 'update']);
 // Lessons
-Route::get('/lessons', [LessonController::class, 'index'])->name('section.index');
+Route::get('/lessons/{cour}', [LessonController::class, 'index'])->name('section.index');
 Route::post('/saveLesson', [LessonController::class, 'store']);
 Route::put('/updateLessonPosition', [LessonController::class, 'updatePosition']);
 
