@@ -87,7 +87,7 @@
             @endforeach
         </div>
         <div>
-            <button class="btn btn-dark" id="btn">+ Add New Section</button>
+            <button class="btn btn-dark" id="btn" data-cour-id="{{$cour}}">+ Add New Section</button>
         </div>
     </div>
 @endsection
