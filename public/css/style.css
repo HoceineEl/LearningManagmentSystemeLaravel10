@@ -231,3 +231,8 @@ ul {
     font-size: 30px;
     margin-left: 5px;
 }
+
+.selected {
+    background-color: rgba(126, 135, 148, 0.795);
+    transform: scale(1.01);
+}
