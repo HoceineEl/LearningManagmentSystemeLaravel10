@@ -28,9 +28,9 @@
                             <th>
                                 {{ trans('cruds.cour.fields.nom') }}
                             </th>
-                            {{-- <th>
+                            <th>
                                 {{ trans('cruds.cour.fields.cover') }}
-                            </th> --}}
+                            </th>
                             <th>
                                 {{ trans('cruds.cour.fields.auteur') }}
                             </th>

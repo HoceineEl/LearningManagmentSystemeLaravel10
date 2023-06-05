@@ -157,7 +157,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"></script>
-    <script src="{{ asset('js/script.js') }}"></script>
 
     <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -183,6 +182,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 
     <script>
         $(function() {
@@ -223,8 +223,9 @@
                 order: [],
                 scrollX: true,
                 pageLength: 100,
-                dom: 'lBfrtip<"actions">',
-                buttons: [{
+                // dom: 'lBfrtip<"actions">',
+                buttons: [
+                    {
                         extend: 'selectAll',
                         className: 'btn-primary',
                         text: selectAllButtonTrans,

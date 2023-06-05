@@ -75,4 +75,12 @@ class LessonController extends Controller
         return response()->json(['message' => 'Lesson positions updated hssd successfully']);
   
     }
+    public function delete(Lesson $lesson){
+        if(!$lesson){
+            return response()->json(['message'=>'lesson Not Found']);
+        }
+        $lesson->delete();
+        return response()->json(['message'=>'lesson is Deleted Successfully']);
+
+    }
 }

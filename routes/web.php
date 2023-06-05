@@ -195,7 +195,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function 
 });
 
 
-// HOUCEIN
+////////////////////////////////? HOUCEINE 
 
 Route::post('clearVideos', [VideoController::class, 'clear'])->name('videos.clear');
 Route::get('/videos/create/{lesson}', [VideoController::class, 'create'])->name('videos.create');
@@ -208,27 +208,30 @@ Route::get('/video-conversion-progress', [VideoController::class, 'getVideoConve
 
 
 
-// Hamza 
+////////////////////////////////////?Hamza /////////////////////////////////////////
+    // *******/ Sections : 
 
-// Sections
-Route::post('/saveSection', [SectionController::class, 'store']);
-Route::put('/updateSectionPosition', [SectionController::class, 'updatePosition']);
-Route::get('/editSection', [SectionController::class, 'edit'])->name('section.edit');
-// Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
-// Route::resource('sections', 'SectionsController');
+    Route::post('/saveSection', [SectionController::class, 'store']);
+    Route::put('/updateSectionPosition', [SectionController::class, 'updatePosition']);
+    Route::delete('/sections/delete/{section}', [SectionController::class, 'delete']);
+    Route::get('/editSection', [SectionController::class, 'edit'])->name('section.edit');
+    Route::put('/sections/{section}', [SectionController::class, 'update']);
+    Route::put('/lessons/{lesson}', [LessonController::class, 'update']);
+    // Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
+    // Route::resource('sections', 'SectionsController');
 
-Route::put('/sections/{section}', [SectionController::class, 'update']);
-Route::put('/lessons/{lesson}', [LessonController::class, 'update']);
-// Lessons
-Route::get('/lessons/{cour}', [LessonController::class, 'index'])->name('section.index');
-Route::post('/saveLesson', [LessonController::class, 'store']);
-Route::put('/updateLessonPosition', [LessonController::class, 'updatePosition']);
-
-// Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
-// Route::resource('lecons', 'LeconsController');
-
-// Route::post('/saveSectionEx',[ SectionController::class,'storeEx'])->name('section.save');
+    // *******/ Lessons : 
+    Route::get('/lessons/{cour}', [LessonController::class, 'index'])->name('section.index');
+    Route::post('/saveLesson', [LessonController::class, 'store']);
+    Route::put('/updateLessonPosition', [LessonController::class, 'updatePosition']);
+    Route::delete('/lessons/delete/{lesson}', [LessonController::class, 'delete']);
+    // Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
+    // Route::resource('lecons', 'LeconsController');
 
 
-// Abdallah
+
+////////////////////////////?         Abdallah
 Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+
+
+//?Hamza Ben Allou 

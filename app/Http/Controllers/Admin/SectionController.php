@@ -68,4 +68,13 @@ class SectionController extends Controller
         ];
     return view('admin.lessons.edit',$data);
     }
+
+    public function delete(Section $section){
+        if(!$section){
+            return response()->json(['message'=>'Section Not Found']);
+        }
+        $section->delete();
+        return response()->json(['message'=>'Section is Deleted Successfully']);
+
+    }
 }
