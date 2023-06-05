@@ -57,10 +57,7 @@ class Cour extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function coursSections()
-    {
-        return $this->hasMany(Section::class, 'cours_id', 'id');
-    }
+   
 
     public function getCoverAttribute()
     {
@@ -77,5 +74,9 @@ class Cour extends Model implements HasMedia
     public function auteur()
     {
         return $this->belongsTo(User::class, 'auteur_id');
+    }
+    public function sections()
+    {
+        return $this->hasMany(Section::class);
     }
 }

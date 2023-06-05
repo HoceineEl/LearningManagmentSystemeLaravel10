@@ -30,11 +30,18 @@ class Section extends Model
         'deleted_at',
     ];
 
-    public function lesson(){
+    public function lesson()
+    {
         return $this->hasMany(Lesson::class);
     }
-    public function cours()
+   
+    public function cour()
     {
-        return $this->belongsTo(Cour::class, 'cours_id');
+        return $this->belongsTo(Cour::class);
+    }
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
     }
 }

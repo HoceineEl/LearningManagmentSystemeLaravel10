@@ -13,7 +13,8 @@ class LessonVideo extends Model
         'path',
         'lesson_id'
     ];
-    public function lecon(){
-        return $this->belongsTo(Lecon::class);
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class);
     }
 }

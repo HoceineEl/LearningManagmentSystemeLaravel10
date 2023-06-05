@@ -58,9 +58,13 @@ class Lesson extends Model
         return $this->hasMany(Contenu::class, 'lesson_id', 'id');
     }
 
-
-    public function section(){
+    public function section()
+    {
         return $this->belongsTo(Section::class);
     }
 
+    public function videos()
+    {
+        return $this->hasMany(LessonVideo::class);
+    }
 }

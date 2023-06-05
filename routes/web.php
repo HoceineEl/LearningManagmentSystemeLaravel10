@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\VideoController;
 use App\Models\LessonVideo;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\LessonController;
+use App\Http\Controllers\Frontend\LessonController as FrontendLessonController;
 use Illuminate\Support\Facades\Http;
 
 
@@ -125,13 +126,9 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('cours/ckmedia', 'CoursController@storeCKEditorImages')->name('cours.storeCKEditorImages');
     Route::resource('cours', 'CoursController');
 
-    // // Sections
-    // Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
-    // Route::resource('sections', 'SectionsController');
+    //lessons
+    Route::get('/lesson/show/{lesson}',[FrontendLessonController::class,'show'])->name('lesson.show');  
 
-    // Lecons
-    // Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
-    // Route::resource('lecons', 'LeconsController');
 
     // Quizs
     Route::delete('quizzes/destroy', 'QuizsController@massDestroy')->name('quizzes.massDestroy');

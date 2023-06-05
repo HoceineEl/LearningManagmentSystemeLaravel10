@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash as FacadesHash;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable
@@ -114,7 +115,7 @@ class User extends Authenticatable
         self::observe(new \App\Observers\UserActionObserver);
     }
 
-    public function auteurCours()
+    public function cours()
     {
         return $this->hasMany(Cour::class, 'auteur_id', 'id');
     }
@@ -167,7 +168,7 @@ class User extends Authenticatable
     public function setPasswordAttribute($input)
     {
         if ($input) {
-            $this->attributes['password'] = app('hash')->needsRehash($input) ? Hash::make($input) : $input;
+            $this->attributes['password'] = app('hash')->needsRehash($input) ? FacadesHash::make($input) : $input;
         }
     }
 

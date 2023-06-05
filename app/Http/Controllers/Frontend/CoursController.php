@@ -66,12 +66,12 @@ class CoursController extends Controller
     {
         $cour->update($request->all());
 
-        if ($request->input('cover', false)) {
-            if (! $cour->cover || $request->input('cover') !== $cour->cover->file_name) {
+        if ($request->hasFile('cover')) {
+            if (!$cour->cover || $request->file('cover')->getClientOriginalName() !== $cour->cover->file_name) {
                 if ($cour->cover) {
                     $cour->cover->delete();
                 }
-                $cour->addMedia(storage_path('tmp/uploads/' . basename($request->input('cover'))))->toMediaCollection('cover');
+                $cour->addMediaFromRequest('cover')->toMediaCollection('cover');
             }
         } elseif ($cour->cover) {
             $cour->cover->delete();
@@ -80,13 +80,13 @@ class CoursController extends Controller
         return redirect()->route('frontend.cours.index');
     }
 
-    public function show(Cour $cour)
+
+    public function show($cour)
     {
         abort_if(Gate::denies('cour_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $cour->load('auteur', 'coursSections');
-
-        return view('frontend.cours.show', compact('cour'));
+        $course = Cour::find($cour);
+        $video = $course->sections->where('position', '1')->first()->lessons->where('position', '1')->first()->videos->first();
+        return view('frontend.cours.show', compact('course', 'video'));
     }
 
     public function destroy(Cour $cour)
