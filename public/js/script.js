@@ -323,6 +323,7 @@ document.getElementById("btn").addEventListener("click", function () {
                         var nameInput = row.querySelector(".input");
                         var name = nameInput.value;
                         var Parent_Li = row.closest(".lesson");
+                        newLi1.setAttribute("data-lesson-name", name);
 
                         // Create an object to send the data
                         var link = document.createElement("a");
@@ -432,9 +433,9 @@ document.getElementById("btn").addEventListener("click", function () {
                         videoLink.className = "btn btn-success";
                         videoLink.href = "/videos/create/" + lessonId;
                         var videoIcon = document.createElement("i");
-                        videoIcon.className = "fa fa-video-camera";
-                        videoLink.appendChild(videoIcon);
-                        videoLink.textContent = " Add Video";
+                        videoIcon.className = "fa fa-video-camera me-2";
+                        videoLink.append(videoIcon, "Add Video");
+                        // videoLink.textContent = " Add Video";
                         videoLi.appendChild(videoLink);
                         ul.appendChild(videoLi);
 
@@ -445,9 +446,8 @@ document.getElementById("btn").addEventListener("click", function () {
                         quizLink.className = "btn btn-primary";
                         quizLink.href = "/admin/quizzes/create/" + lessonId;
                         var quizIcon = document.createElement("i");
-                        quizIcon.className = "fa fa-question-circle";
-                        quizLink.appendChild(quizIcon);
-                        quizLink.textContent = " Add Quiz";
+                        quizIcon.className = "fa fa-question-circle me-2";
+                        quizLink.append(quizIcon, "Add Quiz");
                         quizLi.appendChild(quizLink);
                         ul.appendChild(quizLi);
 
@@ -1214,6 +1214,8 @@ addBtns.forEach(function (addBtn) {
                 var nameInput = row.querySelector(".input");
                 var name = nameInput.value;
                 var parent_li = row.closest(".lesson");
+                parent_li.setAttribute("data-lesson-name", name);
+
                 // Create an object to send the data
 
                 var link = document.createElement("a");
@@ -1300,9 +1302,9 @@ addBtns.forEach(function (addBtn) {
                 videoLink.className = "btn btn-success";
                 videoLink.href = "/videos/create/" + lessonId;
                 var videoIcon = document.createElement("i");
-                videoIcon.className = "fa fa-video-camera";
-                videoLink.appendChild(videoIcon);
-                videoLink.textContent = " Add Video";
+                videoIcon.className = "fa fa-video-camera me-2";
+                videoLink.append(videoIcon, "Add Video");
+                // videoLink.textContent = " Add Video";
                 videoLi.appendChild(videoLink);
                 ul.appendChild(videoLi);
 
@@ -1313,9 +1315,8 @@ addBtns.forEach(function (addBtn) {
                 quizLink.className = "btn btn-primary";
                 quizLink.href = "/admin/quizzes/create/" + lessonId;
                 var quizIcon = document.createElement("i");
-                quizIcon.className = "fa fa-question-circle";
-                quizLink.appendChild(quizIcon);
-                quizLink.textContent = " Add Quiz";
+                quizIcon.className = "fa fa-question-circle me-2";
+                quizLink.append(quizIcon, "Add Quiz");
                 quizLi.appendChild(quizLink);
                 ul.appendChild(quizLi);
 
@@ -1439,6 +1440,7 @@ addBtns.forEach(function (addBtn) {
                                             console.log(
                                                 "suuccessuful update lesson name"
                                             );
+                                            location.reload();
                                         },
                                         error: function (error) {
                                             console.error(error);
