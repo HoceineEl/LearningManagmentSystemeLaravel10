@@ -8,6 +8,14 @@
             max-width: 100%;
             height: auto;
         }
+
+        .course-image {
+            width: 100%;
+            height: 200px;
+            /* Adjust the height as desired */
+            object-fit: cover;
+            /* Ensure the image covers the entire space without distortion */
+        }
     </style>
     <div class="container">
         <div class="row justify-content-center">
@@ -21,10 +29,14 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="card mb-4">
-                        <video controls crossorigin playsinline>
-                            <source type="application/x-mpegURL"
-                                src="{{ asset('storage/videos/' . str_replace('.m3u8', '', $video->path) . '/' . $video->path) }}">
-                        </video>
+                        @if ($video)
+                            <video controls crossorigin playsinline>
+                                <source type="application/x-mpegURL"
+                                    src="{{ asset('storage/videos/' . str_replace('.m3u8', '', $video->path) . '/' . $video->path) }}">
+                            </video>
+                        @else
+                            <img src="{{ $course->cover->getUrl() }}" alt="Card image cap" class="course-image">
+                        @endif
                         <div class="card-body">
                             {!! $course->description !!}
                         </div>
@@ -67,7 +79,6 @@
                                                                     $hours = floor($lesson->videos->first()->duration / 3600);
                                                                     $minutes = floor(($lesson->videos->first()->duration % 3600) / 60);
                                                                     $seconds = $lesson->videos->first()->duration % 60;
-                                                                    
                                                                     // Format values with leading zeros if needed
                                                                     $formattedHours = str_pad($hours, 2, '0', STR_PAD_LEFT);
                                                                     $formattedMinutes = str_pad($minutes, 2, '0', STR_PAD_LEFT);

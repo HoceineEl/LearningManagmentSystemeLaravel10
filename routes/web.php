@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('cours', 'CoursController');
     // Quizs
     Route::delete('quizzes/destroy', 'QuizsController@massDestroy')->name('quizzes.massDestroy');
+    Route::get('quizzes/create/{lesson}', 'QuizsController@create')->name('quizzes.create');
     Route::resource('quizzes', 'QuizsController');
 
     // Quiz Questions
@@ -127,7 +128,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::resource('cours', 'CoursController');
 
     //lessons
-    Route::get('/lesson/show/{lesson}',[FrontendLessonController::class,'show'])->name('lesson.show');  
+    Route::get('/lesson/show/{lesson}', [FrontendLessonController::class, 'show'])->name('lesson.show');
 
 
     // Quizs
@@ -206,24 +207,24 @@ Route::get('/video-conversion-progress', [VideoController::class, 'getVideoConve
 
 
 ////////////////////////////////////?Hamza /////////////////////////////////////////
-    // *******/ Sections : 
+// *******/ Sections : 
 
-    Route::post('/saveSection', [SectionController::class, 'store']);
-    Route::put('/updateSectionPosition', [SectionController::class, 'updatePosition']);
-    Route::delete('/sections/delete/{section}', [SectionController::class, 'delete']);
-    Route::get('/editSection', [SectionController::class, 'edit'])->name('section.edit');
-    Route::put('/sections/{section}', [SectionController::class, 'update']);
-    Route::put('/lessons/{lesson}', [LessonController::class, 'update']);
-    // Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
-    // Route::resource('sections', 'SectionsController');
+Route::post('/saveSection', [SectionController::class, 'store']);
+Route::put('/updateSectionPosition', [SectionController::class, 'updatePosition']);
+Route::delete('/sections/delete/{section}', [SectionController::class, 'delete']);
+Route::get('/editSection', [SectionController::class, 'edit'])->name('section.edit');
+Route::put('/sections/{section}', [SectionController::class, 'update']);
+Route::put('/lessons/{lesson}', [LessonController::class, 'update']);
+// Route::delete('sections/destroy', 'SectionsController@massDestroy')->name('sections.massDestroy');
+// Route::resource('sections', 'SectionsController');
 
-    // *******/ Lessons : 
-    Route::get('/lessons/{cour}', [LessonController::class, 'index'])->name('section.index');
-    Route::post('/saveLesson', [LessonController::class, 'store']);
-    Route::put('/updateLessonPosition', [LessonController::class, 'updatePosition']);
-    Route::delete('/lessons/delete/{lesson}', [LessonController::class, 'delete']);
-    // Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
-    // Route::resource('lecons', 'LeconsController');
+// *******/ Lessons : 
+Route::get('/lessons/{cour}', [LessonController::class, 'index'])->name('section.index');
+Route::post('/saveLesson', [LessonController::class, 'store']);
+Route::put('/updateLessonPosition', [LessonController::class, 'updatePosition']);
+Route::delete('/lessons/delete/{lesson}', [LessonController::class, 'delete']);
+// Route::delete('lecons/destroy', 'LeconsController@massDestroy')->name('lecons.massDestroy');
+// Route::resource('lecons', 'LeconsController');
 
 
 

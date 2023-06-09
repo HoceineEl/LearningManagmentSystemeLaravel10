@@ -428,10 +428,7 @@ document.getElementById("btn").addEventListener("click", function () {
                         // Create the first li element for adding a video
                         var videoLi = document.createElement("li");
                         var videoLink = document.createElement("a");
-                        videoLink.href =
-                            '{{ route("videos.create", ["lesson" => ' +
-                            lessonId +
-                            ") }}";
+                        videoLink.href = "/videos/create/" + lessonId;
                         var videoIcon = document.createElement("i");
                         videoIcon.className = "fa fa-video-camera";
                         videoLink.appendChild(videoIcon);
@@ -442,7 +439,7 @@ document.getElementById("btn").addEventListener("click", function () {
                         // Create the second li element for adding a quiz
                         var quizLi = document.createElement("li");
                         var quizLink = document.createElement("a");
-                        quizLink.href = "#";
+                        quizLink.href = "/admin/quizzes/create/" + lessonId;
                         var quizIcon = document.createElement("i");
                         quizIcon.className = "fa fa-question-circle";
                         quizLink.appendChild(quizIcon);
@@ -1293,10 +1290,7 @@ addBtns.forEach(function (addBtn) {
                 // Create the first li element for adding a video
                 var videoLi = document.createElement("li");
                 var videoLink = document.createElement("a");
-                videoLink.href =
-                    '{{ route("videos.create", ["lesson" => ' +
-                    lessonId +
-                    ") }}";
+                videoLink.href = "/videos/create/" + lessonId;
                 var videoIcon = document.createElement("i");
                 videoIcon.className = "fa fa-video-camera";
                 videoLink.appendChild(videoIcon);
@@ -1307,7 +1301,7 @@ addBtns.forEach(function (addBtn) {
                 // Create the second li element for adding a quiz
                 var quizLi = document.createElement("li");
                 var quizLink = document.createElement("a");
-                quizLink.href = "#";
+                quizLink.href = "/admin/quizzes/create/" + lessonId;
                 var quizIcon = document.createElement("i");
                 quizIcon.className = "fa fa-question-circle";
                 quizLink.appendChild(quizIcon);

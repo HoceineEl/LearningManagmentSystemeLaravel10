@@ -21,38 +21,24 @@
                                 </a>
                                 <ul class="sidebar-submenu collapse" id="section{{ $section->id }}">
                                     @foreach ($section->lessons as $nextLesson)
-                                        <li class="sidebar-menu-item">
-                                            <a class="sidebar-menu-button" href="student-dashboard.html">
-                                                <i
-                                                    class="sidebar-menu-icon sidebar-menu-icon--left material-icons">adjust</i>
-                                                Student
-                                            </a>
-                                        </li>
                                         <li class="sidebar-submenu-item">
                                             <a class="sidebar-menu-button {{ $nextLesson->id == $lesson->id ? 'active' : '' }}"
-                                                href="{{ route('frontend.lesson.show', $nextLesson) }}">
+                                                @if ($nextLesson->videos->first()) href="{{ route('frontend.lesson.show', ['lesson' => $nextLesson]) }}"
+                                                @else
+                                                    href="#" @endif>
                                                 <i
                                                     class="sidebar-menu-icon sidebar-menu-icon--left {{ $nextLesson->id == $lesson->id ? 'active-icon' : 'normal-icon' }}"></i>
                                                 <div class="media">
                                                     <div class="media-body">
-                                                        <a style="text-decoration: none;"
-                                                            @if ($nextLesson->videos->first()) href="{{ route('frontend.lesson.show', ['lesson' => $nextLesson]) }}"
-                                                            @else
-                                                                href="#" @endif>{{ $nextLesson->label }}</a>
+                                                        <span>{{ $nextLesson->label }}</span>
                                                     </div>
                                                     <div class="media-right">
                                                         @if ($nextLesson->videos->first())
                                                             @php
-                                                                $hours = floor($nextLesson->videos->first()->duration / 3600);
-                                                                $minutes = floor(($nextLesson->videos->first()->duration % 3600) / 60);
-                                                                $seconds = $nextLesson->videos->first()->duration % 60;
-                                                                
-                                                                // Format values with leading zeros if needed
-                                                                $formattedHours = str_pad($hours, 2, '0', STR_PAD_LEFT);
-                                                                $formattedMinutes = str_pad($minutes, 2, '0', STR_PAD_LEFT);
-                                                                $formattedSeconds = str_pad($seconds, 2, '0', STR_PAD_LEFT);
+                                                                $duration = $nextLesson->videos->first()->duration;
+                                                                $formattedDuration = gmdate('H:i', $duration);
                                                             @endphp
-                                                            <small>{{ $formattedHours }}:{{ $formattedMinutes }}</small>
+                                                            <small>{{ $formattedDuration }}</small>
                                                         @else
                                                             <small>00:00</small>
                                                         @endif

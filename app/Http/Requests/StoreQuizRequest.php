@@ -21,7 +21,7 @@ class StoreQuizRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'lecon_id' => [
+            'lesson_id' => [
                 'required',
                 'integer',
             ],
