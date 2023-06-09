@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <a  href="{{ route('frontend.cours.show', ['cour' => '1']) }}" style="display: block;">
-                        <img src="{{ $course->cover->getUrl() }}" alt="Card image cap" class="course-image">
+                        <img src="#" alt="Card image cap" class="course-image">
                     </a>
                     <div class="card-body">
                         <small class="text-muted">ADVANCED</small><br>
