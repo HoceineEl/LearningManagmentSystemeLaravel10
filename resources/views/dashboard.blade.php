@@ -36,20 +36,22 @@
                                 </thead>
                                 <tbody>
                                     @forelse($users as $user)
-                                        <tr>
-                                            <td>
-                                                {{ $user['id'] }}
-                                            </td>
-                                            <td>
-                                                {{ $user['name'] }}
-                                            </td>
-                                            <td>
-                                                {{ $user['email'] }}
-                                            </td>
-                                            <td>
-                                                {{ $user['role'] }}
-                                            </td>
-                                        </tr>
+                                        @if($user->approved)
+                                            <tr>
+                                                <td>
+                                                    {{ $user['id'] }}
+                                                </td>
+                                                <td>
+                                                    {{ $user['name'] }}
+                                                </td>
+                                                <td>
+                                                    {{ $user['email'] }}
+                                                </td>
+                                                <td>
+                                                    {{ $user['role'] }}
+                                                </td>
+                                            </tr>
+                                        @endif
                                     @empty
                                         <tr>
                                             <td colspan="4">
@@ -59,6 +61,17 @@
                                     @endforelse
                                 </tbody>
                             </table>
+                        </div>
+
+                        <div class="d-flex justify-content-around">
+                            <div class="card">
+                                <div class="card-title">
+                                    Number of Courses
+                                </div>
+                                <p class="number">
+                                    {{ count($cours) }}
+                                </p>
+                            </div>
                         </div>
 
                         <div class="d-flex justify-content-around">
