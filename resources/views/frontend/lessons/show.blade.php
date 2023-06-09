@@ -3,15 +3,38 @@
     <div class="container">
         <div class="row">
             <div class="col-md-9">
-                <div class="video-player-container ">
-                    <video controls crossorigin playsinline>
-                        <source type="application/x-mpegURL"
-                            src="{{ asset('storage/videos/' . str_replace('.m3u8', '', $video->path) . '/' . $video->path) }}">
-                    </video>
+                @if ($video)
+                    <div class="video-player-container">
+                        <video controls crossorigin playsinline>
+                            <source type="application/x-mpegURL"
+                                src="{{ asset('storage/videos/' . str_replace('.m3u8', '', $video->path) . '/' . $video->path) }}">
+                        </video>
+                    </div>
+                @else
+                    <div class="text-center">
+                        <p>No video available for this lesson.</p>
+                    </div>
+                @endif
+            </div>
+            <div class="col-md-3">
+                <div class="d-flex justify-content-between position-sticky bottom-0">
+                    @if ($previousLesson)
+                        <a href="{{ route('frontend.lesson.show', ['lesson' => $previousLesson]) }}"
+                            class="btn btn-primary me-2">Previous Lesson</a>
+                    @endif
+                    @if ($nextLesson)
+                        <a href="{{ route('frontend.lesson.show', ['lesson' => $nextLesson]) }}"
+                            class="btn btn-primary">Next Lesson</a>
+                    @endif
                 </div>
             </div>
         </div>
+        <div class="position-fixed top-0 end-0 p-3">
+            <a href="#" class="btn btn-success">Take Lesson Quiz</a>
+        </div>
     </div>
+
+
 @section('scripts')
     <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
