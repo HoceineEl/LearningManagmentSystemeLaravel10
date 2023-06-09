@@ -155,13 +155,14 @@
             @can('lesson_delete')
                 let deleteButtonTrans =
                     '{{ trans('
-                                        <<<<<<< HEAD
-                                                                global.datatables.delete ') }}' ===
+                                                            <<<<<<< HEAD
+                                                                                    global.datatables.delete ') }}' ===
                     ===
                     =
                     global.datatables.delete ') }}' >>>
                     >>>
-                    > f64509e60066a3b1624f40081e9110c7e50f86a8
+                    >
+                    f64509e60066a3b1624f40081e9110c7e50f86a8
                 let deleteButton = {
                     text: deleteButtonTrans,
                     url: "",
@@ -175,14 +176,14 @@
                         if (ids.length === 0) {
                             alert(
                                 '{{ trans('
-                                                                <<<<<<< HEAD
-                                                                                                                        global.datatables.zero_selected ') }}'
+                                                                                                <<<<<<< HEAD
+                                                                                                                                                        global.datatables.zero_selected ') }}'
                             )
                             return
                         }
                         if (confirm(
                                 '{{ trans('
-                                                                                                                global.areYouSure ') }}'
+                                                                                                                                                global.areYouSure ') }}'
                             )) {
                             ===
                             ===
@@ -193,11 +194,12 @@
                     }
                     if (confirm(
                             '{{ trans('
-                                                                                                                                        global.areYouSure ') }}'
+                                                                                                                                                                    global.areYouSure ') }}'
                         )) {
                         >>>
                         >>>
-                        > f64509e60066a3b1624f40081e9110c7e50f86a8
+                        >
+                        f64509e60066a3b1624f40081e9110c7e50f86a8
                         $.ajax({
                                 headers: {
                                     'x-csrf-token': _token
