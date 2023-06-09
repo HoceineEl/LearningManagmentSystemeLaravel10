@@ -1,3 +1,6 @@
+@php
+use App\Models\User;
+@endphp
 <!DOCTYPE html>
 <html>
 
@@ -80,10 +83,8 @@
                         <a href="#" class="c-header-nav-link" data-toggle="dropdown">
                             <i class="far fa-bell"></i>
                             @php
-                                $alertsCount = \Auth::user()
-                                    ->userUserAlerts()
-                                    ->where('read', false)
-                                    ->count();
+                                $alerts = User::unapprovedUsers();
+                                $alertsCount = $alerts->count();
                             @endphp
                             @if ($alertsCount > 0)
                                 <span class="badge badge-warning navbar-badge">
@@ -92,19 +93,14 @@
                             @endif
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            @if (count(
-                                    $alerts = \Auth::user()->userUserAlerts()->withPivot('read')->limit(10)->orderBy('created_at', 'ASC')->get()->reverse()) > 0)
+                            @if ($alertsCount > 0)
                                 @foreach ($alerts as $alert)
                                     <div class="dropdown-item">
-                                        <a href="{{ $alert->alert_link ? $alert->alert_link : '#' }}" target="_blank"
+                                        <a href="{{ route('/unapproved_users') }}"
                                             rel="noopener noreferrer">
-                                            @if ($alert->pivot->read === 0)
-                                                <strong>
-                                            @endif
-                                            {{ $alert->alert_text }}
-                                            @if ($alert->pivot->read === 0)
-                                                </strong>
-                                            @endif
+                                            <strong>
+                                                {{ "New Unapproved User: ".$alert->name }}
+                                            </strong>
                                         </a>
                                     </div>
                                 @endforeach

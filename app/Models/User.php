@@ -191,4 +191,9 @@ class User extends Authenticatable
     {
         $this->attributes['two_factor_expires_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
+
+    //* to return all the unapproved users
+    public static function unapprovedUsers(){
+        return User::all()->where('approved', '0');
+    }
 }
