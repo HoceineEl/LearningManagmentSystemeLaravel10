@@ -17,14 +17,14 @@
             <li class="breadcrumb-item"><a href="student-dashboard.html">Home</a></li>
             <li class="breadcrumb-item active">Courses</li>
         </ol>
-     
+
         <div class="clearfix"></div>
         <div class="card-columns">
             @foreach ($courses as $course)
                 <div class="card">
                     <div class="card-header text-center">
                         <h4 class="card-title mb-0"><a
-                                href="{{ route('frontend.cours.show', ['cour' => '1']) }}">{{ $course->nom }}</a>
+                                href="{{ route('frontend.cours.show', ['cour' => $course->id]) }}">{{ $course->nom }}</a>
                         </h4>
                         <div class="rating">
                             <i class="material-icons">star</i>
@@ -34,7 +34,7 @@
                             <i class="material-icons">star_border</i>
                         </div>
                     </div>
-                    <a  href="{{ route('frontend.cours.show', ['cour' => '1']) }}" style="display: block;">
+                    <a href="{{ route('frontend.cours.show', ['cour' => $course->id]) }}" style="display: block;">
                         <img src="{{ $course->cover->getUrl() }}" alt="Card image cap" class="course-image">
                     </a>
                     <div class="card-body">
