@@ -72,80 +72,50 @@
                                                         Supprimer
                                                     </button></li>
 
-                                    {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
-                                </ul>
-                            </div>
+                                            </ul>
+                                        </div>
                             {{-- delete a lesson's modal --}}
-                            <div class="modal fade" id="deleteLesson{{$lesson->id}}" data-lesson-id="{{$lesson->id}}" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Supprimer Un Leçon</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                        <div class="modal fade" id="deleteLesson{{$lesson->id}}" data-lesson-id="{{$lesson->id}}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer Un Leçon</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Voulez-vous Supprimez Le Leçcon ?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-secondary"
+                                                            data-bs-dismiss="modal">Fermer</button>
+                                                        <button type="button" class="btn btn-danger delete-lesson">Suppimer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="modal-body">
-                                            <p>Voulez-vous Supprimez Le Leçcon ?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-secondary"
-                                                data-bs-dismiss="modal">Fermer</button>
-                                            <button type="button" class="btn btn-danger delete-lesson">Suppimer</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             {{-- add cotent's modal --}}
-                        <div class="modal fade" id="addContentModal{{ $lesson->id }}" tabindex="-1" role="dialog"
-                            aria-labelledby="addContentModalLabel{{ $lesson->id }}" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="addContentModalLabel{{ $lesson->id }}">AddContent for</h5>
-                                        <span class=" modal-title h5 ps-2" style="color:rgb(48, 99, 129)">{{ $lesson->label }}</span>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <ul class="content-list d-flex ">
-                                            <li class="m-4">
-                                                <a class="btn btn-success" href="{{ route('videos.create', ['lesson' => $lesson->id]) }}">
-                                                    <i class="fa fa-video-camera"></i> Add Video
-                                                </a>
+                                        <div class="modal fade" id="addContentModal{{ $lesson->id }}" tabindex="-1" role="dialog"
+                                            aria-labelledby="addContentModalLabel{{ $lesson->id }}" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="addContentModalLabel{{ $lesson->id }}">AddContent for</h5>
+                                                        <span class=" modal-title h5 ps-2" style="color:rgb(48, 99, 129)">{{ $lesson->label }}</span>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <ul class="content-list d-flex ">
+                                                            <li class="m-4">
+                                                                <a class="btn btn-success" href="{{ route('videos.create', ['lesson' => $lesson->id]) }}">
+                                                                    <i class="fa fa-video-camera"></i> Add Video
+                                                                </a>
 
-                                            </li>
-                                            <li class="m-4">
-                                                <a class="btn btn-primary" href="">
-                                                    <i class="fa fa-question-circle"></i> Add Quiz
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </li>
-
-                        
-                        
-                        
-                        @endforeach
-                        @endif
-                    </ul>
-                </li>
-            </ul>
-           
-        @endforeach
-    </div>
-    <div>
-        <button class="btn btn-dark" id="btn" data-cour-id="{{$cour}}">+ Add New Section</button>
                                                             </li>
                                                             <li class="m-4">
-                                                                <a class="btn btn-primary"
-                                                                    href="{{ url('admin/quizzes/create/' . $lesson->id) }}">
+                                                                <a class="btn btn-primary" href="{{url('admin/quizzes/create/'.$lesson->id)}}">
                                                                     <i class="fa fa-question-circle"></i> Add Quiz
-
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -159,11 +129,13 @@
                         </ul>
                     </li>
                 </ul>
+           
             @endforeach
         </div>
-        <div>
-            <button class="btn btn-dark" id="btn" data-cour-id="{{ $cour }}">+ Add New Section</button>
-        </div>
+    <div> 
+    <div>
+        <button class="btn btn-dark" id="btn" data-cour-id="{{ $cour }}">+ Add New Section</button>
+    </div>
     </div>
 @endsection
 
