@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\VideoController;
 use App\Models\LessonVideo;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\LessonController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Frontend\LessonController as FrontendLessonController;
 use Illuminate\Support\Facades\Http;
 
@@ -230,7 +231,18 @@ Route::delete('/lessons/delete/{lesson}', [LessonController::class, 'delete']);
 
 
 ////////////////////////////?         Abdallah
+//* route to the dashboard
 Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+
+//* route to the unapproved users table
+Route::get('/unapproved_users',[UsersController::class, 'unapprovedUsersTable'])->name('/unapproved_users');
+
+//* route to approve a user
+Route::get('approve/{user}', [UsersController::class, 'approve'])->name('approve.user');
+
+//* route to delete an unapproved user
+Route::delete('delete/{user}', [UsersController::class, 'deleteUnapproved'])->name('delete.user');
+
 
 
 //?Hamza Ben Allou 

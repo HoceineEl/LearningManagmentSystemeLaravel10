@@ -87,4 +87,23 @@ class UsersController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    //* to return a view containing unapproved users table
+    public function unapprovedUsersTable(){
+        $users = User::all()->where('approved', '0');
+        return view('unapprovedUsers', compact('users'));
+    }
+
+    //* approve a new user
+    public function approve(User $user){
+        $user->approved = '1';
+        $user->save();
+        return back();
+    }
+
+    //* delete an unapproved user
+    public function deleteUnapproved(User $user){
+        $user->delete();
+        return back();
+    }
 }
