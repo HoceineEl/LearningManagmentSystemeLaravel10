@@ -61,12 +61,12 @@
                             </table>
                         </div>
 
-                        <div class="d-flex align-items-end">
+                        <div class="d-flex justify-content-around">
                             <div class="chart card">
-                                <canvas id="chart1" class="chart1"></canvas>
+                                <canvas id="chart1"></canvas>
                             </div>
                             <div class="chart card">
-                                <canvas id="chart2" class="chart2"></canvas>
+                                <canvas id="chart2"></canvas>
                             </div>
                         </div>
 
@@ -173,7 +173,7 @@
                         display: true,
                         text: 'Number of courses published',
                         font: {
-                            size: 35
+                            size: 30
                         }
                     },
                     legend: {
@@ -210,9 +210,9 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Percentage of users who finished the lesson',
+                        text: 'Percent of users who finished lessons',
                         font: {
-                            size: 35
+                            size: 30
                         }
                     },
                     legend: {
