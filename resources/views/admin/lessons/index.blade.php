@@ -112,7 +112,7 @@
                                                             Content for {{ $lesson->id }}</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
-                                                    </div>  
+                                                    </div>
                                                     <div class="modal-body">
                                                         <ul class="content-list d-flex ">
                                                             <li class="m-4">
@@ -123,7 +123,8 @@
 
                                                             </li>
                                                             <li class="m-4">
-                                                                <a class="btn btn-primary" href="#">
+                                                                <a class="btn btn-primary"
+                                                                    href="{{ url('admin/quizzes/create/' . $lesson->id) }}">
                                                                     <i class="fa fa-question-circle"></i> Add Quiz
                                                                 </a>
                                                             </li>
@@ -152,8 +153,15 @@
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
             @can('lesson_delete')
-                let deleteButtonTrans = '{{ trans('
-                        global.datatables.delete ') }}'
+                let deleteButtonTrans =
+                    '{{ trans('
+                                        <<<<<<< HEAD
+                                                                global.datatables.delete ') }}' ===
+                    ===
+                    =
+                    global.datatables.delete ') }}' >>>
+                    >>>
+                    > f64509e60066a3b1624f40081e9110c7e50f86a8
                 let deleteButton = {
                     text: deleteButtonTrans,
                     url: "",
@@ -167,44 +175,62 @@
                         if (ids.length === 0) {
                             alert(
                                 '{{ trans('
-                                                        global.datatables.zero_selected ') }}')
+                                                                <<<<<<< HEAD
+                                                                                                                        global.datatables.zero_selected ') }}'
+                            )
                             return
                         }
-                        if (confirm('{{ trans('
-                                                global.areYouSure ') }}')) {
-                            $.ajax({
-                                    headers: {
-                                        'x-csrf-token': _token
-                                    },
-                                    method: 'POST',
-                                    url: config.url,
-                                    data: {
-                                        ids: ids,
-                                        _method: 'DELETE'
-                                    }
-                                })
-                                .done(function() {
-                                    location.reload()
-                                })
-                        }
+                        if (confirm(
+                                '{{ trans('
+                                                                                                                global.areYouSure ') }}'
+                            )) {
+                            ===
+                            ===
+                            =
+                            global.datatables.zero_selected ') }}'
+                        )
+                        return
+                    }
+                    if (confirm(
+                            '{{ trans('
+                                                                                                                                        global.areYouSure ') }}'
+                        )) {
+                        >>>
+                        >>>
+                        > f64509e60066a3b1624f40081e9110c7e50f86a8
+                        $.ajax({
+                                headers: {
+                                    'x-csrf-token': _token
+                                },
+                                method: 'POST',
+                                url: config.url,
+                                data: {
+                                    ids: ids,
+                                    _method: 'DELETE'
+                                }
+                            })
+                            .done(function() {
+                                location.reload()
+                            })
                     }
                 }
-                dtButtons.push(deleteButton)
-            @endcan
-            $.extend(true, $.fn.dataTable.defaults, {
-                orderCellsTop: true,
-                order: [
-                    [1, 'desc']
-                ],
-                pageLength: 10,
-            });
-            let table = $('.datatable-lesson:not(.ajaxTable)').DataTable({
-                buttons: dtButtons
-            })
-            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-                $($.fn.dataTable.tables(true)).DataTable()
-                    .columns.adjust();
-            });
+            }
+            dtButtons.push(deleteButton)
+        @endcan
+        $.extend(true, $.fn.dataTable.defaults, {
+            orderCellsTop: true,
+            order: [
+                [1, 'desc']
+            ],
+            pageLength: 10,
+        });
+        let table = $('.datatable-lesson:not(.ajaxTable)').DataTable({
+            buttons: dtButtons
+        })
+        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust();
+        });
         })
     </script>
 @endsection

@@ -26,12 +26,15 @@ class QuizsController extends Controller
     public function create($lesson)
     {
         abort_if(Gate::denies('quiz_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        // $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+    
+        $quiz = Quiz::where('lesson_id', $lesson)->first();
+    
+        if ($quiz) {
+            return redirect()->route('admin.quizzes.index', $quiz);
+        }
         return view('admin.quizzes.create', compact('lesson'));
     }
-
+    
     public function store(StoreQuizRequest $request)
     {
         $quiz = Quiz::create($request->all());

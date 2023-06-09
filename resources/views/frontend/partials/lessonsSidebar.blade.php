@@ -36,11 +36,17 @@
                                                         @if ($nextLesson->videos->first())
                                                             @php
                                                                 $duration = $nextLesson->videos->first()->duration;
-                                                                $formattedDuration = gmdate('H:i', $duration);
+                                                                $formattedDuration = gmdate('H:i:s', $duration);
                                                             @endphp
-                                                            <small>{{ $formattedDuration }}</small>
+                                                            <small>
+                                                                <i class="bi bi-clock"></i>
+                                                                {{ $formattedDuration }}
+                                                            </small>
                                                         @else
-                                                            <small>00:00</small>
+                                                            <small>
+                                                                <i class="bi bi-clock"></i>
+                                                                00:00:00
+                                                            </small>
                                                         @endif
                                                     </div>
                                                 </div>
