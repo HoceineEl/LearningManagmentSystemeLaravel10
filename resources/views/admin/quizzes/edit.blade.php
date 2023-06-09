@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label class="required" for="lecon_id">{{ trans('cruds.quiz.fields.lecon') }}</label>
                 <select class="form-control select2 {{ $errors->has('lecon') ? 'is-invalid' : '' }}" name="lecon_id" id="lecon_id" required>
-                    @foreach($lecons as $id => $entry)
+                    @foreach($lessons as $id => $entry)
                         <option value="{{ $id }}" {{ (old('lecon_id') ? old('lecon_id') : $quiz->lecon->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>

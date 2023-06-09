@@ -30,16 +30,19 @@ class QuizsController extends Controller
         $quiz = Quiz::where('lesson_id', $lesson)->first();
     
         if ($quiz) {
-            return redirect()->route('admin.quizzes.index', $quiz);
+            $quizzes = Quiz::where('lesson_id', $lesson)->get();
+            return view('admin.quizzes.index', compact('quizzes'));
         }
+    
         return view('admin.quizzes.create', compact('lesson'));
     }
-    
+        
     public function store(StoreQuizRequest $request)
     {
-        $quiz = Quiz::create($request->all());
-        return redirect()->route('admin.quizzes.index');
-    }
+        $quiz =Quiz::create($request->all());
+        $lesson=$quiz->lesson_id;
+        return redirect()->route('admin.quizzes.index',compact('lesson'));
+    }   
 
     public function edit(Quiz $quiz)
     {
