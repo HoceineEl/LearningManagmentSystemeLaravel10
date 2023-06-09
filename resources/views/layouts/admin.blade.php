@@ -96,7 +96,7 @@ use App\Models\User;
                             @if ($alertsCount > 0)
                                 @foreach ($alerts as $alert)
                                     <div class="dropdown-item">
-                                        <a href="{{ route('/unapproved_users') }}"
+                                        <a href="{{ route('/unapproved_users') }}" style="text-decoration: none"
                                             rel="noopener noreferrer">
                                             <strong>
                                                 {{ "New Unapproved User: ".$alert->name }}
