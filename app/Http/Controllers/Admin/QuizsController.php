@@ -23,13 +23,13 @@ class QuizsController extends Controller
         return view('admin.quizzes.index', compact('quizzes'));
     }
 
-    public function create()
+    public function create($lesson)
     {
         abort_if(Gate::denies('quiz_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.quizzes.create', compact('lessons'));
+        return view('admin.quizzes.create', compact('lesson'));
     }
 
     public function store(StoreQuizRequest $request)
