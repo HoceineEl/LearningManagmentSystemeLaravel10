@@ -35,7 +35,11 @@
                         </div>
                     </div>
                     <a  href="{{ route('frontend.cours.show', ['cour' => '1']) }}" style="display: block;">
+<<<<<<< HEAD
                         {{-- <img src="{{ $course->cover->getUrl() }}" alt="Card image cap" class="course-image"> --}}
+=======
+                        <img src="#" alt="Card image cap" class="course-image">
+>>>>>>> a67b42b20f3564ee73068d9118b988f6f3af6d6f
                     </a>
                     <div class="card-body">
                         <small class="text-muted">ADVANCED</small><br>
