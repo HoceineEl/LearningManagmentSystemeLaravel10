@@ -49,9 +49,9 @@
                                             <td>
                                                 <div class="d-flex justify-content-center">
                                                     <a href="{{ route('approve.user', ['user' => $user['id']]) }}"
-                                                        class="btn btn-primary mx-2">Approve</a>
+                                                        class="btn btn-primary mx-2"><i class="fa fa-light fa-check fa-lg me-2"></i>Approve</a>
                                                     <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                        data-target="#exampleModal">Delete</button>
+                                                        data-target="#exampleModal"><i class="fa fa-light fa-trash fa-lg me-2"></i>Delete</button>
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -74,7 +74,7 @@
                                                                             method="POST">
                                                                             @csrf
                                                                             @method('delete')
-                                                                            <button class="btn btn-danger"> Delete</button>
+                                                                            <button class="btn btn-danger"><i class="fa fa-solid fa-trash me-2"></i>Delete</button>
                                                                         </form>
                                                                 </div>
                                                             </div>
