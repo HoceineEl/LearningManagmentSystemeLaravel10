@@ -142,7 +142,7 @@
                 </a>
             </li>
         @endcan
-        @can('utilisateur_reponse_access')
+        {{-- @can('utilisateur_reponse_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.utilisateur-reponses.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/utilisateur-reponses') || request()->is('admin/utilisateur-reponses/*') ? 'c-active' : '' }}">
@@ -152,8 +152,8 @@
                     {{ trans('cruds.utilisateurReponse.title') }}
                 </a>
             </li>
-        @endcan
-        @can('score_quiz_access')
+        @endcan --}}
+        {{-- @can('score_quiz_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.score-quizzes.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/score-quizzes') || request()->is('admin/score-quizzes/*') ? 'c-active' : '' }}">
@@ -163,13 +163,12 @@
                     {{ trans('cruds.scoreQuiz.title') }}
                 </a>
             </li>
-        @endcan
+        @endcan --}}
         @can('progression_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('admin.progressions.index') }}"
                     class="c-sidebar-nav-link {{ request()->is('admin/progressions') || request()->is('admin/progressions/*') ? 'c-active' : '' }}">
                     <i class="fa-fw fas fa-spinner c-sidebar-nav-icon">
-
                     </i>
                     {{ trans('cruds.progression.title') }}
                 </a>

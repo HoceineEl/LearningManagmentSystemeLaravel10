@@ -35,7 +35,6 @@ class QuizsController extends Controller
     public function store(StoreQuizRequest $request)
     {
         $quiz = Quiz::create($request->all());
-
         return redirect()->route('admin.quizzes.index');
     }
 
