@@ -121,28 +121,32 @@
                                                                     <i class="fa fa-video-camera"></i> Add Video
                                                                 </a>
 
-                                                            </li>
-                                                            <li>
-                                                                <a href="{{ url('admin/quizzes/create/' . $lesson->id) }}">
-                                                                    <i class="fa fa-question-circle"></i> Add Quiz
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            @endif
-                        </ul>
-                    </li>
-                </ul>
-            @endforeach
-        </div>
-        <div>
-            <button class="btn btn-dark" id="btn" data-cour-id="{{ $cour }}">+ Add New Section</button>
-        </div>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-question-circle"></i> Add Quiz
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </li>
+
+                        
+                        
+                        
+                        @endforeach
+                        @endif
+                    </ul>
+                </li>
+            </ul>
+           
+        @endforeach
+    </div>
+    <div>
+        <button class="btn btn-dark" id="btn" data-cour-id="{{$cour}}">+ Add New Section</button>
     </div>
 @endsection
 

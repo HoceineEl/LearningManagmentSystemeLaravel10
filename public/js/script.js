@@ -423,11 +423,13 @@ document.getElementById("btn").addEventListener("click", function () {
 
                         // Create the ul element for the content list
                         var ul = document.createElement("ul");
-                        ul.className = "content-list";
+                        ul.className = "content-list d-flex";
 
                         // Create the first li element for adding a video
                         var videoLi = document.createElement("li");
+                        videoLi.className = "m-4";
                         var videoLink = document.createElement("a");
+                        videoLink.className = "btn btn-success";
                         videoLink.href = "/videos/create/" + lessonId;
                         var videoIcon = document.createElement("i");
                         videoIcon.className = "fa fa-video-camera";
@@ -438,7 +440,9 @@ document.getElementById("btn").addEventListener("click", function () {
 
                         // Create the second li element for adding a quiz
                         var quizLi = document.createElement("li");
+                        quizLi.className = "m-4";
                         var quizLink = document.createElement("a");
+                        quizLink.className = "btn btn-primary";
                         quizLink.href = "/admin/quizzes/create/" + lessonId;
                         var quizIcon = document.createElement("i");
                         quizIcon.className = "fa fa-question-circle";
@@ -484,7 +488,7 @@ document.getElementById("btn").addEventListener("click", function () {
                             },
                             success: function (data) {
                                 // Update the section name in the UI
-                                console.log("suuccessuful update lesson name");
+                                console.log("successful update lesson name");
                                 var edit =
                                     dropdown.querySelector(".edit-lesson");
                                 edit.addEventListener("click", function () {
@@ -581,6 +585,7 @@ document.getElementById("btn").addEventListener("click", function () {
                                                         console.log(
                                                             "suuccessuful update lesson name"
                                                         );
+                                                        location.reload();
                                                     },
                                                     error: function (error) {
                                                         console.error(error);
@@ -627,12 +632,12 @@ document.getElementById("btn").addEventListener("click", function () {
                                                 console.log(
                                                     "suuccessuful delete lesson"
                                                 );
-                                                // location.reload();
                                                 $(
                                                     "#deleteLesson" + lessonId
                                                 ).modal("hide");
-
                                                 Parent_Li.remove();
+                                                location.reload();
+
                                                 console.log(
                                                     "response : ",
                                                     response
@@ -825,7 +830,7 @@ document.getElementById("btn").addEventListener("click", function () {
                                         console.log(
                                             "suuccessuful update section name"
                                         );
-                                        // location.reload();
+                                        location.reload();
                                     },
                                     error: function (xhr, status, error) {
                                         console.log("xhr", xhr);
@@ -862,7 +867,7 @@ document.getElementById("btn").addEventListener("click", function () {
                                 $("#deleteSection" + sectionId).modal("hide");
                                 li.remove();
                                 // console.log("response : ", response);
-                                // location.reload();
+                                location.reload();
                             },
                             error: function (xhr, status, error) {
                                 console.log("xhr", xhr);
@@ -1082,6 +1087,7 @@ editBtnsL.forEach(function (btn) {
                     success: function (data) {
                         // Update the section name in the UI
                         console.log("suuccessuful update lesson name");
+                        location.reload();
                     },
                     error: function (error) {
                         console.error(error);
@@ -1285,11 +1291,13 @@ addBtns.forEach(function (addBtn) {
 
                 // Create the ul element for the content list
                 var ul = document.createElement("ul");
-                ul.className = "content-list";
+                ul.className = "content-list d-flex";
 
                 // Create the first li element for adding a video
                 var videoLi = document.createElement("li");
+                videoLi.className = "m-4";
                 var videoLink = document.createElement("a");
+                videoLink.className = "btn btn-success";
                 videoLink.href = "/videos/create/" + lessonId;
                 var videoIcon = document.createElement("i");
                 videoIcon.className = "fa fa-video-camera";
@@ -1300,7 +1308,9 @@ addBtns.forEach(function (addBtn) {
 
                 // Create the second li element for adding a quiz
                 var quizLi = document.createElement("li");
+                quizLi.className = "m-4";
                 var quizLink = document.createElement("a");
+                quizLink.className = "btn btn-primary";
                 quizLink.href = "/admin/quizzes/create/" + lessonId;
                 var quizIcon = document.createElement("i");
                 quizIcon.className = "fa fa-question-circle";
