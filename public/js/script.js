@@ -1,19 +1,3 @@
-//for the elements tha are added by default in the html section
-// var buttons = document.querySelectorAll(".save-button");
-
-// buttons.forEach(function (button) {
-//     button.addEventListener("click", function () {
-//         var row = button.parentNode;
-//         var nameInput = row.querySelector("#input");
-//         var name = nameInput.value;
-//         var link = document.createElement("a");
-//         link.href = "#";
-//         link.textContent = name;
-//         link.id = "lesson-link";
-//         row.replaceWith(link);
-//     });
-// });
-
 // the drag and drop events :
 var nestedSortables = document.getElementById("main");
 new Sortable(nestedSortables, {
@@ -168,7 +152,10 @@ document.getElementById("btn").addEventListener("click", function () {
         group: "again",
         handle: ".handle",
         animation: 200,
+        ghostClass: "selected",
+        fallbackTolerance: 3,
         multiDrag: true,
+        selectedClass: "selected",
         onEnd: function (event) {
             // Get the updated positions of the lessons within the section
 
@@ -567,7 +554,7 @@ document.getElementById("btn").addEventListener("click", function () {
                                                     "dropDownL";
 
                                                 dropdown.innerHTML =
-                                                    "<span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><button class='dropdown-item edit-lesson' >Edit</button></li><li><button class='dropdown-item delete-lesson' >Delete</button></li></ul>";
+                                                    "<span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1' style='padding:0%'><li><button class='btn btn-primary dropdown-item edit-lesson' >Edit</button></li><li><button class='btn btn-danger dropdown-item delete-lesson' >Delete</button></li></ul>";
 
                                                 row.replaceWith(link);
                                                 less.appendChild(dropdown);
@@ -944,7 +931,7 @@ editBtns.forEach(function (btn) {
                 var dropdown = document.createElement("div");
                 dropdown.className = "dropDown";
                 dropdown.innerHTML =
-                    "<span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'><li><button class='btn btn-primary dropdown-item edit-section' >Edit</button></li><li><button class='btn btn-danger dropdown-item deleteS' data-bs-toggle='modal' >Delete</button></li></ul>";
+                    "<span id='dropdownMenuButton1' data-bs-toggle='dropdown' aria-expanded='false'><i class='fa fa-ellipsis-v info-section'></i></span><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1' style:'padding:0%'><li><button class='btn btn-primary dropdown-item edit-section' >Edit</button></li><li><button class='btn btn-danger dropdown-item deleteS' data-bs-toggle='modal' >Delete</button></li></ul>";
                 var deleteBtn = dropdown.querySelector(".deleteS");
                 deleteBtn.setAttribute(
                     "data-bs-target",
