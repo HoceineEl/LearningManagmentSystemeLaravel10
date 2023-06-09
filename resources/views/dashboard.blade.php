@@ -153,13 +153,26 @@
 
         // chart 1
         let chart1 = new Chart(ctx1, {
-            type: 'bar',
+            type: 'pie',
             data: {
-                labels: ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aou', 'oct', 'nov', 'dec'],
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
                     label: 'Courses published',
                     data: numbers,
-                    backgroundColor: generateBluishColors(12),
+                    backgroundColor: [
+                        '#003f5c',
+                        '#2f4b7c',
+                        '#665191',
+                        '#a05195',
+                        '#d45087',
+                        '#f95d6a',
+                        '#ff7c43',
+                        '#ffa600', 
+                        '#bad0af', 
+                        '#de425b', 
+                        '#f0b8b8', 
+                        '#f1f1f1'
+                    ],
                     borderWidth: 1,
                     borderColor: '#777',
                     hoverBorderColor: '#000',
@@ -177,14 +190,7 @@
                         }
                     },
                     legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: {
-                            display: false
-                        }
+                        display: true
                     }
                 }
             }
