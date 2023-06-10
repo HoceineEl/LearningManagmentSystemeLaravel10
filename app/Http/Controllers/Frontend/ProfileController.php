@@ -2,18 +2,33 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdatePasswordRequest;
-use App\Http\Requests\UpdateProfileRequest;
-use Illuminate\Support\Facades\Gate;
+use App\Models\Lesson;
+use App\Models\Section;
+use App\Models\Progression;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\UpdatePasswordRequest;
+use App\Models\Cour;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends Controller
 {
     public function index()
-    {
-        return view('frontend.profile');
+    { 
+        $progressions = Progression::all()->where('utilisateur_id', auth()->user()->id);
+        $enrolledCourses = [];
+        foreach($progressions as $progression){
+            $lesson = Lesson::find($progression['lesson_id']);
+            $section = Section::find($lesson['section_id']);
+            $cour = Cour::find($section['cour_id']);
+            if(!in_array($cour['nom'], $enrolledCourses)){
+                array_push($enrolledCourses, $cour['nom']);
+            }
+        }
+        $user = auth()->user();
+        return view('frontend.profile', compact('user', 'enrolledCourses'));
     }
 
     public function update(UpdateProfileRequest $request)
