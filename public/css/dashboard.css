@@ -9,20 +9,30 @@ h3 {
     height: auto;
 }
 
-.align-text-center{
+.align-text-center {
     text-align: center;
 }
 
-.number{
+.number {
     text-align: center;
     font-size: 35px
 }
 
-.box{
+.box {
     background-color: #F1F1F1 !important;
     /* color: white; */
 }
 
-.courseBox:hover{
+.courseBox:hover {
     background-color: #f9f9f9;
+}
+
+.editable-input {
+    background-color: white;
+    border: 1px solid #ccc;
+    cursor: text;
+}
+
+.focused-input {
+    border: 2px solid #f00;
 }
