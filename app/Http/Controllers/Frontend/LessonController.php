@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
-
 use App\Models\Lesson;
 use App\Models\Section;
 
 
 class LessonController extends Controller
 {
-
     public function show($lesson)
     {
         $lesson = Lesson::findOrFail($lesson);
@@ -32,7 +28,7 @@ class LessonController extends Controller
 
         // If there is no next lesson in the same section, get the first lesson of the next section
         if (!$nextLesson) {
-            $nextSection = Section::where('cour_id', $lesson->section->cour->id)->where('position', '>', $lesson->section->position)->orderBy('position')->first();
+            $nextSection = Section::where('cour_id', $lesson->section->cour_id)->where('position', '>', $lesson->section->position)->orderBy('position')->first();
             if ($nextSection) {
                 $nextLesson = Lesson::where('section_id', $nextSection->id)->orderBy('position')->first();
             }

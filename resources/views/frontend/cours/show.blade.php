@@ -11,7 +11,7 @@
 
         .course-image {
             width: 100%;
-            height: 200px;
+            height: 100%;
             /* Adjust the height as desired */
             object-fit: cover;
             /* Ensure the image covers the entire space without distortion */
@@ -44,7 +44,7 @@
 
                     <!-- Lessons -->
                     <div class="accordion accordion-borderless" id="accordionFlushExampleX">
-                        @foreach ($course->sections as $section)
+                        @foreach ($course->sections->sortBy('position') as $section)
                             <div class="accordion-item ">
                                 <h2 class="accordion-header" id="flush-heading{{ $section->id }}">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -58,7 +58,7 @@
                                     data-bs-parent="#accordionFlushExampleX">
                                     <div class="accordion-body">
                                         <ul class="lesson-list" data-section-id="{{ $section->id }}">
-                                            @foreach ($section->lessons as $lesson)
+                                            @foreach ($section->lessons->sortBy('position') as $lesson)
                                                 <li class="list-group-item">
 
                                                     <div class="media">
@@ -84,9 +84,12 @@
                                                                     $formattedMinutes = str_pad($minutes, 2, '0', STR_PAD_LEFT);
                                                                     $formattedSeconds = str_pad($seconds, 2, '0', STR_PAD_LEFT);
                                                                 @endphp
+
                                                                 <small>{{ $formattedHours }}:{{ $formattedMinutes }}:{{ $formattedSeconds }}</small>
+                                                                <i
+                                                                    class="sidebar-menu-icon sidebar-menu-icon--left material-icons">play_circle_outline</i>
                                                             @else
-                                                                <small>00:00:00</small>
+                                                                <i class="bi bi-camera-video-off"></i>
                                                             @endif
                                                         </div>
                                                     </div>
