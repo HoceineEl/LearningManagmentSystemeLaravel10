@@ -150,7 +150,7 @@
                 <div class="card-body">
                     <h2 class="card-title">Courses Progress</h2>
                     @forelse ($coursesprogression as $progression)
-                        <div class="card m-0">
+                        <div class="card m-0 courseBox">
                             <div class="d-flex justify-content-between">
                                 <div class="m-3">
                                     <p class="fw-bold mb-0">{{ $progression->cour_id }}</p>
