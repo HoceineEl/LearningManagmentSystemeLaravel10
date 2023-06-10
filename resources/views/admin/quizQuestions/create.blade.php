@@ -6,7 +6,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ url('admin/quiz-questions/store') }}" enctype="multipart/form-data">
+            <form method="post" action="{{ url('admin/quiz-questions/store/' . $quiz1->id) }}" enctype="multipart/form-data">
                 @csrf
                 {{-- <div class="form-group">
                 <label class="required" for="quiz_id">{{ trans('cruds.quizQuestion.fields.quiz') }}</label>
@@ -21,9 +21,8 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.quizQuestion.fields.quiz_helper') }}</span>
-            </div> --}}
-
-                <input type="hidden" name="quiz_id" value="{{ $quizzes }}">
+                </div> --}}
+                <input type="hidden" name="quiz_id" value="{{ $quiz1->id }}">
 
                 <div class="form-group">
                     <label class="required" for="question">{{ trans('cruds.quizQuestion.fields.question') }}</label>

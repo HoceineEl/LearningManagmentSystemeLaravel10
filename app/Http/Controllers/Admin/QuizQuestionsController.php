@@ -14,18 +14,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class QuizQuestionsController extends Controller
 {
-    public function index()
-    {
-        abort_if(Gate::denies('quiz_question_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    // public function index()
+    // {
+    //     abort_if(Gate::denies('quiz_question_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quizQuestions = QuizQuestion::with(['quiz'])->get();
+    //     $quizQuestions = QuizQuestion::with(['quiz'])->get();
 
-        return view('admin.quizQuestions.index', compact('quizQuestions'));
-    }
+    //     return view('admin.quizQuestions.index', compact('quizQuestions'));
+    // }
 
     public function index1($quiz)
     {
-        
         abort_if(Gate::denies('quiz_question_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $quiz1 = Quiz::findOrFail($quiz);
         $quizQuestions = $quiz1->quizQuizQuestions()->get() ?? [];
@@ -37,16 +36,21 @@ class QuizQuestionsController extends Controller
     {
         abort_if(Gate::denies('quiz_question_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // $quizzes = Quiz::pluck('nom', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $quizzes=$quiz;
-        return view('admin.quizQuestions.create', compact('quizzes'));
+        $quiz1 = Quiz::findOrFail($quiz);
+        // $quizzes=$quiz;
+        return view('admin.quizQuestions.create', compact('quiz1'));
     }
 
-    public function store(StoreQuizQuestionRequest $request)
+        public function store(StoreQuizQuestionRequest $request, $quiz)
     {
         $quizQuestion = QuizQuestion::create($request->all());
-
-        return redirect()->route('admin.quiz-questions.index');
+        // $quiz1 = Quiz::findOrFail($quiz);
+        // $quizQuestions = $quiz1->quizQuizQuestions()->get() ?? [];
+        return redirect()->route('admin.quiz-questions.index1',compact('quiz') );
+        // return redirect()->route('admin.quiz-questions.index', $quiz1->id);
     }
+
+    
 
     public function edit(QuizQuestion $quizQuestion)
     {

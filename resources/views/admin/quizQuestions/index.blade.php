@@ -3,9 +3,17 @@
     @can('quiz_question_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
+                {{-- <a class="btn btn-success" href="{{ url('admin/quiz-questions/create/' . $quiz1->id) }}">
+                    {{ trans('global.add') }} {{ trans('cruds.quizQuestion.title_singular') }}
+                </a> --}}
+
+                {{-- @foreach ($quiz1 as $quizId) --}}
                 <a class="btn btn-success" href="{{ url('admin/quiz-questions/create/' . $quiz1->id) }}">
+                    
                     {{ trans('global.add') }} {{ trans('cruds.quizQuestion.title_singular') }}
                 </a>
+                {{-- @endforeach --}}
+
 
             </div>
         </div>
