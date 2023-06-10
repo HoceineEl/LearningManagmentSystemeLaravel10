@@ -242,6 +242,8 @@ Route::get('approve/{user}', [UsersController::class, 'approve'])->name('approve
 //* route to delete an unapproved user
 Route::delete('delete/{user}', [UsersController::class, 'deleteUnapproved'])->name('delete.user');
 
+//* route to update user profile
+Route::post('profile/update', [UsersController::class, 'updateProfile'])->name('profile.update');
 
 
 
