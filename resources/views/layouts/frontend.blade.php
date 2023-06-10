@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 @if (\Illuminate\Support\Facades\Route::is('frontend.lesson.show'))
-                @include('frontend.partials.lessonsSidebar')
+                    @include('frontend.partials.lessonsSidebar')
                 @else
                     @include('frontend.partials.sidebar')
                 @endif
@@ -159,9 +159,7 @@
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     @yield('scripts')
 </body>
 

@@ -120,45 +120,39 @@
                     <input type="email" class="form-control" id="email" value="{{ $user->email }}" readonly>
                 </div>
 
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <a href="#" class="btn btn-success mt-2">
                     Modify
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                ...
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Understood</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
                 <h2 class="card-title">Courses Progress</h2>
-                @forelse ($enrolledCourses as $enrolledCourse)
-                    <a class="text-decoration-none" href="">
-                        <div class="card m-0">
+                @forelse ($coursesprogression as $progression)
+                    <div class="card m-0">
+                        <div class="d-flex justify-content-between">
                             <div class="m-3">
-                                <p class="fw-bold mb-0">{{ $enrolledCourse }}</p>
-                                <small class="mt-0">In Progress</small>
+                                <p class="fw-bold mb-0">{{ $progression->cour_id }}</p>
+                                @if ($progression->est_complete)
+                                    <small class="mt-0">Completed</small>
+                                @else
+                                    <small class="mt-0">In Progress</small>
+                                @endif
+                            </div>
+                            <div class="align-self-center me-3">
+                                <div class="btn-group dropleft">
+                                    <a class="text-decoration-none" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Visit Course</a>
+                                        <a class="dropdown-item" href="#">Delete Course</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 @empty
                     <p class="fw-bold my-2">You did not enroll any course yet</p>
                 @endforelse
