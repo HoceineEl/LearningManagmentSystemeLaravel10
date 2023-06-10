@@ -4,11 +4,11 @@
         <div class="card-body" id="main">
             @foreach ($sections as $section)
                 <ul class="section-list" data-section-id="{{ $section->id }}">
-                    <li class="section" data-section-name="{{ $section->label }}" data-section-id="{{ $section->id }}">
+                    <li class="section card bg-light text-dark" data-section-name="{{ $section->label }}" data-section-id="{{ $section->id }}">
                         <div class="d-flex justify-content-between header">
                             <div>
                                 <i class="fa fa-bars handle-section"></i>
-                                <span class="section-title">{{ $section->label }}</span>
+                                <span class="card-title section-title">{{ $section->label }}</span>
                             </div>
                             <div class="dropDown">
                                 <span id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i
@@ -50,11 +50,11 @@
                             <button class="btn btn-outline-dark btn-el">+ Add Lesson</button>
                             @if (isset($lessons[$section->id]))
                                 @foreach ($lessons[$section->id] as $lesson)
-                                    <li class="lesson d-flex justify-content-between" data-lesson-id="{{ $lesson->id }}"
+                                    <li class="d-flex justify-content-between card lesson" style="display:flex;flex-direction:row ;background-color:  rgba(231, 235, 240, 0.795);" data-lesson-id="{{ $lesson->id }}"
                                         data-lesson-name="{{ $lesson->label }}">
                                         <div>
                                             <i class="fa fa-bars handle"></i>
-                                            <a href="#" id="lesson-link" data-bs-toggle="modal"
+                                            <a class="card-title" href="#" id="lesson-link" data-bs-toggle="modal"
                                                 data-bs-target="#addContentModal{{ $lesson->id }}">
                                                 {{ $lesson->label }}
                                             </a>
@@ -140,13 +140,12 @@
                 </ul>
             @endforeach
         </div>
-        <div>
-            <div>
-                <button class="btn btn-dark" id="btn" data-cour-id="{{ $cour }}">+ Add New
-                    Section</button>
-            </div>
-        </div>
-    @endsection
+    <div> 
+    <div>
+        <button class="btn btn-dark" id="btn" data-cour-id="{{ $cour }}">+ Add New Section</button>
+    </div>
+    </div>
+@endsection
 
     @section('scripts')
         @parent
