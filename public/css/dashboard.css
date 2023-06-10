@@ -22,3 +22,7 @@ h3 {
     background-color: #F1F1F1 !important;
     /* color: white; */
 }
+
+.courseBox:hover{
+    background-color: #f9f9f9;
+}

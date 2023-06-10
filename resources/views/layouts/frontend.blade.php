@@ -47,6 +47,7 @@
         integrity="sha512-ZnR2wlLbSbr8/c9AgLg3jQPAattCUImNsae6NHYnS9KrIwRdcY9DxFotXhNAKIKbAXlRnujIqUWoXXwqyFOeIQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('assets/css/fancytree.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css')}}">
 
     @yield('styles')
 </head>
