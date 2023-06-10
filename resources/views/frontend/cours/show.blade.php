@@ -69,9 +69,7 @@
                                                         </div>
                                                         <div class="media-body">
                                                             <a
-                                                                @if ($lesson->videos && $lesson->videos->first()) href="{{ route('frontend.lesson.show', ['lesson' => $lesson]) }}"
-                                                                @else
-                                                                    href="#" @endif>{{ $lesson->label }}</a>
+                                                                href="{{ route('frontend.lesson.show', ['lesson' => $lesson]) }}">{{ $lesson->label }}</a>
                                                         </div>
                                                         <div class="media-right">
                                                             @if ($lesson->videos->first())
