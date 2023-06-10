@@ -7,12 +7,12 @@
                     {{ trans('global.add') }} {{ trans('cruds.quizQuestion.title_singular') }}
                 </a> --}}
 
-                {{-- @foreach ($quiz1 as $quizId) --}}
-                <a class="btn btn-success" href="{{ url('admin/quiz-questions/create/' . $quiz1->id) }}">
-                    
-                    {{ trans('global.add') }} {{ trans('cruds.quizQuestion.title_singular') }}
-                </a>
-                {{-- @endforeach --}}
+                @isset($quiz1)
+                    <a class="btn btn-success" href="{{ url('admin/quiz-questions/create/' . $quiz1->id) }}">
+                        {{ trans('global.add') }} {{ trans('cruds.quizQuestion.title_singular') }}
+                    </a>
+                @endisset
+
 
 
             </div>
@@ -69,8 +69,9 @@
                                 <td>
                                     @can('quiz_question_show')
                                         <a class="btn btn-xs btn-primary"
-                                            href="{{ route('admin.quiz-questions.show', $quizQuestion->id) }}">
-                                            {{ trans('global.view') }}
+                                            href="{{ url('admin/question-reponses/' . $quizQuestion->id) }}">
+                                            {{-- {{ trans('global.view') }} --}}
+                                            add reponse
                                         </a>
                                     @endcan
 

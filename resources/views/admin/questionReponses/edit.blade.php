@@ -10,7 +10,7 @@
         <form method="POST" action="{{ route("admin.question-reponses.update", [$questionReponse->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label class="required" for="question_id">{{ trans('cruds.questionReponse.fields.question') }}</label>
                 <select class="form-control select2 {{ $errors->has('question') ? 'is-invalid' : '' }}" name="question_id" id="question_id" required>
                     @foreach($questions as $id => $entry)
@@ -23,7 +23,7 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.questionReponse.fields.question_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label class="required" for="reponse">{{ trans('cruds.questionReponse.fields.reponse') }}</label>
                 <input class="form-control {{ $errors->has('reponse') ? 'is-invalid' : '' }}" type="text" name="reponse" id="reponse" value="{{ old('reponse', $questionReponse->reponse) }}" required>
