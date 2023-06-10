@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\LessonController;
 use App\Models\Cour;
 use App\Models\User;
+use App\Models\Video;
 use App\Models\Enroll;
 use App\Models\Lesson;
 use App\Models\Progression;
+use App\Http\Controllers\Admin\LessonController;
 use PHPUnit\TextUI\Configuration\FilterDirectory;
 
 class DashboardController
@@ -56,6 +57,8 @@ class DashboardController
         foreach ($users as  $user) {
             $user->role = $user->roles[0]->title;
         }
-        return view('dashboard', compact('cours', 'users', 'truePercent', 'lessonLabels'));
+        //* video
+        $videosNumbers = Video::all()->count();
+        return view('dashboard', compact('cours', 'users', 'truePercent', 'lessonLabels', 'videosNumbers'));
     }
 }

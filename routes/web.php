@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\VideoController;
 use App\Models\LessonVideo;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\LessonController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Frontend\LessonController as FrontendLessonController;
 use Illuminate\Support\Facades\Http;
 
@@ -34,18 +35,39 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('cours/media', 'CoursController@storeMedia')->name('cours.storeMedia');
     Route::post('cours/ckmedia', 'CoursController@storeCKEditorImages')->name('cours.storeCKEditorImages');
     Route::resource('cours', 'CoursController');
+
+
+
+
+
     // Quizs
     Route::delete('quizzes/destroy', 'QuizsController@massDestroy')->name('quizzes.massDestroy');
     Route::get('quizzes/create/{lesson}', 'QuizsController@create')->name('quizzes.create');
+    Route::post('quiz-questions/store', 'QuizQuestionsController@store')->name('admin.quiz-questions.store');
     Route::resource('quizzes', 'QuizsController');
 
     // Quiz Questions
     Route::delete('quiz-questions/destroy', 'QuizQuestionsController@massDestroy')->name('quiz-questions.massDestroy');
+    Route::get('quiz-questions/{quiz}','QuizQuestionsController@index1');
+    // ('admin/quiz-questions/store/'.$quizzes)
+    Route::get('quiz-questions/index1/{quiz}','QuizQuestionsController@index1')->name('quiz-questions.index1');
+    Route::post('quiz-questions/store/{quizzes}','QuizQuestionsController@store');
+    // admin/quiz-questions/create 
+    Route::get('quiz-questions/create/{quiz}','QuizQuestionsController@create');
     Route::resource('quiz-questions', 'QuizQuestionsController');
+
+
 
     // Question Reponse
     Route::delete('question-reponses/destroy', 'QuestionReponseController@massDestroy')->name('question-reponses.massDestroy');
+    Route::get('question-reponses/{question}', 'QuestionReponseController@index1');
+    Route::get('question-reponses/create/{question}', 'QuestionReponseController@create');
+    Route::post('question-reponses/store/{question}', 'QuestionReponseController@store');
+    Route::get('question-reponses/index1/{question}','QuestionReponseController@index1')->name('questionReponses.index1');
     Route::resource('question-reponses', 'QuestionReponseController');
+
+
+
 
     // Utilisateur Reponses
     Route::delete('utilisateur-reponses/destroy', 'UtilisateurReponsesController@massDestroy')->name('utilisateur-reponses.massDestroy');
@@ -229,7 +251,19 @@ Route::delete('/lessons/delete/{lesson}', [LessonController::class, 'delete']);
 
 
 ////////////////////////////?         Abdallah
+//* route to the dashboard
 Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+
+//* route to the unapproved users table
+Route::get('/unapproved_users',[UsersController::class, 'unapprovedUsersTable'])->name('/unapproved_users');
+
+//* route to approve a user
+Route::get('approve/{user}', [UsersController::class, 'approve'])->name('approve.user');
+
+//* route to delete an unapproved user
+Route::delete('delete/{user}', [UsersController::class, 'deleteUnapproved'])->name('delete.user');
+
+
 
 
 //?Hamza Ben Allou 

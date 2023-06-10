@@ -5,14 +5,20 @@ h3 {
 }
 
 .chart {
-    width: 50%;
+    width: 49%;
     height: auto;
 }
 
-table{
+.align-text-center{
     text-align: center;
 }
 
 .number{
     text-align: center;
+    font-size: 35px
+}
+
+.box{
+    background-color: #F1F1F1 !important;
+    /* color: white; */
 }

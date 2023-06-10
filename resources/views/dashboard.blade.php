@@ -15,9 +15,9 @@
                             </div>
                         @endif
 
-                        <div style="overflow-x: auto;">
+                        {{-- <div style="overflow-x: auto;">
                             <h3>Users</h3>
-                            <table class="table table-bordered table-striped">
+                            <table class="table table-bordered table-striped align-text-center">
                                 <thead>
                                     <tr>
                                         <th>
@@ -61,15 +61,34 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
 
-                        <div class="d-flex justify-content-around">
-                            <div class="card">
+                        <div class="d-flex justify-content-evenly">
+                            <div class="card w-25 align-text-center box">
                                 <div class="card-title">
-                                    Number of Courses
+                                    <i class="fa fa-solid fa-graduation-cap fa-lg"></i>
+                                    Courses Count
                                 </div>
                                 <p class="number">
                                     {{ count($cours) }}
+                                </p>
+                            </div>
+                            <div class="card w-25 align-text-center box">
+                                <div class="card-title">
+                                    <i class="fa fa-solid fa-user fa-lg"></i>
+                                    Users Count
+                                </div>
+                                <p class="number">
+                                    {{ $users->where('approved', '1')->count() }}
+                                </p>
+                            </div>
+                            <div class="card w-25 align-text-center box">
+                                <div class="card-title">
+                                    <i class="fa fa-solid fa-video fa-lg"></i>
+                                        Videos Count
+                                </div>
+                                <p class="number">
+                                    {{ $videosNumbers }}
                                 </p>
                             </div>
                         </div>

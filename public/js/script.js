@@ -110,7 +110,7 @@ document.getElementById("btn").addEventListener("click", function () {
 
     // create the li element
     var newLi = document.createElement("li");
-    newLi.className = "section";
+    newLi.className = "section card bg-light text-dark";
 
     //
     var header = document.createElement("div");
@@ -243,8 +243,9 @@ document.getElementById("btn").addEventListener("click", function () {
             newBtn.addEventListener("click", function () {
                 // create the li element
                 var newLi1 = document.createElement("li");
-                newLi1.className = "lesson d-flex justify-content-between";
-
+                newLi1.className = "d-flex justify-content-between card lesson";
+                newLi1.style =
+                    "display:flex;flex-direction:row ;background-color:  rgba(231, 235, 240, 0.795);";
                 // var header = document.createElement("div");
                 // header.className = "header d-flex justify-content-between";
                 //create the div that contains the icon in the input Or lesson_name
@@ -330,8 +331,9 @@ document.getElementById("btn").addEventListener("click", function () {
                         link.href = "#";
                         link.textContent = name;
                         link.id = "lesson-link";
+                        link.className = "card-title";
                         link.style =
-                            "text-decoration:none;color:rgb(81, 84, 90)";
+                            "text-decoration:none;color:rgb(81, 84, 90);margin-left=1px;";
                         link.setAttribute("data-bs-toggle", "modal");
                         link.setAttribute(
                             "data-bs-target",
@@ -545,8 +547,9 @@ document.getElementById("btn").addEventListener("click", function () {
                                                 link.href = "#";
                                                 link.textContent = name;
                                                 link.id = "lesson-link";
+                                                link.className = "card-title";
                                                 link.style =
-                                                    "text-decoration:none;color:rgb(81, 84, 90);padding-left:1px;";
+                                                    "text-decoration:none;color:rgb(81, 84, 90);margin-left=1px;";
                                                 var dropdown =
                                                     document.createElement(
                                                         "div"
@@ -687,7 +690,7 @@ document.getElementById("btn").addEventListener("click", function () {
             var row = button.parentElement;
             var header = row.closest(".header");
             var span = document.createElement("span");
-            span.className = "section-title";
+            span.className = "card-title section-title";
             span.style = "font-size: 30px;margin-left: 5px;";
             var sectionNm = newInputSection.value;
             span.textContent = sectionNm;
@@ -783,7 +786,7 @@ document.getElementById("btn").addEventListener("click", function () {
                                 var section = header.parentElement;
                                 var sectionId = section.dataset.sectionId;
                                 var span = document.createElement("span");
-                                span.id = "section-title";
+                                span.className = "card-title section-title";
                                 span.style =
                                     "font-size: 30px;margin-left: 5px;";
 
@@ -925,7 +928,7 @@ editBtns.forEach(function (btn) {
                 var section = header.parentElement;
                 var sectionId = section.dataset.sectionId;
                 var span = document.createElement("span");
-                span.id = "section-title";
+                span.className = "card-title section-title";
                 span.style = "font-size: 30px;margin-left: 5px;";
 
                 var sectionNm = newInput.value;
@@ -1052,8 +1055,9 @@ editBtnsL.forEach(function (btn) {
                 link.href = "#";
                 link.textContent = name;
                 link.id = "lesson-link";
+                link.className = "card-title";
                 link.style =
-                    "text-decoration:none;color:rgb(81, 84, 90);padding-left:1px;";
+                    "text-decoration:none;color:rgb(81, 84, 90);margin-left=1px;";
                 var dropdown = document.createElement("div");
                 dropdown.className = "dropDownL";
 
@@ -1141,7 +1145,9 @@ addBtns.forEach(function (addBtn) {
         console.log(addBtn);
         var ul = addBtn.parentElement;
         var newLi1 = document.createElement("li");
-        newLi1.className = "lesson d-flex justify-content-between";
+        newLi1.className = "d-flex justify-content-between card lesson";
+        newLi1.style =
+            "display:flex;flex-direction:row ;background-color: rgba(231, 235, 240, 0.795);";
         ////////////////////////:
 
         // var header = document.createElement("div");
@@ -1158,7 +1164,7 @@ addBtns.forEach(function (addBtn) {
         newDiv1.id = "lesson-box";
         newDiv1.style = "display: inline;";
         newDiv1.innerHTML =
-            "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text' name='' ><button class='btn btn-primary save-button'>Save</button><button class='btn btn-secondary cancel-button'>Cancel</button>";
+            "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text' name='' ><button class='btn btn-primary save-button'>Save</button><a href='' class='btn btn-secondary cancel-button'>Cancel</a>";
         ul.appendChild(newLi1);
         newLi1.appendChild(div);
         div.append(newIcon1, newDiv1);
@@ -1222,8 +1228,9 @@ addBtns.forEach(function (addBtn) {
                 link.href = "#";
                 link.textContent = name;
                 link.id = "lesson-link";
-
-                link.style = "text-decoration:none;color:rgb(81, 84, 90)";
+                link.className = "card-title";
+                link.style =
+                    "text-decoration:none;color:rgb(81, 84, 90);margin-left=1px;";
                 var dropdown = document.createElement("div");
                 dropdown.className = "dropDownL";
                 dropdown.innerHTML =
@@ -1393,9 +1400,12 @@ addBtns.forEach(function (addBtn) {
                                 "btn btn-light button cancel-button";
                             cancelBtn.textContent = "Cancel";
                             console.log(link);
+
                             dropDown.remove();
                             newDiv.append(newInput, saveBtn, cancelBtn);
                             link.replaceWith(newDiv);
+                            newInput.focus();
+                            newInput.select();
                             //
                             var buttons =
                                 document.querySelectorAll(".save-button");
@@ -1409,8 +1419,9 @@ addBtns.forEach(function (addBtn) {
                                     link.href = "#";
                                     link.textContent = name;
                                     link.id = "lesson-link";
+                                    link.className = "card-title";
                                     link.style =
-                                        "text-decoration:none;color:rgb(81, 84, 90);padding-left:1px;";
+                                        "text-decoration:none;color:rgb(81, 84, 90);margin-left=1px;";
                                     var dropdown =
                                         document.createElement("div");
                                     dropdown.className = "dropDownL";

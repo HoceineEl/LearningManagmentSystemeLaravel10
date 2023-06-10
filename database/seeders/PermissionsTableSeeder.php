@@ -4,11 +4,15 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
+// use Illuminate\Support\Facades\Schema;
 
+// use Illuminate\Database\Seeders\DB;
+// use DB;
 class PermissionsTableSeeder extends Seeder
 {
     public function run()
     {
+        // Permission::truncate();
         $permissions = [
             [
                 'id'    => 1,
