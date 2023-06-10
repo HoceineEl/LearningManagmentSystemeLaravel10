@@ -42,6 +42,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Quiz Questions
     Route::delete('quiz-questions/destroy', 'QuizQuestionsController@massDestroy')->name('quiz-questions.massDestroy');
+    Route::get('quiz-questions/{quiz}','QuizQuestionsController@index1');
+    // admin/quiz-questions/create 
+    Route::get('quiz-questions/create/{quiz}','QuizQuestionsController@create');
+
     Route::resource('quiz-questions', 'QuizQuestionsController');
 
     // Question Reponse
@@ -134,7 +138,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Quizs
     Route::delete('quizzes/destroy', 'QuizsController@massDestroy')->name('quizzes.massDestroy');
-    
     Route::resource('quizzes', 'QuizsController');
 
     // Quiz Questions

@@ -49,12 +49,17 @@
                                 <td>
                                     {{ $quiz->lecon->label ?? '' }}
                                 </td>
+                                {{-- <td>
+                                    {{ $lesson ?? '' }}
+                                </td> --}}
                                 <td>
-                                    {{-- @can('quiz_show')
-                                        <a class="btn btn-xs btn-primary" href="{{ route('admin.quizzes.show', $quiz->id) }}">
-                                            {{ trans('global.view') }}
+
+                                    @can('quiz_show')
+                                        <a class="btn btn-xs btn-primary" href="{{ url('admin/quiz-questions/' . $quiz->id) }}">
+                                            {{-- {{ trans('global.view') }} --}}
+                                            add question
                                         </a>
-                                    @endcan --}}
+                                    @endcan
 
                                     @can('quiz_edit')
                                         <a class="btn btn-xs btn-info" href="{{ route('admin.quizzes.edit', $quiz->id) }}">
@@ -72,7 +77,6 @@
                                                 value="{{ trans('global.delete') }}">
                                         </form>
                                     @endcan
-
                                 </td>
 
                             </tr>

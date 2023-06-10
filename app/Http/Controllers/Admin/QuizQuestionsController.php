@@ -23,12 +23,23 @@ class QuizQuestionsController extends Controller
         return view('admin.quizQuestions.index', compact('quizQuestions'));
     }
 
-    public function create()
+    public function index1($quiz)
+    {
+        
+        abort_if(Gate::denies('quiz_question_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $quiz = Quiz::findOrFail($quiz);
+        $quizQuestions = $quiz->quizQuizQuestions()->get() ?? [];
+        // $quizQuestions = $quiz->questions ?? [];
+        return view('admin.quizQuestions.index', compact('quizQuestions'));
+
+    }
+    
+    public function create($quiz)
     {
         abort_if(Gate::denies('quiz_question_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $quizzes = Quiz::pluck('nom', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        // $quizzes = Quiz::pluck('nom', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $quizzes=$quiz;
         return view('admin.quizQuestions.create', compact('quizzes'));
     }
 
