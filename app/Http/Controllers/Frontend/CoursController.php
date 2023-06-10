@@ -83,11 +83,23 @@ class CoursController extends Controller
 
     public function show($cour)
     {
-        abort_if(Gate::denies('cour_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $course = Cour::find($cour);
-        $video = $course->sections->where('position', '1')->first()->lessons->where('position', '1')->first()->videos->first();
+        $video = null;
+
+        if ($course) {
+            $section = $course->sections->where('position', '1')->first();
+
+            if ($section) {
+                $lesson = $section->lessons->where('position', '1')->first();
+
+                if ($lesson) {
+                    $video = $lesson->videos->first();
+                }
+            }
+        }
         return view('frontend.cours.show', compact('course', 'video'));
     }
+
 
     public function destroy(Cour $cour)
     {

@@ -17,45 +17,42 @@ class QuizsController extends Controller
     public function index()
     {
         abort_if(Gate::denies('quiz_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $quizzes = Quiz::with(['lesson'])->get();
-
         return view('admin.quizzes.index', compact('quizzes'));
     }
 
     public function create($lesson)
     {
         abort_if(Gate::denies('quiz_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        // $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        $quiz = Quiz::where('lesson_id', $lesson)->first();
+        if ($quiz) {
+            $quizzes = Quiz::where('lesson_id', $lesson)->get();
+            return view('admin.quizzes.index', compact('quizzes'));
+        }
         return view('admin.quizzes.create', compact('lesson'));
     }
-
+        
     public function store(StoreQuizRequest $request)
     {
-        $quiz = Quiz::create($request->all());
-
-        return redirect()->route('admin.quizzes.index');
-    }
+        $quiz =Quiz::create($request->all());
+        $lesson=$quiz->lesson_id;
+        return redirect()->route('admin.quizzes.index',compact('lesson'));
+    }   
 
     public function edit(Quiz $quiz)
     {
         abort_if(Gate::denies('quiz_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $lessons = Lesson::pluck('label', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        // $lessons = Lesson::pluck('label','id')->prepend(trans('global.pleaseSelect'), '');
         $quiz->load('lesson');
-
-        return view('admin.quizzes.edit', compact('lessons', 'quiz'));
+        return view('admin.quizzes.edit', compact('quiz'));
     }
-
-    public function update(UpdateQuizRequest $request, Quiz $quiz)
+    // UpdateQuizRequest
+    public function update(Request $request, Quiz $quiz)
     {
-        $quiz->update($request->all());
-
-        return redirect()->route('admin.quizzes.index');
+    $quiz->update(['nom' => $request->input('nom')]);
+    return redirect()->route('admin.quizzes.index');
     }
+
 
     public function show(Quiz $quiz)
     {
