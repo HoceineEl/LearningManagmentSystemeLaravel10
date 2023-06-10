@@ -43,6 +43,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Quiz Questions
     Route::delete('quiz-questions/destroy', 'QuizQuestionsController@massDestroy')->name('quiz-questions.massDestroy');
     Route::get('quiz-questions/{quiz}','QuizQuestionsController@index1');
+    // Route::get('quiz-questions/store/{id}','QuizQuestionsController@store');
     // admin/quiz-questions/create 
     Route::get('quiz-questions/create/{quiz}','QuizQuestionsController@create');
 
