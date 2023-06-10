@@ -106,4 +106,13 @@ class UsersController extends Controller
         $user->delete();
         return back();
     }
+
+    //* update user profile
+    public function updateProfile(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $user->update($request->all());
+        $success = "Your profile was updated successfully !";
+        return back()->withSuccess($success);
+    }
 }
