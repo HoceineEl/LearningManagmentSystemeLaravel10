@@ -171,7 +171,7 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="#">Visit Course</a>
-                                        <a class="dropdown-item" href="#">Delete Course</a>
+                                        <a class="dropdown-item" href="#">Share Course</a>
                                     </div>
                                 </div>
                             </div>
@@ -196,16 +196,13 @@
         }
 
         modifyButton.addEventListener('click', () => {
-            for (let i = 0; i < inputs.length; i++) {
+            for (let i = inputs.length -1 ; i >= 0; i--) {
                 let input = inputs[i];
                 input.readOnly = !input.readOnly;
                 input.classList.toggle('editable-input');
 
                 if (!input.readOnly) {
                     input.focus();
-                    input.classList.add('focused-input');
-                } else {
-                    input.classList.remove('focused-input');
                 }
             }
 

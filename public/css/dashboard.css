@@ -29,10 +29,6 @@ h3 {
 
 .editable-input {
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc;
     cursor: text;
-}
-
-.focused-input {
-    border: 2px solid #f00;
 }
