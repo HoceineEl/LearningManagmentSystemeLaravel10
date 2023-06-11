@@ -50,7 +50,7 @@
                             <button class="btn btn-outline-dark btn-el">+ Add Lesson</button>
                             @if (isset($lessons[$section->id]))
                                 @foreach ($lessons[$section->id] as $lesson)
-                                    <li class="d-flex justify-content-between card lesson" style="display:flex;flex-direction:row ;background-color:  rgba(231, 235, 240, 0.795);" data-lesson-id="{{ $lesson->id }}"
+                                    <li class="lesson d-flex justify-content-between card flex-row" style="background-color: rgba(231, 235, 240, 0.795);" data-lesson-id="{{ $lesson->id }}"
                                         data-lesson-name="{{ $lesson->label }}">
                                         <div>
                                             <i class="fa fa-bars handle"></i>

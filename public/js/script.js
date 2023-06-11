@@ -116,6 +116,7 @@ document.getElementById("btn").addEventListener("click", function () {
     var header = document.createElement("div");
     header.className = "d-flex justify-content-between header";
     var div = document.createElement("div");
+    div.className = "d-flex flex-row align-items-baseline";
 
     // create the icon handler:
     var newIcon = document.createElement("i");
@@ -123,9 +124,9 @@ document.getElementById("btn").addEventListener("click", function () {
     // create the div element
     var newDiv = document.createElement("div");
     newDiv.id = "section-box";
-    newDiv.style = "display: flex;";
+    newDiv.className = "d-flex align-items-center";
     newDiv.innerHTML =
-        "<input value='New Section' class='form-control form-control-lg m-2 border border-dark input-section' type='text' ><button class='btn btn-primary button save-button_sec d-box'>Save</button><a href='' class='btn btn-light button cancel-button_sec d-box'>Cancel</a>";
+        "<input value='New Section' class='form-control form-control-lg m-2 border border-dark input-section' type='text' ><button class='btn btn-primary me-2 button save-button_sec d-box'>Save</button><a href='' class='btn btn-secondary button d-box' >Cancel</a>";
 
     // create the button to add a lesson:
     var newBtn = document.createElement("button");
@@ -250,15 +251,17 @@ document.getElementById("btn").addEventListener("click", function () {
                 // header.className = "header d-flex justify-content-between";
                 //create the div that contains the icon in the input Or lesson_name
                 var div = document.createElement("div");
+                div.className = "d-flex flex-row align-items-baseline";
+
                 // create the icon and the title of the lesson as a span:
                 var newIcon1 = document.createElement("i");
                 newIcon1.className = "fa fa-bars handle";
                 // create the div element
                 var newDiv1 = document.createElement("div");
                 newDiv1.id = "lesson-box";
-                newDiv1.style = "display: flex;";
+                newDiv1.className = "d-flex align-items-center";
                 newDiv1.innerHTML =
-                    "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text'><button class='btn btn-primary save-button'>Save</button><a href='' class='btn btn-secondary cancel-button'>Cancel</a>";
+                    "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text'><button class='btn btn-primary me-2 save-button'>Save</button><a href='' class='btn cancel-button'>Cancel</a>";
                 // add all the elements to the ul element with id section-list.
                 var currentLi = newUl.parentElement;
                 var lessonList =
@@ -1145,16 +1148,16 @@ addBtns.forEach(function (addBtn) {
         console.log(addBtn);
         var ul = addBtn.parentElement;
         var newLi1 = document.createElement("li");
-        newLi1.className = "d-flex justify-content-between card lesson";
-        newLi1.style =
-            "display:flex;flex-direction:row ;background-color: rgba(231, 235, 240, 0.795);";
+        newLi1.className =
+            "d-flex justify-content-between card lesson flex-row";
+        newLi1.style = "background-color: rgba(231, 235, 240, 0.795);";
         ////////////////////////:
 
         // var header = document.createElement("div");
         // header.className = "header d-flex justify-content-between";
         //create the div that contains the icon in the input Or lesson_name
         var div = document.createElement("div");
-
+        div.className = "d-flex flex-row align-items-baseline";
         // create the icon and the title of the lesson as a span:
         var newIcon1 = document.createElement("i");
         newIcon1.className = "fa fa-bars handle";
@@ -1162,9 +1165,9 @@ addBtns.forEach(function (addBtn) {
         // create the div element
         var newDiv1 = document.createElement("div");
         newDiv1.id = "lesson-box";
-        newDiv1.style = "display: flex;";
+        newDiv1.className = "d-flex align-items-center";
         newDiv1.innerHTML =
-            "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text' name='' ><button class='btn btn-primary save-button'>Save</button><a href='' class='btn btn-secondary cancel-button'>Cancel</a>";
+            "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text' name='' ><button class='btn btn-primary me-2 save-button'>Save</button><a href='' class='btn btn-secondary cancel-button' >Cancel</a>";
         ul.appendChild(newLi1);
         newLi1.appendChild(div);
         div.append(newIcon1, newDiv1);
