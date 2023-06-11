@@ -44,7 +44,7 @@
         }
 
         .correct-answer {
-            width: 180px;
+            display: inline-block;
             background-color: #8bc34a;
             /* Green background color */
             color: #ffffff;
@@ -55,6 +55,7 @@
             border-radius: 5px;
             /* Optional rounded corners for a better visual effect */
         }
+
 
         .user-selected {
             color: rgb(5, 68, 122);
