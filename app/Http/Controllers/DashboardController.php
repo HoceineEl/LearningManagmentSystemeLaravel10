@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Cour;
 use App\Models\User;
-use App\Models\Video;
 use App\Models\Enroll;
 use App\Models\Lesson;
+use App\Models\LessonVideo;
 use App\Models\Progression;
 use App\Http\Controllers\Admin\LessonController;
 use PHPUnit\TextUI\Configuration\FilterDirectory;
@@ -58,7 +58,7 @@ class DashboardController
             $user->role = $user->roles[0]->title;
         }
         //* video
-        $videosNumbers = Video::all()->count();
+        $videosNumbers = LessonVideo::all()->count();
         return view('dashboard', compact('cours', 'users', 'truePercent', 'lessonLabels', 'videosNumbers'));
     }
 }

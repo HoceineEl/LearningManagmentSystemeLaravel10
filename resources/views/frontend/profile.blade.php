@@ -135,7 +135,6 @@
                         <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}"
                             readonly>
                     </div>
-
                     <button class="btn btn-success mt-2" id="modifyButton" type="button">
                         Modify
                     </button>

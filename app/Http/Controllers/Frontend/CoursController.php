@@ -92,7 +92,7 @@ class CoursController extends Controller
             if ($section) {
                 $lesson = $section->lessons->where('position', '1')->first();
 
-                if ($lesson) {
+                if ($lesson->videos) {
                     $video = $lesson->videos->first();
                 }
             }
