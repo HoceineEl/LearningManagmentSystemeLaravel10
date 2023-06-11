@@ -156,6 +156,11 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     // Quizs
     Route::delete('quizzes/destroy', 'QuizsController@massDestroy')->name('quizzes.massDestroy');
     Route::resource('quizzes', 'QuizsController');
+    Route::get('frontend/quiz/take/{lesson}', 'QuizsController@hi');
+
+    Route::post('user/reponse', 'QuizsController@hamza');
+    
+
 
     // Quiz Questions
     Route::delete('quiz-questions/destroy', 'QuizQuestionsController@massDestroy')->name('quiz-questions.massDestroy');

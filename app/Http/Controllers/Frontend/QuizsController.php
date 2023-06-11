@@ -8,12 +8,19 @@ use App\Http\Requests\StoreQuizRequest;
 use App\Http\Requests\UpdateQuizRequest;
 use App\Models\Lesson;
 use App\Models\Quiz;
+use App\Models\QuizQuestion;
+use App\Models\QuestionReponse;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuizsController extends Controller
 {
+    public function hi($lesson){
+         $quiz = Quiz::all()->where('lesson_id',$lesson);
+        // dd($quiz);
+        return view('frontend.lessons.quiz',compact('quiz'));
+    }
     public function index()
     {
         abort_if(Gate::denies('quiz_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -22,6 +29,7 @@ class QuizsController extends Controller
 
         return view('frontend.quizzes.index', compact('quizzes'));
     }
+
 
     public function create()
     {
@@ -85,4 +93,60 @@ class QuizsController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+
+
+    public function hamza(Request $request)
+    {
+        // Retrieve the selected answers
+        $selectedAnswers = $request->input('answers');
+    
+        // Get the questions and their answers from your data source
+        $questions = QuizQuestion::with('questionQuestionReponses')->get();
+    
+        // Prepare an array to store the quiz results and the score
+        $quizResults = [];
+        $score = 0;
+        $question_count = 0;
+    
+        foreach ($questions as $question) {
+            $correctAnswers = [];
+            $correct_Answers = [];
+
+            $selected = isset($selectedAnswers[$question->id]) ? $selectedAnswers[$question->id] : [];
+    
+            foreach ($question->questionQuestionReponses as $answer) {
+                $answer->selected = in_array($answer->id, $selected); // Add 'selected' property to each answer
+    
+                if ($answer->est_correct) {
+                    $correctAnswers[] = $answer->id; // Store the ID of the correct answer
+                    $correct_Answers [] =$answer->reponse;
+
+                }
+            }
+    
+            $isCorrect = count($correctAnswers) === count($selected) && empty(array_diff($correctAnswers, $selected));
+    
+            if ($isCorrect) {
+                $score++; // Increment the score if the answer is correct
+            }
+    
+            $quizResults[] = [
+                'question' => $question->question,
+                'answers' => $question->questionQuestionReponses, // Add 'answers' property
+                'isCorrect' => $isCorrect,
+                'selectedAnswers' => $selected,
+                'correctAnswers' => $correctAnswers,
+                'correct_Answers'=>$correct_Answers,
+            ];
+            $question_count++;
+        }
+    
+        $scorePercentage = ($score / $question_count) * 100;
+    
+        return view('frontend.lessons.quiz_results', compact('quizResults', 'score', 'question_count', 'scorePercentage'));
+    }
+    
+
+
 }
