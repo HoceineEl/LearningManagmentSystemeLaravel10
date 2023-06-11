@@ -35,7 +35,11 @@
                         </div>
                     </div>
                     <a href="{{ route('frontend.cours.show', ['cour' => $course->id]) }}" style="display: block;">
-                        <img src="{{ $course->cover->getUrl() }}" alt="Card image cap" class="course-image">
+                        @if(!($course->cover == null))
+                            <img src="{{ $course->cover->getUrl() }}" alt="Card image cap" class="course-image">
+                        @else
+                            <img src="{{ asset("assets/online-course-500x333-3420656067.jpeg")}}" alt="Card image cap" style="width: 100%">
+                        @endif
                     </a>
                     <div class="card-body">
                         <small class="text-muted">ADVANCED</small><br>
