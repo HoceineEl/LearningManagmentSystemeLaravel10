@@ -84,6 +84,10 @@
     @endphp
     <div class="quiz-results">
         @foreach ($quizResults as $result)
+            @php
+                $answer_number = 1;
+                
+            @endphp
             <div>
             </div>
             <div class="question">
@@ -97,6 +101,7 @@
                         @endphp
                         <li
                             class="{{ $isSelected ? ($isCorrect ? 'correct selected' : 'incorrect selected') : ($isUserSelected ? 'user-selected' : '') }}">
+                            {{ $answer_number++ }}.
                             {{ $answer->reponse }}
                         </li>
                     @endforeach
