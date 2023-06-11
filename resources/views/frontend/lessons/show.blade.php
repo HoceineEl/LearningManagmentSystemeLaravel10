@@ -29,9 +29,13 @@
                 </div>
             </div>
         </div>
-        <div class="position-fixed top-0 end-0 p-3">
-            <a href="{{ url('frontend/quiz/take/'.$lesson->id) }}" class="btn btn-success">Take Lesson Quiz</a>
-        </div>
+        @if ($lesson->lessonQuizzes->isNotEmpty())
+            <div class="position-fixed top-0 end-0 p-3">
+                <a href="{{ url('frontend/quiz/take/' . $lesson->id) }}" class="btn btn-success">Take Lesson Quiz</a>
+            </div>
+        @endif
+
+
     </div>
 @section('scripts')
     <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
