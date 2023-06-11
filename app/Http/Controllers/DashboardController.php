@@ -42,21 +42,29 @@ class DashboardController
         }
 
         foreach ($lessonCount as $lesson_id => $count) {
-            $lessonLabels[$lesson_id] = Lesson::find($lesson_id)->label; // Retrieve the lesson label using the original lesson_id
+            if (Lesson::find($lesson_id))
+                $lessonLabels[$lesson_id] = Lesson::find($lesson_id)->label; // Retrieve the lesson label using the original lesson_id
         }
 
         $truePercent = [];
 
         foreach ($lessonCount as $lesson_id => $count) {
-            $truePercent[$lessonLabels[$lesson_id]] = ($trueCounts[$lesson_id] / $count) * 100; // Use the lesson label as the key instead of the lesson_id
+            if (isset($lessonLabels[$lesson_id])) {
+                $truePercent[$lessonLabels[$lesson_id]] = ($trueCounts[$lesson_id] / $count) * 100;
+            }
         }
+
         $lessonNames = array_keys($lessonCount);
 
-        //* users for the table in the dashboard
+        // Users for the table in the dashboard
         $users = User::all();
-        foreach ($users as  $user) {
-            $user->role = $user->roles[0]->title;
+
+        foreach ($users as $user) {
+            if (isset($user->roles[0])) {
+                $user->role = $user->roles[0]->title;
+            }
         }
+
         //* video
         $videosNumbers = LessonVideo::all()->count();
         return view('dashboard', compact('cours', 'users', 'truePercent', 'lessonLabels', 'videosNumbers'));

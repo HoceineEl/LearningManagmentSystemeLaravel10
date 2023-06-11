@@ -4,10 +4,8 @@
     <style>
         .course-image {
             width: 100%;
-            height: 200px;
-            /* Adjust the height as desired */
+            height: 300px;
             object-fit: cover;
-            /* Ensure the image covers the entire space without distortion */
         }
     </style>
 
@@ -19,10 +17,10 @@
         </ol>
 
         <div class="clearfix"></div>
-        <div class="card-columns">
+        <div class="card-columns ">
             @foreach ($courses as $course)
-                <div class="card">
-                    <div class="card-header text-center">
+                <div class="card " style="border-radius: 20px;">
+                    <div class="card-header text-center rounded-5">
                         <h4 class="card-title mb-0"><a
                                 href="{{ route('frontend.cours.show', ['cour' => $course->id]) }}">{{ $course->nom }}</a>
                         </h4>

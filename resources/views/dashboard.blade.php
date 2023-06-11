@@ -82,7 +82,7 @@
                                     {{ $users->where('approved', '1')->count() }}
                                 </p>
                             </div>
-                            <div class="card w-25 align-text-center box">
+                            {{-- <div class="card w-25 align-text-center box">
                                 <div class="card-title">
                                     <i class="fa fa-solid fa-video fa-lg"></i>
                                         Videos Count
@@ -90,7 +90,7 @@
                                 <p class="number">
                                     {{ $videosNumbers }}
                                 </p>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="d-flex justify-content-around">

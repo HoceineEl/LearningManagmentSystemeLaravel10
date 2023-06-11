@@ -123,9 +123,9 @@ document.getElementById("btn").addEventListener("click", function () {
     // create the div element
     var newDiv = document.createElement("div");
     newDiv.id = "section-box";
-    newDiv.style = "display: inline;";
+    newDiv.style = "display: flex;";
     newDiv.innerHTML =
-        "<input value='New Section' class='form-control form-control-lg m-2 border border-dark input-section' type='text' ><button class='btn btn-primary button save-button_sec'>Save</button><a href='' class='btn btn-light button cancel-button_sec'>Cancel</a>";
+        "<input value='New Section' class='form-control form-control-lg m-2 border border-dark input-section' type='text' ><button class='btn btn-primary button save-button_sec d-box'>Save</button><a href='' class='btn btn-light button cancel-button_sec d-box'>Cancel</a>";
 
     // create the button to add a lesson:
     var newBtn = document.createElement("button");
@@ -256,7 +256,7 @@ document.getElementById("btn").addEventListener("click", function () {
                 // create the div element
                 var newDiv1 = document.createElement("div");
                 newDiv1.id = "lesson-box";
-                newDiv1.style = "display: inline;";
+                newDiv1.style = "display: flex;";
                 newDiv1.innerHTML =
                     "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text'><button class='btn btn-primary save-button'>Save</button><a href='' class='btn btn-secondary cancel-button'>Cancel</a>";
                 // add all the elements to the ul element with id section-list.
@@ -1162,7 +1162,7 @@ addBtns.forEach(function (addBtn) {
         // create the div element
         var newDiv1 = document.createElement("div");
         newDiv1.id = "lesson-box";
-        newDiv1.style = "display: inline;";
+        newDiv1.style = "display: flex;";
         newDiv1.innerHTML =
             "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text' name='' ><button class='btn btn-primary save-button'>Save</button><a href='' class='btn btn-secondary cancel-button'>Cancel</a>";
         ul.appendChild(newLi1);
