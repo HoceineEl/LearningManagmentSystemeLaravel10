@@ -44,7 +44,7 @@
         }
 
         .correct-answer {
-            width: 170px;
+            width: 180px;
             background-color: #8bc34a;
             /* Green background color */
             color: #ffffff;
