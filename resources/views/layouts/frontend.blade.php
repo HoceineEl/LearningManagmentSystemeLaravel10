@@ -14,6 +14,11 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
     <!-- Styles -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
@@ -163,7 +168,66 @@
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
+    <script>
+        $(document).ready(function() {
+            var currentStep = 0;
+            var totalSteps = $(".step").length;
+
+            function showStep(stepNumber) {
+                $(".step").hide();
+                $(".step:eq(" + stepNumber + ")").show();
+            }
+
+            function updateButtons() {
+                if (currentStep === totalSteps - 1) {
+                    $(".next").hide();
+                    $(".submit").show();
+                } else {
+                    $(".next").show();
+                    $(".submit").hide();
+                }
+            }
+
+            updateButtons();
+
+            $(".next").click(function() {
+                var $currentStep = $(".step").eq(currentStep);
+
+                if (currentStep < totalSteps - 1) {
+                    currentStep++;
+                    showStep(currentStep);
+                    updateButtons();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $(".question li").each(function() {
+                var isCorrect = $(this).hasClass("correct");
+                var isSelected = $(this).hasClass("incorrect");
+                var isUserSelected = $(this).hasClass("selected");
+
+                if (isCorrect) {
+                    $(this).removeClass("correct");
+                    // $(this).css("color", ""); // Remove color from the correct answer
+                } else if (isSelected) {
+                    $(this).css("color", "red");
+                } else if (isUserSelected) {
+                    var checkbox = $(this).closest(".question").find("input[type='checkbox']");
+                    if (checkbox.is(":checked")) {
+                        $(this).css("color", "yellow"); // Mark user's answer with yellow color
+                    }
+                }
+            });
+        });
+    </script>
+
+
     @yield('scripts')
 </body>
 

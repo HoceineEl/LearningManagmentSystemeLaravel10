@@ -66,7 +66,7 @@
                                                     {{ trans('global.edit') }}
                                                 </a>
                                             @endcan
-
+                                                
                                             @can('lecon_delete')
                                                 <form action="{{ route('frontend.lecons.destroy', $lecon->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                                     <input type="hidden" name="_method" value="DELETE">
