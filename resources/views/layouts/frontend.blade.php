@@ -49,6 +49,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/fancytree.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css')}}">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     @yield('styles')
     <link rel="stylesheet"

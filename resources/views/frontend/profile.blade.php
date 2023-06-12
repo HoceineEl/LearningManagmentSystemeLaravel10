@@ -108,13 +108,9 @@
 </div> --}}
     @if (session('success'))
         <div class="container">
-            <div class="alert alert-success alert-dismissible fade show">
-                <div class="d-flex align-items-center">
-                    <div><strong>{{ session('success') }}</strong></div>
-                    <div class="mt-0">
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
+            <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
+                class="alert alert-success">
+                <strong>{{ session('success') }}</strong>
             </div>
         </div>
     @endif
@@ -195,7 +191,7 @@
         }
 
         modifyButton.addEventListener('click', () => {
-            for (let i = inputs.length -1 ; i >= 0; i--) {
+            for (let i = inputs.length - 1; i >= 0; i--) {
                 let input = inputs[i];
                 input.readOnly = !input.readOnly;
                 input.classList.toggle('editable-input');

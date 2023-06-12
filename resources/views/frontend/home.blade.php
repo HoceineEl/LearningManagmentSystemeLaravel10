@@ -7,7 +7,6 @@
             width: 100%;
             height: 200px;
             overflow: hidden;
-            border-radius: 20px;
         }
 
         .course-image {
@@ -116,7 +115,7 @@
         <div class="row">
             @foreach ($courses as $course)
                 <div class="col-md-4 mb-4">
-                    <div class="card">
+                    <div class="card rounded-4">
                         <div class="course-image-container">
                             <a href="{{ route('frontend.cours.show', ['cour' => $course->id]) }}">
                                 @if (!($course->cover == null))
