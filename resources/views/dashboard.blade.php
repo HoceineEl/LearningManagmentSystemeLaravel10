@@ -122,9 +122,9 @@
 
         let cours = {!! json_encode($cours) !!};
         let truePercent = {!! json_encode($truePercent) !!};
-        let lessonNames = {!! json_encode($lessonLabels) !!};
-        truePercent = Object.values(truePercent);
-        lessonNames = Object.values(lessonNames);
+        let courNames = Object.keys(truePercent);
+        truePercentage = Object.values(truePercent);
+      
 
         // data for chart 1
         let names = cours.map(cour => cour.nom);
@@ -216,7 +216,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Number of courses published',
+                        text: 'Courses Published Per Month',
                         font: {
                             size: 30
                         }
@@ -232,10 +232,10 @@
         let chart2 = new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: lessonNames,
+                labels: courNames,
                 datasets: [{
                     label: 'fished by',
-                    data: truePercent,
+                    data: truePercentage,
                     backgroundColor: generateBluishColors(12),
                     borderWidth: 1,
                     borderColor: '#777',
@@ -248,7 +248,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Percent of users who finished lessons',
+                        text: 'Most 10 Enrolled Courses',
                         font: {
                             size: 30
                         }
@@ -264,11 +264,15 @@
                             callback: function(value) {
                                 return value + "%";
                             }
+                        },
+                        title: {
+                            display: true,
+                            text: "Percentage Of Users Who Finished The Courses"
                         }
                     },
                     x: {
                         grid: {
-                            display: false
+                            display: true
                         }
                     }
                 }
