@@ -22,17 +22,15 @@
                             <th width="10">
 
                             </th>
+                            
                             <th>
-                                {{ trans('cruds.cour.fields.id') }}
+                               Name
                             </th>
                             <th>
-                                {{ trans('cruds.cour.fields.nom') }}
+                                Cover
                             </th>
                             <th>
-                                {{ trans('cruds.cour.fields.cover') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.cour.fields.auteur') }}
+                                Author
                             </th>
                             <th>
                                 &nbsp;
@@ -45,16 +43,13 @@
                                 <td>
                                 </td>
                                 <td>
-                                    {{ $cour->id ?? '' }}
-                                </td>
-                                <td>
                                     {{ $cour->nom ?? '' }}
                                 </td>
                                 <td>
                                     @if ($cour->cover)
                                         <a href="{{ $cour->cover->getUrl() }}" target="_blank"
                                             style="display: inline-block">
-                                            <img src="{{ $cour->cover->getUrl('thumb') }}">
+                                            <img src="{{ $cour->cover->getUrl('thumb') }}" alt="">
                                         </a>
                                     @endif
                                 </td>

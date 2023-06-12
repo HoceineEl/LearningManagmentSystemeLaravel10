@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class CoursController extends Controller
 {
@@ -40,7 +41,9 @@ class CoursController extends Controller
 
     public function store(StoreCourRequest $request)
     {
-        $cour = Cour::create($request->all());
+        $cour = new Cour($request->all());
+        $cour->auteur_id = auth()->id();
+        $cour->save();
 
         if ($request->input('cover', false)) {
             $cour->addMedia(storage_path('tmp/uploads/' . basename($request->input('cover'))))->toMediaCollection('cover');

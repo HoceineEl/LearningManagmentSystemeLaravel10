@@ -18,7 +18,7 @@
                                             class="btn btn-primary dropdown-item edit-section">Edit</button></li>
                                     <li><button type="button" class="btn btn-danger dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#deleteSection{{ $section->id }}">
-                                            Supprimer
+                                            Delete
                                         </button></li>
                                     {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
                                 </ul>
@@ -30,17 +30,17 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Supprimer Une Section</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete a Section</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Voulez-vous Supprimez La Section ?</p>
+                                            <p>Do You Want To Delete The Section  ?</p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-outline-secondary"
                                                 data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-danger delete-section">Suppimer</button>
+                                            <button type="button" class="btn btn-danger delete-section">Delete</button>
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
                                                 <li><button type="button" class="btn btn-danger dropdown-item"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#deleteLesson{{ $lesson->id }}">
-                                                        Supprimer
+                                                        Delete
                                                     </button></li>
 
                                             </ul>
@@ -81,19 +81,19 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer Un Leçon
+                                                        <h5 class="modal-title" id="exampleModalLabel">Delete a Lesson
                                                         </h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Voulez-vous Supprimez Le Leçcon ?</p>
+                                                        <p>Do You Want To Delete The Lesson ?</p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-outline-secondary"
-                                                            data-bs-dismiss="modal">Fermer</button>
+                                                            data-bs-dismiss="modal">Close</button>
                                                         <button type="button"
-                                                            class="btn btn-danger delete-lesson">Suppimer</button>
+                                                            class="btn btn-danger delete-lesson">Delete</button>
                                                     </div>
                                                 </div>
                                             </div>
