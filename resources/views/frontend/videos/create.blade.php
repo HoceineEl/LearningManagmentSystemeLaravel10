@@ -24,7 +24,7 @@
         <h1>Video Upload Form</h1>
         <form action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data" id="upload-form">
             @csrf
-            <input type="text" class="form-control" id="title" name="title"
+            <input type="hidden" class="form-control" id="title" name="title"
                 value="video for lesseon {{ $lesson->label }}">
 
             <input type="hidden" value="{{ $lesson->id }}" id="lecon_id" name="lecon_id" required>
