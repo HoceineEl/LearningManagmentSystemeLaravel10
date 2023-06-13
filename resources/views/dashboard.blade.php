@@ -79,7 +79,7 @@
                                     Users Count
                                 </div>
                                 <p class="number">
-                                    {{ $users->where('approved', '1')->count() }}
+                                    {{ $users->where('approved', '1')->where('role', '!=', '1')->count() }}
                                 </p>
                             </div>
                             <div class="card w-25 align-text-center box">

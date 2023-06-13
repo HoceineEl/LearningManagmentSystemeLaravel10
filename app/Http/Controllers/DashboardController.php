@@ -62,7 +62,7 @@ class DashboardController
         
         foreach ($users as $user) {
             if (isset($user->roles[0])) {
-                $user->role = $user->roles[0]->title;
+                $user->role = $user->roles[0]->id;
             }
         }
         //* video
