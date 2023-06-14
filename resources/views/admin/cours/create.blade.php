@@ -41,20 +41,6 @@
                 <span class="help-block">{{ trans('cruds.cour.fields.cover_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="auteur_id">{{ trans('cruds.cour.fields.auteur') }}</label>
-                <select class="form-control select2 {{ $errors->has('auteur') ? 'is-invalid' : '' }}" name="auteur_id" id="auteur_id" required>
-                    @foreach($auteurs as $id => $entry)
-                        <option value="{{ $id }}" {{ old('auteur_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('auteur'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('auteur') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.cour.fields.auteur_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

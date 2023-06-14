@@ -84,7 +84,7 @@
                     <i class="fa-fw fas fa-chalkboard c-sidebar-nav-icon">
 
                     </i>
-                    {{ trans('cruds.cour.title') }}
+                    Courses
                 </a>
             </li>
         @endcan

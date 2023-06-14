@@ -73,23 +73,14 @@
                                                         </div>
                                                         <div class="media-right">
                                                             @if ($lesson->videos->first())
-                                                                @php
-                                                                    $hours = floor($lesson->videos->first()->duration / 3600);
-                                                                    $minutes = floor(($lesson->videos->first()->duration % 3600) / 60);
-                                                                    $seconds = $lesson->videos->first()->duration % 60;
-                                                                    // Format values with leading zeros if needed
-                                                                    $formattedHours = str_pad($hours, 2, '0', STR_PAD_LEFT);
-                                                                    $formattedMinutes = str_pad($minutes, 2, '0', STR_PAD_LEFT);
-                                                                    $formattedSeconds = str_pad($seconds, 2, '0', STR_PAD_LEFT);
-                                                                @endphp
-
-                                                                <small>{{ $formattedHours }}:{{ $formattedMinutes }}:{{ $formattedSeconds }}</small>
                                                                 <i
                                                                     class="sidebar-menu-icon sidebar-menu-icon--left material-icons">play_circle_outline</i>
                                                             @else
-                                                                <i class="bi bi-camera-video-off"></i>
+                                                                <i
+                                                                    class="sidebar-menu-icon sidebar-menu-icon--left material-icons">error_outline</i>
                                                             @endif
                                                         </div>
+
                                                     </div>
 
                                                 </li>

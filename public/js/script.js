@@ -116,6 +116,7 @@ document.getElementById("btn").addEventListener("click", function () {
     var header = document.createElement("div");
     header.className = "d-flex justify-content-between header";
     var div = document.createElement("div");
+    div.className = "d-flex flex-row align-items-baseline";
 
     // create the icon handler:
     var newIcon = document.createElement("i");
@@ -123,9 +124,9 @@ document.getElementById("btn").addEventListener("click", function () {
     // create the div element
     var newDiv = document.createElement("div");
     newDiv.id = "section-box";
-    newDiv.style = "display: inline;";
+    newDiv.className = "d-flex align-items-center";
     newDiv.innerHTML =
-        "<input value='New Section' class='form-control form-control-lg m-2 border border-dark input-section' type='text' ><button class='btn btn-primary button save-button_sec'>Save</button><a href='' class='btn btn-light button cancel-button_sec'>Cancel</a>";
+        "<input value='New Section' class='form-control form-control-lg m-2 border border-dark input-section' type='text' ><button class='btn btn-primary me-2 button save-button_sec d-box'>Save</button><a href='' class='btn btn-secondary button d-box me-2' >Cancel</a>";
 
     // create the button to add a lesson:
     var newBtn = document.createElement("button");
@@ -205,6 +206,16 @@ document.getElementById("btn").addEventListener("click", function () {
     var newInputSection = newDiv.querySelector(".input-section");
     newInputSection.focus();
     newInputSection.select();
+    // Add event listener for "Enter" key press
+    newInputSection.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevent form submission
+
+            var saveButton = newDiv.querySelector(".save-button_sec");
+            saveButton.click(); // Trigger click event on the save button
+        }
+    });
+    newLi.scrollIntoView({ behavior: "smooth", block: "center" });
     // Get the section name from the input field
     var sectionName = newInputSection.value;
     var sectionPosition = section_item.querySelectorAll(".section-list").length;
@@ -250,15 +261,17 @@ document.getElementById("btn").addEventListener("click", function () {
                 // header.className = "header d-flex justify-content-between";
                 //create the div that contains the icon in the input Or lesson_name
                 var div = document.createElement("div");
+                div.className = "d-flex flex-row align-items-baseline";
+
                 // create the icon and the title of the lesson as a span:
                 var newIcon1 = document.createElement("i");
                 newIcon1.className = "fa fa-bars handle";
                 // create the div element
                 var newDiv1 = document.createElement("div");
                 newDiv1.id = "lesson-box";
-                newDiv1.style = "display: inline;";
+                newDiv1.className = "d-flex align-items-center";
                 newDiv1.innerHTML =
-                    "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text'><button class='btn btn-primary save-button'>Save</button><a href='' class='btn btn-secondary cancel-button'>Cancel</a>";
+                    "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text'><button class='btn btn-primary me-2 save-button'>Save</button><a href='' class='btn btn-secondary cancel-button'>Cancel</a>";
                 // add all the elements to the ul element with id section-list.
                 var currentLi = newUl.parentElement;
                 var lessonList =
@@ -271,6 +284,16 @@ document.getElementById("btn").addEventListener("click", function () {
                 var newInput = newDiv1.querySelector(".input");
                 newInput.focus();
                 newInput.select();
+                // Add event listener for "Enter" key press
+                newInput.addEventListener("keydown", function (event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault(); // Prevent form submission
+
+                        var saveButton = newDiv1.querySelector(".save-button");
+                        saveButton.click(); // Trigger click event on the save button
+                    }
+                });
+                newLi1.scrollIntoView({ behavior: "smooth", block: "center" });
                 // Get the lesson name from the input field
 
                 var lessonName = newInput.value;
@@ -331,7 +354,7 @@ document.getElementById("btn").addEventListener("click", function () {
                         link.href = "#";
                         link.textContent = name;
                         link.id = "lesson-link";
-                        link.className = "card-title";
+                        link.className = "card-title ms-1";
                         link.style =
                             "text-decoration:none;color:rgb(81, 84, 90);margin-left=1px;";
                         link.setAttribute("data-bs-toggle", "modal");
@@ -502,7 +525,9 @@ document.getElementById("btn").addEventListener("click", function () {
                                     newDiv.id = "lesson-box";
                                     var dropDown = edit.closest(".dropDownL");
                                     console.log("dropdown : ", dropDown);
-                                    newDiv.style = "display: inline;";
+                                    // newDiv.style = "display: inline;";
+                                    newDiv.className =
+                                        "d-flex align-items-center";
                                     var less = edit.closest(".lesson");
                                     console.log("lesson : ", less);
                                     var lesson_name = less.dataset.lessonName;
@@ -518,17 +543,36 @@ document.getElementById("btn").addEventListener("click", function () {
                                     var saveBtn =
                                         document.createElement("button");
                                     saveBtn.className =
-                                        "btn btn-primary button save-button";
+                                        "btn btn-primary button save-button me-2";
                                     saveBtn.textContent = "Save";
                                     var cancelBtn = document.createElement("a");
                                     cancelBtn.href = "";
                                     cancelBtn.className =
-                                        "btn btn-light button cancel-button";
+                                        "btn btn-secondary button cancel-button me-2";
                                     cancelBtn.textContent = "Cancel";
+                                    var div = link.parentElement;
+                                    div.className =
+                                        "d-flex flex-row align-items-baseline";
                                     console.log(link);
                                     dropDown.remove();
+                                    newInput.addEventListener(
+                                        "keydown",
+                                        function (event) {
+                                            if (event.key === "Enter") {
+                                                event.preventDefault(); // Prevent form submission
+
+                                                var saveButton =
+                                                    newDiv.querySelector(
+                                                        ".save-button"
+                                                    );
+                                                saveButton.click(); // Trigger click event on the save button
+                                            }
+                                        }
+                                    );
                                     newDiv.append(newInput, saveBtn, cancelBtn);
                                     link.replaceWith(newDiv);
+                                    newInput.focus();
+                                    newInput.select();
 
                                     var buttons =
                                         document.querySelectorAll(
@@ -547,7 +591,8 @@ document.getElementById("btn").addEventListener("click", function () {
                                                 link.href = "#";
                                                 link.textContent = name;
                                                 link.id = "lesson-link";
-                                                link.className = "card-title";
+                                                link.className =
+                                                    "card-title ms-1";
                                                 link.style =
                                                     "text-decoration:none;color:rgb(81, 84, 90);margin-left=1px;";
                                                 var dropdown =
@@ -639,7 +684,81 @@ document.getElementById("btn").addEventListener("click", function () {
                                                     "#deleteLesson" + lessonId
                                                 ).modal("hide");
                                                 Parent_Li.remove();
-                                                location.reload();
+                                                var sections =
+                                                    document.getElementsByClassName(
+                                                        "section"
+                                                    );
+                                                var lessonPositions = [];
+
+                                                Array.from(sections).forEach(
+                                                    function (section) {
+                                                        var lessons =
+                                                            section.getElementsByClassName(
+                                                                "lesson"
+                                                            );
+                                                        Array.from(
+                                                            lessons
+                                                        ).forEach(function (
+                                                            lesson,
+                                                            index
+                                                        ) {
+                                                            var sectionId =
+                                                                section.dataset
+                                                                    .sectionId;
+                                                            var lessonId =
+                                                                lesson.dataset
+                                                                    .lessonId;
+                                                            lessonPositions.push(
+                                                                {
+                                                                    sectionId:
+                                                                        sectionId,
+                                                                    lessonId:
+                                                                        lessonId,
+                                                                    position:
+                                                                        index +
+                                                                        1,
+                                                                }
+                                                            );
+                                                        });
+                                                    }
+                                                );
+                                                console.log(lessonPositions);
+                                                // Send the updated positions to the server
+                                                $.ajaxSetup({
+                                                    headers: {
+                                                        "X-CSRF-TOKEN": $(
+                                                            'meta[name="csrf-token"]'
+                                                        ).attr("content"),
+                                                    },
+                                                });
+                                                $.ajax({
+                                                    url: "/updateLessonPosition", // Update with the appropriate URL
+                                                    type: "PUT",
+                                                    dataType: "json",
+                                                    data: JSON.stringify(
+                                                        lessonPositions
+                                                    ),
+                                                    contentType:
+                                                        "application/json",
+                                                    success: function (
+                                                        response
+                                                    ) {
+                                                        console.log(
+                                                            "Lesson positions updated successfully",
+                                                            response
+                                                        );
+                                                    },
+                                                    error: function (
+                                                        xhr,
+                                                        status,
+                                                        error
+                                                    ) {
+                                                        console.error(
+                                                            "Error updating lesson positions:",
+                                                            error
+                                                        );
+                                                    },
+                                                });
 
                                                 console.log(
                                                     "response : ",
@@ -751,9 +870,10 @@ document.getElementById("btn").addEventListener("click", function () {
                             .querySelector(".section-title");
                         var newDiv = document.createElement("div");
                         newDiv.id = "section-box";
+
                         var dropDown = edit.closest(".dropDown");
 
-                        newDiv.style = "display: inline;";
+                        newDiv.className = "d-flex align-items-center";
                         var sec = edit.closest(".section");
                         var section_name = sec.dataset.sectionName;
                         console.log("section_name : ", section_name);
@@ -764,19 +884,30 @@ document.getElementById("btn").addEventListener("click", function () {
                         newInput.value = section_name;
                         var saveBtn = document.createElement("button");
                         saveBtn.className =
-                            "btn btn-primary button save-button_sec";
+                            "btn btn-primary button save-button_sec me-2";
                         saveBtn.textContent = "Save";
                         var cancelBtn = document.createElement("a");
                         cancelBtn.href = "";
                         cancelBtn.className =
-                            "btn btn-light button cancel-button_sec";
+                            "btn btn-secondary button cancel-button_sec me-2";
                         cancelBtn.textContent = "Cancel";
-                        // newDiv.innerHTML =
-                        //     "<button class='btn btn-primary button save-button_sec'>Save</button><a href='' class='btn btn-light button cancel-button_sec'>Cancel</a>";
+                        var div = span.parentElement;
+                        div.className = "d-flex flex-row align-items-baseline";
                         console.log("span", span);
+                        newInput.addEventListener("keydown", function (event) {
+                            if (event.key === "Enter") {
+                                event.preventDefault(); // Prevent form submission
+
+                                var saveButton =
+                                    newDiv.querySelector(".save-button_sec");
+                                saveButton.click(); // Trigger click event on the save button
+                            }
+                        });
                         dropDown.remove();
                         newDiv.append(newInput, saveBtn, cancelBtn);
                         span.replaceWith(newDiv);
+                        newInput.focus();
+                        newInput.select();
                         var buttons1 =
                             document.querySelectorAll(".save-button_sec");
                         buttons1.forEach(function (button) {
@@ -869,6 +1000,49 @@ document.getElementById("btn").addEventListener("click", function () {
                                 console.log("suuccessuful section delete");
                                 $("#deleteSection" + sectionId).modal("hide");
                                 li.remove();
+                                var sections =
+                                    document.getElementsByClassName("section");
+                                console.log("sections :", sections);
+                                var sectionPositions = Array.from(sections).map(
+                                    function (section, index) {
+                                        return {
+                                            sectionId:
+                                                section.dataset.sectionId,
+                                            position: index + 1,
+                                        };
+                                    }
+                                );
+                                console.log(
+                                    "Section Positions",
+                                    sectionPositions
+                                );
+                                // Send the updated positions to the server
+                                $.ajaxSetup({
+                                    headers: {
+                                        "X-CSRF-TOKEN": $(
+                                            'meta[name="csrf-token"]'
+                                        ).attr("content"),
+                                    },
+                                });
+                                $.ajax({
+                                    url: "/updateSectionPosition", // Update with the appropriate URL
+                                    type: "PUT",
+                                    dataType: "json",
+                                    data: JSON.stringify(sectionPositions),
+                                    contentType: "application/json",
+                                    success: function (response) {
+                                        console.log(
+                                            "Section positions updated successfully"
+                                        );
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.error(
+                                            "Error updating section positions:",
+                                            error
+                                        );
+                                    },
+                                });
+
                                 // console.log("response : ", response);
                                 location.reload();
                             },
@@ -898,9 +1072,8 @@ editBtns.forEach(function (btn) {
         var span = btn.closest(".header").querySelector(".section-title");
         var newDiv = document.createElement("div");
         newDiv.id = "section-box";
+        newDiv.className = "d-flex align-items-center";
         var dropDown = btn.closest(".dropDown");
-
-        newDiv.style = "display: inline;";
         var sec = btn.closest(".section");
         var section_name = sec.dataset.sectionName;
         console.log("section_name : ", section_name);
@@ -910,16 +1083,28 @@ editBtns.forEach(function (btn) {
         newInput.type = "text";
         newInput.value = section_name;
         var saveBtn = document.createElement("button");
-        saveBtn.className = "btn btn-primary button save-button_sec";
+        saveBtn.className = "btn btn-primary button save-button_sec me-2";
         saveBtn.textContent = "Save";
         var cancelBtn = document.createElement("a");
         cancelBtn.href = "";
-        cancelBtn.className = "btn btn-light button cancel-button_sec";
+        cancelBtn.className = "btn btn-secondary button cancel-button_sec me-2";
         cancelBtn.textContent = "Cancel";
         console.log(span);
+        var div = span.parentElement;
+        div.className = "d-flex flex-row align-items-baseline";
         dropDown.remove();
         newDiv.append(newInput, saveBtn, cancelBtn);
+        newInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission
+
+                var saveButton = newDiv.querySelector(".save-button_sec");
+                saveButton.click(); // Trigger click event on the save button
+            }
+        });
         span.replaceWith(newDiv);
+        newInput.focus();
+        newInput.select();
         var buttons1 = document.querySelectorAll(".save-button_sec");
         buttons1.forEach(function (button) {
             button.addEventListener("click", function () {
@@ -963,7 +1148,7 @@ editBtns.forEach(function (btn) {
                     success: function (data) {
                         // Update the section name in the UI
                         console.log("suuccessuful update section name");
-                        // location.reload();
+                        location.reload();
                     },
                     error: function (xhr, status, error) {
                         console.log("xhr", xhr);
@@ -1000,6 +1185,42 @@ deleteBtns.forEach(function (btn) {
                 // location.reload();
                 $("#deleteSection" + sectionId).modal("hide");
                 section.remove();
+                var sections = document.getElementsByClassName("section");
+                console.log("sections :", sections);
+                var sectionPositions = Array.from(sections).map(function (
+                    section,
+                    index
+                ) {
+                    return {
+                        sectionId: section.dataset.sectionId,
+                        position: index + 1,
+                    };
+                });
+                console.log("Section Positions", sectionPositions);
+                // Send the updated positions to the server
+                $.ajaxSetup({
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                    },
+                });
+                $.ajax({
+                    url: "/updateSectionPosition", // Update with the appropriate URL
+                    type: "PUT",
+                    dataType: "json",
+                    data: JSON.stringify(sectionPositions),
+                    contentType: "application/json",
+                    success: function (response) {
+                        console.log("Section positions updated successfully");
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(
+                            "Error updating section positions:",
+                            error
+                        );
+                    },
+                });
                 console.log("response : ", response);
             },
             error: function (xhr, status, error) {
@@ -1021,7 +1242,7 @@ editBtnsL.forEach(function (btn) {
         newDiv.id = "lesson-box";
         var dropDown = btn.closest(".dropDownL");
         console.log("dropdown : ", dropDown);
-        newDiv.style = "display: inline;";
+        newDiv.className = "d-flex align-items-center";
         var less = btn.closest(".lesson");
         console.log("lesson : ", less);
         var lesson_name = less.dataset.lessonName;
@@ -1033,16 +1254,28 @@ editBtnsL.forEach(function (btn) {
         newInput.type = "text";
         newInput.value = lesson_name;
         var saveBtn = document.createElement("button");
-        saveBtn.className = "btn btn-primary button save-button";
+        saveBtn.className = "btn btn-primary button save-button me-2";
         saveBtn.textContent = "Save";
         var cancelBtn = document.createElement("a");
         cancelBtn.href = "";
-        cancelBtn.className = "btn btn-light button cancel-button";
+        cancelBtn.className = "btn btn-secondary button cancel-button me-2";
         cancelBtn.textContent = "Cancel";
         console.log(link);
+        var div = link.parentElement;
+        div.className = "d-flex flex-row align-items-baseline";
         dropDown.remove();
         newDiv.append(newInput, saveBtn, cancelBtn);
+        newInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission
+
+                var saveButton = newDiv.querySelector(".save-button");
+                saveButton.click(); // Trigger click event on the save button
+            }
+        });
         link.replaceWith(newDiv);
+        newInput.focus();
+        newInput.select();
         //
         var buttons = document.querySelectorAll(".save-button");
         buttons.forEach(function (button) {
@@ -1055,7 +1288,7 @@ editBtnsL.forEach(function (btn) {
                 link.href = "#";
                 link.textContent = name;
                 link.id = "lesson-link";
-                link.className = "card-title";
+                link.className = "card-title ms-1";
                 link.style =
                     "text-decoration:none;color:rgb(81, 84, 90);margin-left=1px;";
                 var dropdown = document.createElement("div");
@@ -1128,6 +1361,51 @@ deleteBtnsL.forEach(function (btn) {
                 // location.reload();
                 $("#deleteLesson" + lessonId).modal("hide");
                 lesson.remove();
+
+                var sections = document.getElementsByClassName("section");
+                var lessonPositions = [];
+
+                Array.from(sections).forEach(function (section) {
+                    var lessons = section.getElementsByClassName("lesson");
+                    Array.from(lessons).forEach(function (lesson, index) {
+                        var sectionId = section.dataset.sectionId;
+                        var lessonId = lesson.dataset.lessonId;
+                        lessonPositions.push({
+                            sectionId: sectionId,
+                            lessonId: lessonId,
+                            position: index + 1,
+                        });
+                    });
+                });
+                console.log(lessonPositions);
+                // Send the updated positions to the server
+                $.ajaxSetup({
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content"
+                        ),
+                    },
+                });
+                $.ajax({
+                    url: "/updateLessonPosition", // Update with the appropriate URL
+                    type: "PUT",
+                    dataType: "json",
+                    data: JSON.stringify(lessonPositions),
+                    contentType: "application/json",
+                    success: function (response) {
+                        console.log(
+                            "Lesson positions updated successfully",
+                            response
+                        );
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(
+                            "Error updating lesson positions:",
+                            error
+                        );
+                    },
+                });
+
                 console.log("response : ", response);
             },
             error: function (xhr, status, error) {
@@ -1145,16 +1423,16 @@ addBtns.forEach(function (addBtn) {
         console.log(addBtn);
         var ul = addBtn.parentElement;
         var newLi1 = document.createElement("li");
-        newLi1.className = "d-flex justify-content-between card lesson";
-        newLi1.style =
-            "display:flex;flex-direction:row ;background-color: rgba(231, 235, 240, 0.795);";
+        newLi1.className =
+            "d-flex justify-content-between card lesson flex-row";
+        newLi1.style = "background-color: rgba(231, 235, 240, 0.795);";
         ////////////////////////:
 
         // var header = document.createElement("div");
         // header.className = "header d-flex justify-content-between";
         //create the div that contains the icon in the input Or lesson_name
         var div = document.createElement("div");
-
+        div.className = "d-flex flex-row align-items-baseline";
         // create the icon and the title of the lesson as a span:
         var newIcon1 = document.createElement("i");
         newIcon1.className = "fa fa-bars handle";
@@ -1162,17 +1440,29 @@ addBtns.forEach(function (addBtn) {
         // create the div element
         var newDiv1 = document.createElement("div");
         newDiv1.id = "lesson-box";
-        newDiv1.style = "display: inline;";
+        newDiv1.className = "d-flex align-items-center";
         newDiv1.innerHTML =
-            "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text' name='' ><button class='btn btn-primary save-button'>Save</button><a href='' class='btn btn-secondary cancel-button'>Cancel</a>";
+            "<input value='New Lesson' class='form-control input m-2 border border-dark' type='text' name='' ><button class='btn btn-primary me-2 save-button'>Save</button><a href='' class='btn btn-secondary cancel-button me-2' >Cancel</a>";
         ul.appendChild(newLi1);
         newLi1.appendChild(div);
         div.append(newIcon1, newDiv1);
         var newInput = newDiv1.querySelector(".input");
         newInput.focus();
         newInput.select();
-        // Get the lesson name from the input field
+        // Add event listener for "Enter" key press
+        newInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission
 
+                var saveButton = newDiv1.querySelector(".save-button");
+                saveButton.click(); // Trigger click event on the save button
+            }
+        });
+
+        // Scroll
+        newLi1.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Get the lesson name from the input field
         var lessonName = newInput.value;
         var sectionID = ul.dataset.sectionId;
         console.log("section id : ", sectionID);
@@ -1228,7 +1518,7 @@ addBtns.forEach(function (addBtn) {
                 link.href = "#";
                 link.textContent = name;
                 link.id = "lesson-link";
-                link.className = "card-title";
+                link.className = "card-title ms-1";
                 link.style =
                     "text-decoration:none;color:rgb(81, 84, 90);margin-left=1px;";
                 var dropdown = document.createElement("div");
@@ -1376,6 +1666,7 @@ addBtns.forEach(function (addBtn) {
                             console.log("edit : ", edit);
                             var newDiv = document.createElement("div");
                             newDiv.id = "lesson-box";
+                            newDiv.className = "d-flex align-items-center";
                             var dropDown = edit.closest(".dropDownL");
                             console.log("dropdown : ", dropDown);
                             newDiv.style = "display: inline;";
@@ -1392,20 +1683,37 @@ addBtns.forEach(function (addBtn) {
                             newInput.value = lesson_name;
                             var saveBtn = document.createElement("button");
                             saveBtn.className =
-                                "btn btn-primary button save-button";
+                                "btn btn-primary button save-button me-2";
                             saveBtn.textContent = "Save";
                             var cancelBtn = document.createElement("a");
                             cancelBtn.href = "";
                             cancelBtn.className =
-                                "btn btn-light button cancel-button";
+                                "btn btn-secondary button cancel-button me-2";
                             cancelBtn.textContent = "Cancel";
                             console.log(link);
-
+                            var div = link.parentElement;
+                            div.className =
+                                "d-flex flex-row align-items-baseline";
                             dropDown.remove();
+                            newInput.addEventListener(
+                                "keydown",
+                                function (event) {
+                                    if (event.key === "Enter") {
+                                        event.preventDefault(); // Prevent form submission
+
+                                        var saveButton =
+                                            newDiv.querySelector(
+                                                ".save-button"
+                                            );
+                                        saveButton.click(); // Trigger click event on the save button
+                                    }
+                                }
+                            );
                             newDiv.append(newInput, saveBtn, cancelBtn);
                             link.replaceWith(newDiv);
                             newInput.focus();
                             newInput.select();
+
                             //
                             var buttons =
                                 document.querySelectorAll(".save-button");
@@ -1419,7 +1727,7 @@ addBtns.forEach(function (addBtn) {
                                     link.href = "#";
                                     link.textContent = name;
                                     link.id = "lesson-link";
-                                    link.className = "card-title";
+                                    link.className = "card-title ms-1";
                                     link.style =
                                         "text-decoration:none;color:rgb(81, 84, 90);margin-left=1px;";
                                     var dropdown =
@@ -1488,6 +1796,62 @@ addBtns.forEach(function (addBtn) {
                                     // location.reload();
                                     $("#deleteLesson" + lessonId).modal("hide");
                                     parent_li.remove();
+                                    var sections =
+                                        document.getElementsByClassName(
+                                            "section"
+                                        );
+                                    var lessonPositions = [];
+
+                                    Array.from(sections).forEach(function (
+                                        section
+                                    ) {
+                                        var lessons =
+                                            section.getElementsByClassName(
+                                                "lesson"
+                                            );
+                                        Array.from(lessons).forEach(function (
+                                            lesson,
+                                            index
+                                        ) {
+                                            var sectionId =
+                                                section.dataset.sectionId;
+                                            var lessonId =
+                                                lesson.dataset.lessonId;
+                                            lessonPositions.push({
+                                                sectionId: sectionId,
+                                                lessonId: lessonId,
+                                                position: index + 1,
+                                            });
+                                        });
+                                    });
+                                    console.log(lessonPositions);
+                                    // Send the updated positions to the server
+                                    $.ajaxSetup({
+                                        headers: {
+                                            "X-CSRF-TOKEN": $(
+                                                'meta[name="csrf-token"]'
+                                            ).attr("content"),
+                                        },
+                                    });
+                                    $.ajax({
+                                        url: "/updateLessonPosition", // Update with the appropriate URL
+                                        type: "PUT",
+                                        dataType: "json",
+                                        data: JSON.stringify(lessonPositions),
+                                        contentType: "application/json",
+                                        success: function (response) {
+                                            console.log(
+                                                "Lesson positions updated successfully",
+                                                response
+                                            );
+                                        },
+                                        error: function (xhr, status, error) {
+                                            console.error(
+                                                "Error updating lesson positions:",
+                                                error
+                                            );
+                                        },
+                                    });
                                     console.log("response : ", response);
                                 },
                                 error: function (xhr, status, error) {

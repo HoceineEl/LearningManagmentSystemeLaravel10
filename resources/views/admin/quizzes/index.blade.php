@@ -28,7 +28,7 @@
                                 {{ trans('cruds.quiz.fields.nom') }}
                             </th>
                             <th>
-                                {{ trans('cruds.quiz.fields.lecon') }}
+                                {{ trans('cruds.quiz.fields.lesson') }}
                             </th>
                             <th>
                                 &nbsp;

@@ -22,10 +22,10 @@ class StoreCourRequest extends FormRequest
                 'required',
                 'unique:cours',
             ],
-            'auteur_id' => [
-                'required',
-                'integer',
-            ],
+            // 'auteur_id' => [
+            //     'required',
+            //     'integer',
+            // ],
         ];
     }
 }

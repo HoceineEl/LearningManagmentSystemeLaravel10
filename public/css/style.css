@@ -158,6 +158,12 @@
 
 }
 */
+
+.selected {
+    background-color: rgba(126, 135, 148, 0.795) !important;
+    transform: scale(1.01);
+}
+
 ul {
     list-style-type: none;
     /* padding: 0;
@@ -189,9 +195,7 @@ ul {
 
 }
 
-.section {
-    background-color: #1d2c3b11;
-}
+
 
 
 .handle-section {
@@ -226,15 +230,10 @@ ul {
 
 #lesson-link:hover {
     text-decoration: none;
-    color: rgb(53, 55, 59)
+    color: rgb(84, 103, 141)
 }
 
 .section-title {
     font-size: 30px;
     margin-left: 5px;
-}
-
-.selected {
-    background-color: rgba(126, 135, 148, 0.795);
-    transform: scale(1.01);
 }

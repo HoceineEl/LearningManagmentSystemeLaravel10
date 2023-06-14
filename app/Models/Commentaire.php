@@ -58,7 +58,7 @@ class Commentaire extends Model implements HasMedia
         return $this->hasMany(self::class, 'parent_id', 'id');
     }
 
-    public function lecon()
+    public function lesson()
     {
         return $this->belongsTo(Lesson::class, 'lesson_id');
     }

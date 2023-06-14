@@ -9,10 +9,11 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Frontend\LessonController as FrontendLessonController;
+use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Http;
 
 
-Route::view('/', 'welcome');
+Route::get('/', [HomeController::class,'index']);
 Route::get('userVerification/{token}', 'UserVerificationController@approve')->name('userVerification');
 Auth::routes();
 
