@@ -2,13 +2,16 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            {{ trans('global.create') }} {{ trans('cruds.questionReponse.title_singular') }}
+            <label class="" for="quiz_id">{{ $questions->question }}</label>
+
+            {{-- {{ trans('global.create') }} {{ trans('cruds.questionReponse.title_singular') }} --}}
         </div>
 
         <div class="card-body">
             <form method="POST" action="{{ url('admin/question-reponses/store/' . $questions->id) }}"
                 enctype="multipart/form-data">
                 @csrf
+
 
                 {{-- <div class="form-group">
                 <label class="required" for="question_id">{{ trans('cruds.questionReponse.fields.question') }}</label>
@@ -24,6 +27,10 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.questionReponse.fields.question_helper') }}</span>
                 </div> --}}
+
+                {{-- <div class="form-group">
+                </div> --}}
+
 
                 <input type="hidden" name="question_id" value="{{ $questions->id }}">
 

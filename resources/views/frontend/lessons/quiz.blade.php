@@ -96,6 +96,7 @@
     <form id="multi-step-form" method="post" action="{{ url('user/reponse') }}">
         @csrf
         @foreach ($quiz as $singleQuiz)
+            <input type="hidden" name="quiz_id" value="{{ $singleQuiz->id }}"> <!-- Add this line to store the quiz ID -->
             <span class="badge bg-primary badge-lg">{{ $singleQuiz->nom }}</span>
             @foreach ($singleQuiz->quizQuizQuestions as $key => $question)
                 <div class="step{{ $key === 0 ? ' current' : '' }}">

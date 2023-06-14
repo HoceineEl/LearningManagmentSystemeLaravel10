@@ -18,7 +18,7 @@ class QuizsController extends Controller
 {
     public function hi($lesson){
          $quiz = Quiz::all()->where('lesson_id',$lesson);
-        // dd($quiz);
+        // dd($quiz->id);
         return view('frontend.lessons.quiz',compact('quiz'));
     }
     public function index()
@@ -100,16 +100,27 @@ class QuizsController extends Controller
     {
         // Retrieve the selected answers
         $selectedAnswers = $request->input('answers');
-    
+        $quizId = $request->input('quiz_id'); // Assuming you have a hidden input field with the name 'quiz_id' in your form
+        
         // Get the questions and their answers from your data source
-        $questions = QuizQuestion::with('questionQuestionReponses')->get();
-    
+        $questions = QuizQuestion::with(['questionQuestionReponses'])
+            ->whereHas('quiz', function ($query) use ($quizId) {
+                $query->where('id', $quizId);
+            })
+            ->get();
+                // $questions = QuizQuestion::with(['questionQuestionReponses'])
+        // ->whereHas('quiz', function ($query) use ($quizId) {
+        //     $query->where('id', $quizId);
+        // })
+        // ->get();
+
         // Prepare an array to store the quiz results and the score
         $quizResults = [];
         $score = 0;
         $question_count = 0;
     
         foreach ($questions as $question) {
+            $questionText=$question->question;
             $correctAnswers = [];
             $correct_Answers = [];
 
@@ -117,11 +128,9 @@ class QuizsController extends Controller
     
             foreach ($question->questionQuestionReponses as $answer) {
                 $answer->selected = in_array($answer->id, $selected); // Add 'selected' property to each answer
-    
                 if ($answer->est_correct) {
                     $correctAnswers[] = $answer->id; // Store the ID of the correct answer
                     $correct_Answers [] =$answer->reponse;
-
                 }
             }
     
@@ -130,9 +139,10 @@ class QuizsController extends Controller
             if ($isCorrect) {
                 $score++; // Increment the score if the answer is correct
             }
-    
+            
             $quizResults[] = [
-                'question' => $question->question,
+                // 'question' => $question->question,
+                'question' => $questionText,
                 'answers' => $question->questionQuestionReponses, // Add 'answers' property
                 'isCorrect' => $isCorrect,
                 'selectedAnswers' => $selected,
@@ -141,12 +151,9 @@ class QuizsController extends Controller
             ];
             $question_count++;
         }
-    
-        $scorePercentage = ($score / $question_count) * 100;
+        $scorePercentage = ($question_count > 0) ? round(($score / $question_count) * 100) : 0;
+        // $scorePercentage = round(($score / $question_count) * 100);
     
         return view('frontend.lessons.quiz_results', compact('quizResults', 'score', 'question_count', 'scorePercentage'));
     }
-    
-
-
 }

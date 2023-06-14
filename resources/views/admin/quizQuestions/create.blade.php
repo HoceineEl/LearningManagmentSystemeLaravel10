@@ -2,26 +2,15 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            {{ trans('global.create') }} {{ trans('cruds.quizQuestion.title_singular') }}
+            <label class="" for="quiz_id">{{ $quiz1->nom }}</label>
+
+            {{-- {{ trans('global.create') }} {{ trans('cruds.quizQuestion.title_singular') }} --}}
         </div>
 
         <div class="card-body">
             <form method="post" action="{{ url('admin/quiz-questions/store/' . $quiz1->id) }}" enctype="multipart/form-data">
                 @csrf
-                {{-- <div class="form-group">
-                <label class="required" for="quiz_id">{{ trans('cruds.quizQuestion.fields.quiz') }}</label>
-                <select class="form-control select2 {{ $errors->has('quiz') ? 'is-invalid' : '' }}" name="quiz_id" id="quiz_id" required>
-                    @foreach ($quizzes as $id => $entry)
-                        <option value="{{ $id }}" {{ old('quiz_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if ($errors->has('quiz'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('quiz') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.quizQuestion.fields.quiz_helper') }}</span>
-                </div> --}}
+
                 <input type="hidden" name="quiz_id" value="{{ $quiz1->id }}">
 
                 <div class="form-group">
